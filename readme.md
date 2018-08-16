@@ -35,6 +35,16 @@ The project can be run from within Visual Studio using IIS Express.  However, de
 
 3. Set up the app in IIS.  Set up the app as your normally would in IIS. For the application pool, set the .NET CLR version to No Managed Code.
 
+### Using integrated authentication to connect to database (for development on Windows with IIS)
+
+You can use integrated authentication with .NET Core projects to authenticate and connect to a database.  As with other projects, you will want to set the identity of the application pool to a user that has access to the database (your account or a service account).  You may also need to provide this user read access to the directory where your `dotnet.exe` is (likely `C:\Program Files\dotnet\`).
+
+Any updates you make to the connection string should be done in an environment specific appsettings file like `appsettings.Development.json` _not_ in the main `appsettings.json`. Refer to docs for a sample file.
+
+### Database authentication for Mac users
+
+There is not yet a method for Mac users to connect to the database.  Currently the only solution is integrated authentication which only works on Windows.  But I will work on this soon.
+
 #### More information
 
  - [https://stackoverflow.com/a/50286082/891018](https://stackoverflow.com/a/50286082/891018)
