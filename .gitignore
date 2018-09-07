@@ -3,7 +3,7 @@
 
 # Exclude web.config for repo
 web.config
-appsettings.Development.json
+*/appsettings.Development.json
 
 # User-specific files
 *.suo
