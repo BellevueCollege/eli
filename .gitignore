@@ -3,6 +3,7 @@
 
 # Exclude web.config for repo
 web.config
+appsettings.*.json
 
 # User-specific files
 *.suo
