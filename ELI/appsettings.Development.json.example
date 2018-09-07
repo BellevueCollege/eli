@@ -1,0 +1,12 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  },
+  "ConnectionStrings": {
+    "ELIDatabase": "Data Source=;Initial Catalog=;Integrated Security=True;"
+  }
+}
