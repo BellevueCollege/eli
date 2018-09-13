@@ -1,65 +1,133 @@
 ﻿<!DOCTYPE html>
-<html>
+<!--[if lt IE 7 ]> <html lang="en-US" class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en-US" class="no-js">
+<!--<![endif]-->
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ELI</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://www.bellevuecollege.edu/bellevue.ico" />
+    <!--[if IE]>
+        <link rel="shortcut icon" href="https://www.bellevuecollege.edu/bellevue.ico" />
+    <![endif]-->
+    <link rel='dns-prefetch' href='//s.bellevuecollege.edu' />
 
     <environment include="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel='stylesheet' id='globals-css' href='//shoes.bellevuecollege.edu/g/3/c/g.css' type='text/css' media='screen' />
+        <link rel='stylesheet' id='globals-print-css' href='//shoes.bellevuecollege.edu/g/3/c/p.css' type='text/css' media='print' />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script type='text/javascript' src='//shoes.bellevuecollege.edu/g/3/j/ghead-full.js'></script>
+
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <link rel='stylesheet' id='globals-css' href='//s.bellevuecollege.edu/g/3/c/g.css' type='text/css' media='screen' />
+        <link rel='stylesheet' id='globals-print-css' href='//s.bellevuecollege.edu/g/3/c/p.css' type='text/css' media='print' />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script type='text/javascript' src='//s.bellevuecollege.edu/g/3/j/ghead-full.min.js'></script>
     </environment>
-    @*
-        <environment include="Development">
-            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-            <link rel="stylesheet" href="~/css/site.css" />
-        </environment>
-        <environment exclude="Development">
-            <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        </environment>*@
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-page="/Index" class="navbar-brand">ELI</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-page="/Index">Home</a></li>
+    <ul id="skiplinks">
+        <li><a href="#content">Skip to Content</a></li>
+    </ul>
+    <header id="top-wrap" class="lite clearfix mobile-s17">
+        <div id="smallhead-wrap" class="container">
+            <div id="smallhead" class="clearfix">
+                <a href="https://www.bellevuecollege.edu/" id="bc-logo">
+                    <img alt="Bellevue College (with link to home page)" src="//s.bellevuecollege.edu/g/3/i/bellevuecollege-s.png" />
+                </a><!-- #bc-logo-->
+                <ul id="college-top-actions">
+                    <li id="lite-top-actions-register" class="top-actions"><a href="https://www.bellevuecollege.edu/registration/" class="top-actions">Register</a></li>
+                    <li id="lite-top-actions-services" class="top-actions"><a href="https://www.bellevuecollege.edu/services/" class="top-actions">Online Services</a></li>
+                    <li id="lite-top-actions-canvas" class="top-actions"><a href="https://www.bellevuecollege.edu/canvas/" class="top-actions">Canvas</a></li>
                 </ul>
-                <p class="nav navbar-text navbar-right">Hello, @User.Identity.Name!</p>
-            </div>
-        </div>
-    </nav>
+            </div><!-- smallhead -->
+        </div><!-- #smallhead-wrap .container -->
+    </header> <!--#masthead-->
+    <div id="main-wrap" class="globals-lite">
+        <div id="main" class="container no-padding">
+            <div id="top" class="mobile-s17">
+                <div id="site-branding">
+                    <p class="site-title">
+                        <a title="Return to Home Page" rel="home" asp-page="/Index">ELI Student Management</a>
+                    </p>
+                    <p class="site-description "></p>
+                </div><!-- #site-branding -->
+                <div id="header-actions-container" class="header-social-links-no-margin ">
+                    <div class="social-media social-media-no-margin">
+                        <ul></ul>
+                    </div><!-- social-media -->
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - ELI</p>
-        </footer>
-    </div>
+                    <div id="header-actions-bar" class="row searchform-show">
+                        <div id="main-nav-link" class="col-xs-4 col-sm-12">
+                            <a href="#college-navbar" title="Navigation Menu" class="btn btn-default btn-block" aria-expanded="false" aria-controls="main-nav-wrap"><span class="glyphicon menu-icon" aria-hidden="true"></span> Menu</a>
+                        </div><!-- main-nav-link -->
+                    </div><!-- row -->
 
-    @*<environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>*@
 
+                </div><!-- col-md-4 -->
+            </div> <!--#top-->
+
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="flexwrap">
+
+                        <div id="content">
+                            <div class="row" style="padding:1em 0">
+                                <section>
+                                    @RenderBody()
+                                </section>
+                            </div>
+                        </div><!-- #content-->
+                        <div id="main-nav-wrap" class="lite">
+                            <div class="container">
+                                <nav id="college-navbar" class="navbar navbar-default" role="navigation">
+                                    <div class="menu-top-menu-container">
+                                        <ul class="nav navbar-nav" id="main-nav">
+                                            <li id="nav-top"><a href="#top">Top ^</a></li>
+                                            <!-- BEGIN CONFIGURABLE NAVIGATION -->
+                                            <li><a class="menu-item active" asp-page="/Index">Home</a></li>
+                                            <p class="nav navbar-text navbar-right">Hello, @User.Identity.Name!</p>
+
+                                            <!-- END CONFIGURABLE NAVIGATION -->
+                                        </ul>
+                                    </div>
+                                </nav><!-- navbar -->
+                            </div><!-- /.container -->
+                        </div><!-- main-nav-wrap -->
+                    </div> <!-- .flexwrap -->
+                </div><!-- row -->
+            </div><!-- col-md-12 -->
+        </div><!-- #main .container -->
+    </div><!-- #main-wrap -->
+    <div class="container" role="contentinfo">
+        <ul id="legalbar">
+            <li id="legal-footer-accessibility" class="first"><a href="https://www.bellevuecollege.edu/accessibility/">Accessibility</a></li>
+            <li id="legal-footer-alerts"><a href="https://www.bellevuecollege.edu/alerts/">Emergency info</a></li>
+            <li id="legal-footer-privacy"><a href="https://www.bellevuecollege.edu/website/privacy/">Privacy notice</a></li>
+            <li id="legal-footer-disclosure"><a href="https://www.bellevuecollege.edu/legal/publicdisclosure/">Public disclosure</a></li>
+            <li id="legal-footer-website"><a href="https://www.bellevuecollege.edu/website/">Website info</a></li>
+            <li id="legal-footer-equal"><a href="https://www.bellevuecollege.edu/equal/">We are an equal opportunity institution</a></li>
+        </ul><!-- legalbar -->
+    </div><!-- container -->
+    <environment include="Development">
+        <script type='text/javascript' src='//shoes.bellevuecollege.edu/g/3/j/gfoot-full.js'></script>
+    </environment>
+    <environment exclude="Development">
+        <script type='text/javascript' src='//s.bellevuecollege.edu/g/3/j/gfoot-full.min.js'></script>
+    </environment>
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>
