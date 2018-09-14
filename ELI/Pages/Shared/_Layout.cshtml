@@ -46,9 +46,7 @@
                     <img alt="Bellevue College (with link to home page)" src="//s.bellevuecollege.edu/g/3/i/bellevuecollege-s.png" />
                 </a><!-- #bc-logo-->
                 <ul id="college-top-actions">
-                    <li id="lite-top-actions-register" class="top-actions"><a href="https://www.bellevuecollege.edu/registration/" class="top-actions">Register</a></li>
-                    <li id="lite-top-actions-services" class="top-actions"><a href="https://www.bellevuecollege.edu/services/" class="top-actions">Online Services</a></li>
-                    <li id="lite-top-actions-canvas" class="top-actions"><a href="https://www.bellevuecollege.edu/canvas/" class="top-actions">Canvas</a></li>
+                    <p>Hello, @User.Identity.Name!</p>
                 </ul>
             </div><!-- smallhead -->
         </div><!-- #smallhead-wrap .container -->
@@ -60,16 +58,14 @@
                     <p class="site-title">
                         <a title="Return to Home Page" rel="home" asp-page="/Index">ELI Student Management</a>
                     </p>
-                    <p class="site-description "></p>
                 </div><!-- #site-branding -->
-                <div id="header-actions-container" class="header-social-links-no-margin ">
-                    <div class="social-media social-media-no-margin">
-                        <ul></ul>
-                    </div><!-- social-media -->
+                <div id="header-actions-container">
+
 
                     <div id="header-actions-bar" class="row searchform-show">
                         <div id="main-nav-link" class="col-xs-4 col-sm-12">
                             <a href="#college-navbar" title="Navigation Menu" class="btn btn-default btn-block" aria-expanded="false" aria-controls="main-nav-wrap"><span class="glyphicon menu-icon" aria-hidden="true"></span> Menu</a>
+
                         </div><!-- main-nav-link -->
                     </div><!-- row -->
 
@@ -84,10 +80,10 @@
                     <div class="flexwrap">
 
                         <div id="content">
-                            <div class="row" style="padding:1em 0">
-                                <section>
+                            <div class="row">
+                                <main class="col-md-12">
                                     @RenderBody()
-                                </section>
+                                </main>
                             </div>
                         </div><!-- #content-->
                         <div id="main-nav-wrap" class="lite">
@@ -98,7 +94,7 @@
                                             <li id="nav-top"><a href="#top">Top ^</a></li>
                                             <!-- BEGIN CONFIGURABLE NAVIGATION -->
                                             <li><a class="menu-item active" asp-page="/Index">Home</a></li>
-                                            <p class="nav navbar-text navbar-right">Hello, @User.Identity.Name!</p>
+
 
                                             <!-- END CONFIGURABLE NAVIGATION -->
                                         </ul>
@@ -111,16 +107,7 @@
             </div><!-- col-md-12 -->
         </div><!-- #main .container -->
     </div><!-- #main-wrap -->
-    <div class="container" role="contentinfo">
-        <ul id="legalbar">
-            <li id="legal-footer-accessibility" class="first"><a href="https://www.bellevuecollege.edu/accessibility/">Accessibility</a></li>
-            <li id="legal-footer-alerts"><a href="https://www.bellevuecollege.edu/alerts/">Emergency info</a></li>
-            <li id="legal-footer-privacy"><a href="https://www.bellevuecollege.edu/website/privacy/">Privacy notice</a></li>
-            <li id="legal-footer-disclosure"><a href="https://www.bellevuecollege.edu/legal/publicdisclosure/">Public disclosure</a></li>
-            <li id="legal-footer-website"><a href="https://www.bellevuecollege.edu/website/">Website info</a></li>
-            <li id="legal-footer-equal"><a href="https://www.bellevuecollege.edu/equal/">We are an equal opportunity institution</a></li>
-        </ul><!-- legalbar -->
-    </div><!-- container -->
+
     <environment include="Development">
         <script type='text/javascript' src='//shoes.bellevuecollege.edu/g/3/j/gfoot-full.js'></script>
     </environment>
