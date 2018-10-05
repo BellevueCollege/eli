@@ -16,6 +16,8 @@ namespace ELI.Models
         }
 
         public DbQuery<StudentSearch> StudentSearchResults { get; set; }
+        public DbQuery<StudentClassDetail> StudentClassDetails { get; set; }
+        public DbQuery<Student> Students { get; set; }
 
         /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,9 +29,9 @@ namespace ELI.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<StudentSearch>().HasKey(ss => ss.Sid);
-            //modelBuilder.Query<StudentSearch>().ToQuery( ss => "exec usp_getStudentViewData");
-            //modelBuilder.Query<StudentSearch>().
+            //define views for these models
+            modelBuilder.Query<StudentClassDetail>().ToView("vw_StudentCourseDetail");
+            modelBuilder.Query<Student>().ToView("vw_Student");
         }
     }
 }
