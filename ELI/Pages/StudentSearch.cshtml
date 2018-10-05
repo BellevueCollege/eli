@@ -6,9 +6,28 @@
 
 <h2>StudentSearch Test</h2>
 
-<ul>
-    @foreach (var student in Model.StudentData)
-    {
-        <li>@student.LastName, @student.FirstName</li>
-    }
-</ul>
+<table class="table">
+    <thead>
+        <tr>
+            <th>SID</th>
+            <th>Last name</th>
+            <th>First name</th>
+            <th>Group</th>
+            <th>Country</th>
+            <th>Projected quarter</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model.StudentData)
+        {
+            <tr>
+                <td><a asp-action="StudentDetail" asp-route-id="@student.Sid">@student.Sid</a></td>
+                <td>@student.LastName</td>
+                <td>@student.FirstName</td>
+                <td>@student.Program</td>
+                <td>@student.Country</td>
+                <td>@student.ProjectedQuarter</td>
+            </tr>
+        }
+    </tbody>
+</table>
