@@ -77,7 +77,7 @@ namespace ELI.Pages
             }
             if( !String.IsNullOrEmpty(SidSearch))
             {
-                StudentData = StudentData.Where(s => s.Sid.Equals(SidSearch)).ToList();
+                StudentData = StudentData.Where(s => s.Sid.StartsWith(SidSearch)).ToList();
             }
             if (!String.IsNullOrEmpty(FnameSearch))
             {
