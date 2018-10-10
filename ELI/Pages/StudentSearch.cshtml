@@ -1,27 +1,41 @@
 ﻿@page
 @model ELI.Pages.StudentSearchModel
 @{
-    ViewData["Title"] = "StudentSearch";
+    ViewData["Title"] = "View Student";
 }
 
-<h2>StudentSearch Test</h2>
+<h2>View Students</h2>
 
+<form>
 <table class="table">
     <thead>
         <tr>
-            <th>SID</th>
-            <th>Last name</th>
-            <th>First name</th>
-            <th>Group</th>
-            <th>Country</th>
-            <th>Projected quarter</th>
+            <th>SID <input type="text" asp-for="@Model.SidSearch" class="form-control form-control-sm" /></th>
+            <th>Last name <input type="text" asp-for="@Model.LnameSearch"  class="form-control form-control-sm" /></th>
+            <th>First name <input type="text" asp-for="@Model.FnameSearch" class="form-control form-control-sm" /></th>
+            <th>Group 
+                <select asp-for="@Model.GroupSearch" asp-items="Model.SelectGroups" class="form-control form-control-sm">
+                    <option value=""></option>
+                </select>
+            </th>
+            <th>Country
+                <select asp-for="@Model.CountrySearch" asp-items="Model.SelectCountries" class="form-control form-control-sm">
+                    <option value=""></option>
+                </select>
+            </th>
+            <th>Projected quarter
+                <select asp-for="@Model.QuarterSearch" asp-items="Model.SelectQuarters" class="form-control form-control-sm">
+                    <option value=""></option>
+                </select>
+                <input type="submit" class="btn btn-secondary btn-sm" value="Apply" />
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var student in Model.StudentData)
         {
             <tr>
-                <td><a asp-action="StudentDetail" asp-route-id="@student.Sid">@student.Sid</a></td>
+                <td><a asp-page="/StudentDetail" asp-route-id="@student.Sid">@student.Sid</a></td>
                 <td>@student.LastName</td>
                 <td>@student.FirstName</td>
                 <td>@student.Program</td>
@@ -31,3 +45,4 @@
         }
     </tbody>
 </table>
+</form>
