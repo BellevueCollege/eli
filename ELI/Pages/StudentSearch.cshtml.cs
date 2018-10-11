@@ -40,7 +40,7 @@ namespace ELI.Pages
         {
             _context.Database.SetCommandTimeout(200);
             //StudentData = _context.StudentSearchResults.FromSql("EXEC dbo.usp_getStudentViewData").ToList();
-            StudentData = _context.StudentSearchResults.FromSql("EXEC dbo.usp_getFakeStudentView").ToList();
+            StudentData = _context.StudentSearchResults.FromSql("EXEC dbo.usp_getFakeStudentView").OrderByDescending(s => s.ProjectedQuarter).ThenBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
 
             /***
              * get groups, countries, and quarters to fill filter drop downs
