@@ -4,45 +4,58 @@
     ViewData["Title"] = "View Student";
 }
 
-<h2>View Students</h2>
+<div class="row content-padding">
+    <div class="col-md-10">
+        <h2>View Students</h2>
+    </div>
+    <div class="col-md-2">
 
-<form>
-<table class="table">
-    <thead>
-        <tr>
-            <th>SID <input type="text" asp-for="@Model.SidSearch" class="form-control form-control-sm" placeholder="Filter by SID" /></th>
-            <th>Last name <input type="text" asp-for="@Model.LnameSearch"  class="form-control form-control-sm" placeholder="Filter by last name" /></th>
-            <th>First name <input type="text" asp-for="@Model.FnameSearch" class="form-control form-control-sm" placeholder="Filter by first name" /></th>
-            <th>Group 
-                <select asp-for="@Model.GroupSearch" asp-items="Model.SelectGroups" class="form-control form-control-sm">
-                    <option value="">All</option>
-                </select>
-            </th>
-            <th>Country
-                <select asp-for="@Model.CountrySearch" asp-items="Model.SelectCountries" class="form-control form-control-sm">
-                    <option value="">All</option>
-                </select>
-            </th>
-            <th>Projected quarter
-                <select asp-for="@Model.QuarterSearch" asp-items="Model.SelectQuarters" class="form-control form-control-sm">
-                    <option value="">All</option>
-                </select>
-                <input type="submit" class="btn btn-secondary btn-sm" value="Apply" />
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var student in Model.StudentData)
-        {
-            <tr>
-                <td><a asp-page="/StudentDetail" asp-route-id="@student.Sid">@student.Sid</a></td>
-                <td>@student.LastName</td>
-                <td>@student.FirstName</td>
-                <td>@student.Program</td>
-                <td>@student.Country</td>
-                <td>@student.ProjectedQuarter</td>
-            </tr>
-        }
-    </tbody>
-</table>
-</form>
+    </div>
+</div>
+<div class="row content-padding">
+    <div class="col-md-12">
+        <form>
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th>SID <input type="text" asp-for="@Model.SidSearch" class="form-control form-control-sm" placeholder="Filter by SID" /></th>
+                        <th>Last name <input type="text" asp-for="@Model.LnameSearch" class="form-control form-control-sm" placeholder="Filter by last name" /></th>
+                        <th>First name <input type="text" asp-for="@Model.FnameSearch" class="form-control form-control-sm" placeholder="Filter by first name" /></th>
+                        <th>
+                            Group
+                            <select asp-for="@Model.GroupSearch" asp-items="Model.SelectGroups" class="form-control form-control-sm">
+                                <option value="">All</option>
+                            </select>
+                        </th>
+                        <th>
+                            Country
+                            <select asp-for="@Model.CountrySearch" asp-items="Model.SelectCountries" class="form-control form-control-sm">
+                                <option value="">All</option>
+                            </select>
+                        </th>
+                        <th>
+                            Projected quarter
+                            <select asp-for="@Model.QuarterSearch" asp-items="Model.SelectQuarters" class="form-control form-control-sm">
+                                <option value="">All</option>
+                            </select>
+                            <input type="submit" class="btn btn-secondary btn-sm" value="Apply" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model.StudentData)
+                    {
+                        <tr>
+                            <td><a asp-page="/StudentDetail" asp-route-id="@student.Sid">@student.Sid</a></td>
+                            <td>@student.LastName</td>
+                            <td>@student.FirstName</td>
+                            <td>@student.Program</td>
+                            <td>@student.Country</td>
+                            <td>@student.ProjectedQuarter</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
