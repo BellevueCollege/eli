@@ -9,7 +9,26 @@
         <h2>View Students</h2>
     </div>
     <div class="col-md-2">
-
+        <!--<div class="dropdown mt-3" style="">
+            <button class="btn btn-primary dropdown-toggle mt-3" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown button
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a asp-page="/StudentSearch" class="dropdown-item">Clear filters</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </div>-->
+        <div class="btn-group mt-1 btn-block">
+            <button type="button" class="btn btn-primary btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Actions <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">Add placement scores</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a asp-page="/StudentSearch" class="dropdown-item">Clear filters</a></li>
+            </ul>
+        </div>
     </div>
 </div>
 <div class="row content-padding">

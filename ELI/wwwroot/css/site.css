@@ -9,3 +9,11 @@ for details on configuring this project to bundle and minify static web assets. 
 #college-top-actions p {
     color: #fff;
 }
+
+.mt-1 {
+    margin-top: 1em;
+}
+
+.btn-block {
+    display: block;
+}
