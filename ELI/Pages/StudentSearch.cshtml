@@ -9,16 +9,6 @@
         <h2>View Students</h2>
     </div>
     <div class="col-md-2">
-        <!--<div class="dropdown mt-3" style="">
-            <button class="btn btn-primary dropdown-toggle mt-3" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown button
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a asp-page="/StudentSearch" class="dropdown-item">Clear filters</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </div>-->
         <div class="btn-group mt-1 btn-block">
             <button type="button" class="btn btn-primary btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Actions <span class="caret"></span>
@@ -37,27 +27,29 @@
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
-                        <th>SID <input type="text" asp-for="@Model.SidSearch" class="form-control form-control-sm" placeholder="Filter by SID" /></th>
-                        <th>Last name <input type="text" asp-for="@Model.LnameSearch" class="form-control form-control-sm" placeholder="Filter by last name" /></th>
-                        <th>First name <input type="text" asp-for="@Model.FnameSearch" class="form-control form-control-sm" placeholder="Filter by first name" /></th>
+                        <th>SID <input type="text" asp-for="@Model.SidSearch" class="form-control input-sm" placeholder="Filter by SID" /></th>
+                        <th>Last name <input type="text" asp-for="@Model.LnameSearch" class="form-control input-sm" placeholder="Filter by last name" /></th>
+                        <th>First name <input type="text" asp-for="@Model.FnameSearch" class="form-control input-sm" placeholder="Filter by first name" /></th>
                         <th>
                             Group
-                            <select asp-for="@Model.GroupSearch" asp-items="Model.SelectGroups" class="form-control form-control-sm">
+                            <select asp-for="@Model.GroupSearch" asp-items="Model.SelectGroups" class="form-control input-sm">
                                 <option value="">All</option>
                             </select>
                         </th>
                         <th>
                             Country
-                            <select asp-for="@Model.CountrySearch" asp-items="Model.SelectCountries" class="form-control form-control-sm">
+                            <select asp-for="@Model.CountrySearch" asp-items="Model.SelectCountries" class="form-control input-sm">
                                 <option value="">All</option>
                             </select>
                         </th>
                         <th>
                             Projected quarter
-                            <select asp-for="@Model.QuarterSearch" asp-items="Model.SelectQuarters" class="form-control form-control-sm">
-                                <option value="">All</option>
-                            </select>
-                            <input type="submit" class="btn btn-secondary btn-sm" value="Apply" />
+                            <div class="form-inline">
+                                <select asp-for="@Model.QuarterSearch" asp-items="Model.SelectQuarters" class="form-control input-sm">
+                                    <option value="">All</option>
+                                </select>
+                                <input type="submit" class="btn btn-secondary btn-sm" value="Apply" />
+                            </div>
                         </th>
                     </tr>
                 </thead>
