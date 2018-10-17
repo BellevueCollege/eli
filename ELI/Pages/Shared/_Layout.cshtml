@@ -24,7 +24,6 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script type='text/javascript' src='//shoes.bellevuecollege.edu/g/3/j/ghead-full.js'></script>
-
     </environment>
     <environment exclude="Development">
         <link rel='stylesheet' id='globals-css' href='//s.bellevuecollege.edu/g/3/c/g.css' type='text/css' media='screen' />
@@ -108,13 +107,14 @@
         </div><!-- #main .container -->
     </div><!-- #main-wrap -->
 
+    @RenderSection("Scripts", required: false)
+
     <environment include="Development">
         <script type='text/javascript' src='//shoes.bellevuecollege.edu/g/3/j/gfoot-full.js'></script>
     </environment>
     <environment exclude="Development">
         <script type='text/javascript' src='//s.bellevuecollege.edu/g/3/j/gfoot-full.min.js'></script>
     </environment>
-    @RenderSection("Scripts", required: false)
 
 </body>
 </html>

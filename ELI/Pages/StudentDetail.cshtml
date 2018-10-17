@@ -1,65 +1,90 @@
 ﻿@page "{id}"
 @model ELI.Pages.StudentDetailModel
 @{
+    Layout = "_Simple";
     ViewData["Title"] = "StudentDetail";
 }
-
-<h2>@Model.Student.LastName, @Model.Student.FirstName</h2>
-<ul class="list-unstyled">
-    <li>@Model.Student.Sid</li>
-    <li>@Model.Student.Sex, born @Model.Student.Dob, from @Model.Student.Country</li>
-</ul>
-<ul class="list-unstyled">
-    <li>Visa: @Model.Student.VisaObtained</li>
-    <li>Type: @Model.Student.Visa</li>
-</ul>
-
-<div class="row">
-    <div class="col-md-8">
-        <h3>Class details</h3>
-        <table class="table">
-            <thead class="thead-light">
-                <tr>
-                    <th>Year quarter</th>
-                    <th>Item number</th>
-                    <th>Class title</th>
-                    <th>Instructor</th>
-                    <th>Grade</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach( var c in Model.StudentClassDetails)
-                {
-                    <tr>
-                        <td>@c.YearQuarterID</td>
-                        <td>@c.ItemNumber</td>
-                        <td>@c.CourseTitle</td>
-                        <td>@c.InstructorName</td>
-                        <td>@c.GradeID</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+</div>
+<div class="modal-body">
+    <div class="row content-padding">
+        <div class="col-md-8">
+            <h2>@Model.Student.LastName, @Model.Student.FirstName <small>@Model.Student.Program</small></h2>
+            <ul class="list-unstyled">
+                <li>@Model.Student.Sid</li>
+                <li>@Model.Student.Sex, born @Model.Student.Dob, from @Model.Student.Country</li>
+                <li>Projected quarter: @Model.Student.ProjectedYRQ</li>
+            </ul>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h3>Assessment scores</h3>
-        <dl class="row">
-            <dt class="col-md-9">Writing score:</dt>
-            <dd class="col-md-3">-</dd>
-            <dt class="col-md-9">Writing placement:</dt>
-            <dd class="col-md-3">-</dd>
-        </dl>
-        <dl class="row">
-            <dt class="col-md-9">Reading score:</dt>
-            <dd class="col-md-3">-</dd>
-            <dt class="col-md-9">Reading placement:</dt>
-            <dd class="col-md-3">-</dd>
-        </dl>
-        <dl class="row">
-            <dt class="col-md-9">Speaking score:</dt>
-            <dd class="col-md-3">-</dd>
-            <dt class="col-md-9">Speaking placement:</dt>
-            <dd class="col-md-3">-</dd>
-        </dl>
+    <div class="row content-padding">
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Class details</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Year quarter</th>
+                                <th>Item number</th>
+                                <th>Class title</th>
+                                <th>Instructor</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var c in Model.StudentClassDetails)
+                            {
+                                <tr>
+                                    <td>@c.YearQuarterID</td>
+                                    <td>@c.ItemNumber</td>
+                                    <td>@c.CourseTitle</td>
+                                    <td>@c.InstructorName</td>
+                                    <td>@c.GradeID</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Visa: @Model.Student.VisaObtained</h3>
+                </div>
+                <div class="panel-body">
+                    <p><strong>Type:</strong> @Model.Student.Visa</p>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Assessment scores</h3>
+                </div>
+                <div class="panel-body">
+                    <dl class="row">
+                        <dt class="col-md-9">Writing score:</dt>
+                        <dd class="col-md-3">-</dd>
+                        <dt class="col-md-9">Writing placement:</dt>
+                        <dd class="col-md-3">-</dd>
+                    </dl>
+                    <dl class="row">
+                        <dt class="col-md-9">Reading score:</dt>
+                        <dd class="col-md-3">-</dd>
+                        <dt class="col-md-9">Reading placement:</dt>
+                        <dd class="col-md-3">-</dd>
+                    </dl>
+                    <dl class="row">
+                        <dt class="col-md-9">Speaking score:</dt>
+                        <dd class="col-md-3">-</dd>
+                        <dt class="col-md-9">Speaking placement:</dt>
+                        <dd class="col-md-3">-</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
