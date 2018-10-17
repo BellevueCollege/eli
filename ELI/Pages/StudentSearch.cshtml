@@ -2,8 +2,13 @@
 @model ELI.Pages.StudentSearchModel
 @{
     ViewData["Title"] = "View Student";
-}
 
+    var parms = Request.Query.ToDictionary(p => p.Key, p => p.Value.ToString());
+    var sortInput = "";
+    if (parms.ContainsKey("sortType") && !String.IsNullOrEmpty(parms["sortType"])) {
+        sortInput = parms["sortType"];
+    }
+}
 <div class="row content-padding">
     <div class="col-md-10">
         <h2>View Students</h2>
@@ -24,33 +29,34 @@
 <div class="row content-padding">
     <div class="col-md-12">
         <form>
-            <table class="table table-striped">
+            <input type="hidden" name="sortType" id="sortType" value="@sortInput" />
+            <table class="table table-striped studentsearch">
                 <thead class="thead-light">
                     <tr>
-                        <th>SID <input type="text" asp-for="@Model.SidSearch" class="form-control input-sm" placeholder="Filter by SID" /></th>
-                        <th>Last name <input type="text" asp-for="@Model.LnameSearch" class="form-control input-sm" placeholder="Filter by last name" /></th>
-                        <th>First name <input type="text" asp-for="@Model.FnameSearch" class="form-control input-sm" placeholder="Filter by first name" /></th>
+                        <th><a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.SidSort">SID <span class="glyphicon glyphicon-triangle-@Model.SortDirSid" aria-hidden="true"></span></a> <input type="text" asp-for="@Model.SidSearch" class="form-control input-sm" placeholder="Filter by SID" /></th>
+                        <th><a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.LnameSort">Last name <span class="glyphicon glyphicon-triangle-@Model.SortDirLname" aria-hidden="true"></span></a> <input type="text" asp-for="@Model.LnameSearch" class="form-control input-sm" placeholder="Filter by last name" /></th>
+                        <th><a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.FnameSort">First name <span class="glyphicon glyphicon-triangle-@Model.SortDirFname" aria-hidden="true"></span></a> <input type="text" asp-for="@Model.FnameSearch" class="form-control input-sm" placeholder="Filter by first name" /></th>
                         <th>
-                            Group
-                            <select asp-for="@Model.GroupSearch" asp-items="Model.SelectGroups" class="form-control input-sm">
-                                <option value="">All</option>
-                            </select>
-                        </th>
-                        <th>
-                            Country
-                            <select asp-for="@Model.CountrySearch" asp-items="Model.SelectCountries" class="form-control input-sm">
-                                <option value="">All</option>
-                            </select>
-                        </th>
-                        <th>
-                            Projected quarter
-                            <div class="form-inline">
-                                <select asp-for="@Model.QuarterSearch" asp-items="Model.SelectQuarters" class="form-control input-sm">
+                            <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.GroupSort">Group <span class="glyphicon glyphicon-triangle-@Model.SortDirGroup" aria-hidden="true"></span></a>
+                                <select asp-for="@Model.GroupSearch" asp-items="Model.SelectGroups" class="form-control input-sm">
                                     <option value="">All</option>
                                 </select>
-                                <input type="submit" class="btn btn-secondary btn-sm" value="Apply" />
-                            </div>
-                        </th>
+</th>
+                        <th>
+                            <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.CountrySort">Country <span class="glyphicon glyphicon-triangle-@Model.SortDirCountry" aria-hidden="true"></span></a> 
+                                <select asp-for="@Model.CountrySearch" asp-items="Model.SelectCountries" class="form-control input-sm">
+                                    <option value="">All</option>
+                                </select>
+</th>
+                        <th>
+                            <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.QuarterSort">Projected quarter <span class="glyphicon glyphicon-triangle-@Model.SortDirQuarter" aria-hidden="true"></span></a>
+                                <div class="form-inline">
+                                    <select asp-for="@Model.QuarterSearch" asp-items="Model.SelectQuarters" class="form-control input-sm">
+                                        <option value="">All</option>
+                                    </select>
+                                    <input type="submit" class="btn btn-secondary btn-sm" value="Apply" />
+                                </div>
+</th>
                     </tr>
                 </thead>
                 <tbody>

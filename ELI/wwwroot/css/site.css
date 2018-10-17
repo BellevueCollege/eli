@@ -17,3 +17,10 @@ for details on configuring this project to bundle and minify static web assets. 
 .btn-block {
     display: block;
 }
+
+.studentsearch th a {
+    text-decoration: none;
+}
+.studentsearch th a span {
+    font-size: 80%;
+}

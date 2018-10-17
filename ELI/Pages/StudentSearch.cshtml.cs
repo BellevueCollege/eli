@@ -23,7 +23,7 @@ namespace ELI.Pages
         public SelectList SelectGroups { get; set; }
         public SelectList SelectCountries { get; set; }
         public SelectList SelectQuarters { get; set; }
-        
+
         [BindProperty(SupportsGet = true)]
         public string LnameSearch { get; set; }
 
@@ -36,7 +36,21 @@ namespace ELI.Pages
         [BindProperty(SupportsGet = true)] public string CountrySearch { get; set; }
         [BindProperty(SupportsGet = true)] public string QuarterSearch { get; set; }
 
-        public void OnGet()
+        public string SidSort { get; set; }
+        public string LnameSort { get; set; }
+        public string FnameSort { get; set; }
+        public string GroupSort { get; set; }
+        public string CountrySort { get; set; }
+        public string QuarterSort { get; set; }
+
+        public string SortDirSid { get; set; }
+        public string SortDirLname { get; set; }
+        public string SortDirFname { get; set; }
+        public string SortDirCountry { get; set; }
+        public string SortDirGroup { get; set; }
+        public string SortDirQuarter {get; set;}
+
+        public void OnGet(string sortType)
         {
             _context.Database.SetCommandTimeout(200);
             //StudentData = _context.StudentSearchResults.FromSql("EXEC dbo.usp_getStudentViewData").ToList();
@@ -94,6 +108,85 @@ namespace ELI.Pages
             if (!String.IsNullOrEmpty(QuarterSearch))
             {
                 StudentData = StudentData.Where(s => s.ProjectedQuarter.Equals(QuarterSearch)).ToList();
+            }
+
+            /***
+             * Now sort data per any inputs 
+            ***/
+            FnameSort = "fname";
+            LnameSort = "lname";
+            SidSort = "sid";
+            GroupSort = "group";
+            CountrySort = "country";
+            QuarterSort = "quarter";
+            SortDirSid = SortDirFname = SortDirLname = SortDirGroup = SortDirCountry = SortDirQuarter = "bottom";
+            if ( !String.IsNullOrEmpty(sortType) )
+            {
+                switch(sortType)
+                {
+                    case "lname":
+                        StudentData = StudentData.OrderBy(s => s.LastName).ToList();
+                        LnameSort = "lname_desc";
+                        break;
+                    case "lname_desc":
+                        StudentData = StudentData.OrderByDescending(s => s.LastName).ToList();
+                        LnameSort = "lname";
+                        SortDirLname = "top";
+                        break;
+                    case "fname":
+                        StudentData = StudentData.OrderBy(s => s.FirstName).ToList();
+                        FnameSort = "fname_desc";
+                        break;
+                    case "fname_desc":
+                        StudentData = StudentData.OrderByDescending(s => s.FirstName).ToList();
+                        FnameSort = "fname";
+                        SortDirFname = "top";
+                        break;
+                    case "sid":
+                        StudentData = StudentData.OrderBy(s => s.Sid).ToList();
+                        SidSort = "sid_desc";
+                        break;
+                    case "sid_desc":
+                        StudentData = StudentData.OrderByDescending(s => s.Sid).ToList();
+                        SidSort = "sid";
+                        SortDirSid = "top";
+                        break;
+                    case "group":
+                        StudentData = StudentData.OrderBy(s => s.Program).ToList();
+                        GroupSort = "group_desc";
+                        break;
+                    case "group_desc":
+                        StudentData = StudentData.OrderByDescending(s => s.Program).ToList();
+                        GroupSort = "group";
+                        SortDirGroup = "top";
+                        break;
+                    case "country":
+                        StudentData = StudentData.OrderBy(s => s.Country).ToList();
+                        CountrySort = "country_desc";
+                        break;
+                    case "country_desc":
+                        StudentData = StudentData.OrderByDescending(s => s.Country).ToList();
+                        CountrySort = "country";
+                        SortDirCountry = "top";
+                        break;
+                    case "quarter":
+                        StudentData = StudentData.OrderBy(s => s.ProjectedQuarter).ToList();
+                        QuarterSort = "quarter_desc";
+                        break;
+                    case "quarter_desc":
+                        StudentData = StudentData.OrderByDescending(s => s.ProjectedQuarter).ToList();
+                        QuarterSort = "quarter";
+                        SortDirQuarter = "top";
+                        break;
+                }
+            } else
+            {
+                FnameSort = "fname";
+                LnameSort = "lname";
+                SidSort = "sid";
+                GroupSort = "group";
+                CountrySort = "country";
+                QuarterSort = "quarter";
             }
         }
     }
