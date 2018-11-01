@@ -7,21 +7,28 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ELI.Models;
+using ELI.Helpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.WsFederation;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Server.IISIntegration;
 
 namespace ELI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            HostingEnvironment = env;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment HostingEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -33,8 +40,33 @@ namespace ELI
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //configure authorization if not development environment
+            if (!HostingEnvironment.IsDevelopment())
+            {
+                services.AddAuthentication(IISDefaults.AuthenticationScheme);
+
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .AddRequirements(new ELIAdminRequirement())
+                    /*.RequireAssertion(x =>
+                                        x.User.IsInRole(@"CAMPUS\KBCS-FullTimeStaff") || 
+                                        x.User.IsInRole(@"CAMPUS\Developers")
+                    )*/
+                    .Build();
+
+                services.AddMvc(options =>
+                {
+                    options.Filters.Add(new Microsoft.AspNetCore.Mvc.Authorization.AuthorizeFilter(policy));
+                }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+                services.AddScoped<IAuthorizationHandler, ELIAuthorizationHandler>();
+            }
+            else
+            {
+                services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            }
 
             services.AddDbContext<ELIContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ELIDatabase")));
@@ -55,6 +87,7 @@ namespace ELI
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseCookiePolicy();
 
             app.UseMvc();
