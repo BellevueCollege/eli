@@ -4,6 +4,7 @@
 # Exclude web.config for repo
 web.config
 appsettings.*.json
+nlog.config
 
 # User-specific files
 *.suo
