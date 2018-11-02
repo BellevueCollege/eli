@@ -13,8 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using ELI.Models;
 using ELI.Helpers;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.WsFederation;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Server.IISIntegration;
 
 namespace ELI
@@ -89,7 +87,6 @@ namespace ELI
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseCookiePolicy();
-
             app.UseMvc();
         }
     }
