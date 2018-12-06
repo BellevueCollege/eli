@@ -18,6 +18,7 @@ namespace ELI.Models
         public DbQuery<StudentSearch> StudentSearchResults { get; set; }
         public DbQuery<StudentClassDetail> StudentClassDetails { get; set; }
         public DbQuery<Student> Students { get; set; }
+        public DbQuery<Quarter> Quarters { get; set; }
 
         /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -32,6 +33,7 @@ namespace ELI.Models
             //define views for these models
             modelBuilder.Query<StudentClassDetail>().ToView("vw_StudentCourseDetail");
             modelBuilder.Query<Student>().ToView("vw_Student");
+            modelBuilder.Query<Quarter>().ToView("vw_YearQuarter");
         }
     }
 }
