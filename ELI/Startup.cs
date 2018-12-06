@@ -34,7 +34,7 @@ namespace ELI
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
@@ -48,10 +48,6 @@ namespace ELI
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .AddRequirements(new ELIAdminRequirement())
-                    /*.RequireAssertion(x =>
-                                        x.User.IsInRole(@"CAMPUS\KBCS-FullTimeStaff") || 
-                                        x.User.IsInRole(@"CAMPUS\Developers")
-                    )*/
                     .Build();
 
                 services.AddMvc(options =>
@@ -65,7 +61,9 @@ namespace ELI
             {
                 services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             }
-
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            services.AddHttpContextAccessor();
             services.AddDbContext<ELIContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ELIDatabase")));
         }
@@ -87,6 +85,7 @@ namespace ELI
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseCookiePolicy();
+            app.UseSession();
             app.UseMvc();
         }
     }

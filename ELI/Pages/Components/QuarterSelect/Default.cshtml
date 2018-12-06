@@ -1,0 +1,15 @@
+﻿@model List<ELI.Models.Quarter>
+@{ 
+    ELI.Models.Quarter curQuar = Context.Session.Get<ELI.Models.Quarter>("_CurrentQuarter");
+}
+@curQuar.Id
+<form>
+    <select name="quarterSelect" id="quarterSelect">
+        @foreach (var q in Model)
+        {
+            string selected = null;
+            if (curQuar.Id == q.Id) { selected = "selected"; }
+            <option value="@q.Id" selected="@selected">@q.Id</option>
+        }
+    </select>
+</form>
