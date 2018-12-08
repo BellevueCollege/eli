@@ -1,15 +1,24 @@
 ﻿@model List<ELI.Models.Quarter>
-@{ 
-    ELI.Models.Quarter curQuar = Context.Session.Get<ELI.Models.Quarter>("_CurrentQuarter");
+@using Microsoft.Extensions.Options;
+@using Microsoft.Extensions.Configuration;
+
+@inject IConfiguration AppConfiguration
+
+@{
+    ELI.Models.Quarter selQuar = Context.Session.Get<ELI.Models.Quarter>(AppConfiguration.GetSection(ELI.Models.ApplicationSettings.SectionName).Get<ELI.Models.ApplicationSettings>().SessionKey_SelectedQuarter);
 }
-@curQuar.Id
-<form>
-    <select name="quarterSelect" id="quarterSelect">
-        @foreach (var q in Model)
-        {
-            string selected = null;
-            if (curQuar.Id == q.Id) { selected = "selected"; }
-            <option value="@q.Id" selected="@selected">@q.Id</option>
-        }
-    </select>
+<form method="post">
+    <div class="form-group">
+        <select name="QuarterSelect" id="QuarterSelect">
+            @foreach (var q in Model)
+            {
+                string selected = null;
+                if (selQuar.Id == q.Id) { selected = "selected"; }
+                <option value="@q.Id" selected="@selected">@q.Id</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Apply" class="btn btn-default" />
+    </div>
 </form>

@@ -10,6 +10,7 @@
     "ELIDatabase": "Data Source=;Initial Catalog=;Integrated Security=True;"
   },
   "ApplicationSettings": {
-    "AuthorizedGroups": ""
+    "AuthorizedGroups": "",
+    "SessionKey_SelectedQuarter": ""
   }
 }
