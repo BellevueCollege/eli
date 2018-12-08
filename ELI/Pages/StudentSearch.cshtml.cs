@@ -6,18 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using ELI.Models;
 
 namespace ELI.Pages
 {
-    public class StudentSearchModel : PageModel
+    public class StudentSearchModel : EliPageModel
     {
-        private readonly ELIContext _context;
+        //private readonly ELIContext _context;
 
-        public StudentSearchModel(ELIContext context)
-        {
-            _context = context;
-        }
+        public StudentSearchModel(ELIContext context, IConfiguration config, ILogger<StudentSearchModel> logger) : base(context, config, logger){}
 
         public IList<StudentSearch> StudentData { get; set; }
         public SelectList SelectGroups { get; set; }
@@ -188,6 +187,18 @@ namespace ELI.Pages
                 CountrySort = "country";
                 QuarterSort = "quarter";
             }
+        }
+
+        public IActionResult OnPost()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            //if (! string.IsNullOrEmpty(QuarterSelect)) _logger.LogDebug(QuarterSelect);
+
+            SetSelectedQuarter();
+            return RedirectToPage();
         }
     }
 }
