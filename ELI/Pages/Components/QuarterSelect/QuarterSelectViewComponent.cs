@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using ELI.Helpers;
 
 namespace ELI.Pages.Components.QuarterSelect
 {
@@ -17,6 +18,7 @@ namespace ELI.Pages.Components.QuarterSelect
         private readonly ILogger _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IConfiguration _config;
+        private readonly ApplicationSettings _appSettings;
 
         public QuarterSelectViewComponent(ELIContext context, ILogger<QuarterSelectViewComponent> logger, IHttpContextAccessor httpContextAccessor, IConfiguration config)
         {
@@ -24,6 +26,7 @@ namespace ELI.Pages.Components.QuarterSelect
             _logger = logger;
             _httpContextAccessor = httpContextAccessor;
             _config = config;
+            _appSettings = _config.GetSection(ApplicationSettings.SectionName).Get<ApplicationSettings>();
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
@@ -34,20 +37,19 @@ namespace ELI.Pages.Components.QuarterSelect
 
         private Task<List<Quarter>> SetAndGetQuartersAsync()
         {
-            var settings = _config.GetSection(ApplicationSettings.SectionName).Get<ApplicationSettings>();
+            Utility util = new Utility(_config);
             //if current quarter session value is null, query current quarter and set
-            if ( _httpContextAccessor.HttpContext.Session.Get<Quarter>(settings.SessionKey_SelectedQuarter) == null )
+            if ( _httpContextAccessor.HttpContext.Session.Get<Quarter>(_appSettings.SessionKey_SelectedQuarter) == null )
             {
                 //get current quarter and set it in the session
-                Quarter curQuarter = _context.Quarters.Where(q => DateTime.Now.Date >= q.FirstClassDay && q.Id != "Z999").OrderByDescending(q => q.Id).Take(1).Single();
+                Quarter curQuarter = util.getCurrentQuarter(_context);
                 //_logger.LogDebug(curQuarter.Title.ToString());
-                _httpContextAccessor.HttpContext.Session.Set<Quarter>(settings.SessionKey_SelectedQuarter, curQuarter);
-                Quarter quar = _httpContextAccessor.HttpContext.Session.Get<Quarter>(settings.SessionKey_SelectedQuarter);
+                _httpContextAccessor.HttpContext.Session.Set<Quarter>(_appSettings.SessionKey_SelectedQuarter, curQuarter);
+                Quarter quar = _httpContextAccessor.HttpContext.Session.Get<Quarter>(_appSettings.SessionKey_SelectedQuarter);
                 //_logger.LogDebug(quar.Id);
             }
 
-            return _context.Quarters.Where(q => DateTime.Now.Date >= q.FirstClassDay && q.Id != "Z999").OrderByDescending(q => q.Id).Take(10).ToListAsync();
-
+            return util.getQuarters(_context, 10).ToListAsync();
         }
     }
 }

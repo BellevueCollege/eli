@@ -10,5 +10,6 @@ namespace ELI.Models
         public static string SectionName = "ApplicationSettings";
         public string AuthorizedGroups { get; set; }
         public string SessionKey_SelectedQuarter { get; set; }
+        public string MaxQuarter { get; set; }
     }
 }
