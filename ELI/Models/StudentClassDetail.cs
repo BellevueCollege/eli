@@ -13,6 +13,5 @@ namespace ELI.Models
         public string GradeID { get; private set; }
         public string InstructorName { get; private set; }
         public string CourseTitle { get; private set; }
-        public string Country { get; private set; }
     }
 }

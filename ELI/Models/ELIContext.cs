@@ -31,8 +31,8 @@ namespace ELI.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //define views for these models
-            modelBuilder.Query<StudentClassDetail>().ToView("vw_StudentCourseDetail");
-            modelBuilder.Query<Student>().ToView("vw_Student");
+            modelBuilder.Query<Student>().ToView("Students");
+            modelBuilder.Query<StudentClassDetail>().ToView("vw_StudentClassDetail");
             modelBuilder.Query<Quarter>().ToView("vw_YearQuarter");
         }
     }

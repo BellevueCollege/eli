@@ -10,11 +10,11 @@
 <div class="modal-body">
     <div class="row content-padding">
         <div class="col-md-8">
-            <h2>@Model.Student.LastName, @Model.Student.FirstName <small>@Model.Student.Program</small></h2>
+            <h2>@Model.Student.LastName, @Model.Student.FirstName <small>@Model.Student.Group</small></h2>
             <ul class="list-unstyled">
                 <li>@Model.Student.Sid</li>
-                <li>@Model.Student.Sex, born @Model.Student.Dob, from @Model.Student.Country</li>
-                <li>Projected quarter: @Model.Student.ProjectedYRQ</li>
+                <li>@Model.Student.Gender, born @String.Format("{0:MMMM d, yyyy}", @Model.Student.Dob.Date), from @Model.Student.Country</li>
+                <li>Most recently enrolled quarter: @Model.Student.YearQuarterEnrolled</li>
             </ul>
         </div>
     </div>
@@ -54,10 +54,7 @@
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Visa: @Model.Student.VisaObtained</h3>
-                </div>
-                <div class="panel-body">
-                    <p><strong>Type:</strong> @Model.Student.Visa</p>
+                    <h3 class="panel-title">Visa: @Model.Student.VisaStatus</h3>
                 </div>
             </div>
             <div class="panel panel-default">

@@ -18,7 +18,7 @@ namespace ELI.Pages
 
         public StudentSearchModel(ELIContext context, IConfiguration config, ILogger<StudentSearchModel> logger) : base(context, config, logger){}
 
-        public IList<StudentSearch> StudentData { get; set; }
+        public IList<Student> StudentData { get; set; }
         public SelectList SelectGroups { get; set; }
         public SelectList SelectCountries { get; set; }
         public SelectList SelectQuarters { get; set; }
@@ -51,15 +51,15 @@ namespace ELI.Pages
 
         public void OnGet(string sortType)
         {
-            _context.Database.SetCommandTimeout(200);
+            //_context.Database.SetCommandTimeout(200);
             //StudentData = _context.StudentSearchResults.FromSql("EXEC dbo.usp_getStudentViewData").ToList();
-            StudentData = _context.StudentSearchResults.FromSql("EXEC dbo.usp_getFakeStudentView").OrderByDescending(s => s.ProjectedQuarter).ThenBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
-
+            //StudentData = _context.StudentSearchResults.FromSql("EXEC dbo.usp_getFakeStudentView").OrderByDescending(s => s.ProjectedQuarter).ThenBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+            StudentData = _context.Students.OrderByDescending(s => s.YearQuarterEnrolled).ThenBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
             /***
              * get groups, countries, and quarters to fill filter drop downs
              * need to do before student data is filtered
             ***/
-            var g = StudentData.Select(s => s.Program).Distinct();
+            var g = StudentData.Select(s => s.Group).Distinct();
             if (!String.IsNullOrEmpty(GroupSearch))
             {
                 SelectGroups = new SelectList(g, GroupSearch);
@@ -73,7 +73,7 @@ namespace ELI.Pages
             }
             else SelectCountries = new SelectList(c);
 
-            var q = StudentData.Select(s => s.ProjectedQuarter).Distinct();
+            var q = StudentData.Select(s => s.YearQuarterEnrolled).Distinct();
             if (!String.IsNullOrEmpty(QuarterSearch))
             {
                 SelectQuarters = new SelectList(q, QuarterSearch);
@@ -98,7 +98,7 @@ namespace ELI.Pages
             }
             if (!String.IsNullOrEmpty(GroupSearch))
             {
-                StudentData = StudentData.Where(s => s.Program.Equals(GroupSearch)).ToList();
+                StudentData = StudentData.Where(s => s.Group.Equals(GroupSearch)).ToList();
             }
             if (!String.IsNullOrEmpty(CountrySearch))
             {
@@ -106,7 +106,7 @@ namespace ELI.Pages
             }
             if (!String.IsNullOrEmpty(QuarterSearch))
             {
-                StudentData = StudentData.Where(s => s.ProjectedQuarter.Equals(QuarterSearch)).ToList();
+                StudentData = StudentData.Where(s => s.YearQuarterEnrolled.Equals(QuarterSearch)).ToList();
             }
 
             /***
@@ -151,11 +151,11 @@ namespace ELI.Pages
                         SortDirSid = "top";
                         break;
                     case "group":
-                        StudentData = StudentData.OrderBy(s => s.Program).ToList();
+                        StudentData = StudentData.OrderBy(s => s.Group).ToList();
                         GroupSort = "group_desc";
                         break;
                     case "group_desc":
-                        StudentData = StudentData.OrderByDescending(s => s.Program).ToList();
+                        StudentData = StudentData.OrderByDescending(s => s.Group).ToList();
                         GroupSort = "group";
                         SortDirGroup = "top";
                         break;
@@ -169,11 +169,11 @@ namespace ELI.Pages
                         SortDirCountry = "top";
                         break;
                     case "quarter":
-                        StudentData = StudentData.OrderBy(s => s.ProjectedQuarter).ToList();
+                        StudentData = StudentData.OrderBy(s => s.YearQuarterEnrolled).ToList();
                         QuarterSort = "quarter_desc";
                         break;
                     case "quarter_desc":
-                        StudentData = StudentData.OrderByDescending(s => s.ProjectedQuarter).ToList();
+                        StudentData = StudentData.OrderByDescending(s => s.YearQuarterEnrolled).ToList();
                         QuarterSort = "quarter";
                         SortDirQuarter = "top";
                         break;
