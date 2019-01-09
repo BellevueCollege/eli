@@ -85,21 +85,20 @@
                                 </main>
                             </div>
                         </div><!-- #content-->
-                        <div id="main-nav-wrap" class="lite">
-                            <div class="container">
-                                <nav id="college-navbar" class="navbar navbar-default" role="navigation">
-                                    <div class="menu-top-menu-container">
-                                        <ul class="nav navbar-nav" id="main-nav">
-                                            <li id="nav-top"><a href="#top">Top ^</a></li>
-                                            <!-- BEGIN CONFIGURABLE NAVIGATION -->
-                                            <li><a class="menu-item active" asp-page="/Index">Home</a></li>
-
-
-                                            <!-- END CONFIGURABLE NAVIGATION -->
-                                        </ul>
-                                    </div>
-                                </nav><!-- navbar -->
-                            </div><!-- /.container -->
+                        <div id="" class="">
+                            <!--<div class="container">-->
+                                <nav class="navbar navbar-default">
+                                    <div class="container-fluid">
+                                        <!-- Collect the nav links, forms, and other content for toggling -->
+                                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                            <ul class="nav navbar-nav">
+                                                <li><a class="menu-item active" asp-page="/Index">Home</a></li>
+                                            </ul>
+                                            @await Component.InvokeAsync("QuarterSelect")
+                                        </div><!-- /.navbar-collapse -->
+                                    </div><!-- /.container-fluid -->
+                                </nav>
+                            <!--</div>--><!-- /.container -->
                         </div><!-- main-nav-wrap -->
                     </div> <!-- .flexwrap -->
                 </div><!-- row -->
@@ -108,7 +107,6 @@
     </div><!-- #main-wrap -->
 
     @RenderSection("Scripts", required: false)
-
     <environment include="Development">
         <script type='text/javascript' src='//shoes.bellevuecollege.edu/g/3/j/gfoot-full.js'></script>
     </environment>
