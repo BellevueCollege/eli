@@ -188,17 +188,5 @@ namespace ELI.Pages
                 QuarterSort = "quarter";
             }
         }
-
-        public IActionResult OnPost()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-            //if (! string.IsNullOrEmpty(QuarterSelect)) _logger.LogDebug(QuarterSelect);
-
-            SetSelectedQuarter();
-            return RedirectToPage();
-        }
     }
 }
