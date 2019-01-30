@@ -53,7 +53,8 @@ namespace ELI
                 services.AddMvc(options =>
                 {
                     options.Filters.Add(new Microsoft.AspNetCore.Mvc.Authorization.AuthorizeFilter(policy));
-                }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
                 services.AddScoped<IAuthorizationHandler, ELIAuthorizationHandler>();
             }

@@ -19,7 +19,6 @@ namespace ELI
             var _logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             try
             {
-                _logger.Debug("init main");
                 CreateWebHostBuilder(args).Build().Run();
             }
             catch (Exception exception)
