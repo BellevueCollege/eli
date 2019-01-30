@@ -64,21 +64,21 @@
                 <div class="panel-body">
                     <dl class="row">
                         <dt class="col-md-9">Writing score:</dt>
-                        <dd class="col-md-3">-</dd>
+                        <dd class="col-md-3">@Model.Student.Score.WriteScore</dd>
                         <dt class="col-md-9">Writing placement:</dt>
-                        <dd class="col-md-3">-</dd>
+                        <dd class="col-md-3">@Model.Student.Score.WritePlacement</dd>
                     </dl>
                     <dl class="row">
-                        <dt class="col-md-9">Reading score:</dt>
-                        <dd class="col-md-3">-</dd>
-                        <dt class="col-md-9">Reading placement:</dt>
-                        <dd class="col-md-3">-</dd>
+                        <dt class="col-md-9">EPT/Reading score:</dt>
+                        <dd class="col-md-3">@Model.Student.Score.EptScore</dd>
+                        <dt class="col-md-9">EPT/Reading placement:</dt>
+                        <dd class="col-md-3">@Model.Student.Score.EptPlacement</dd>
                     </dl>
                     <dl class="row">
                         <dt class="col-md-9">Speaking score:</dt>
-                        <dd class="col-md-3">-</dd>
+                        <dd class="col-md-3">@Model.Student.Score.OralScore</dd>
                         <dt class="col-md-9">Speaking placement:</dt>
-                        <dd class="col-md-3">-</dd>
+                        <dd class="col-md-3">@Model.Student.Score.OralPlacement</dd>
                     </dl>
                 </div>
             </div>

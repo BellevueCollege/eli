@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using ELI.Models;
 
 namespace ELI.Pages
@@ -26,7 +27,7 @@ namespace ELI.Pages
             if ( id != null )
             {
                 StudentID = id;
-                Student = _context.Students.Where(s => s.Sid == StudentID).Single();
+                Student = _context.Students.Include(s => s.Score).Where(s => s.Sid == StudentID).Single();
                 StudentClassDetails = _context.StudentClassDetails.Where(s => s.Sid == StudentID).OrderByDescending(s => s.YearQuarterID).ThenBy(s => s.ItemNumber).ToList();
             }
 
