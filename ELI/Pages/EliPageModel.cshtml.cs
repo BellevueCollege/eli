@@ -37,9 +37,20 @@ namespace ELI.Pages
             }
         }
 
+        public Quarter GetSelectedQuarter()
+        {
+            return HttpContext.Session.Get<Quarter>(GetSettings().SessionKey_SelectedQuarter);
+        }
+
         public ApplicationSettings GetSettings()
         {
             return _config.GetSection(ApplicationSettings.SectionName).Get<ApplicationSettings>();
+        }
+
+        public IActionResult OnPostQuarterSet()
+        {
+            SetSelectedQuarter();
+            return RedirectToPage();
         }
 
     }

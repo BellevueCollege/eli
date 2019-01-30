@@ -7,7 +7,7 @@
 @{
     ELI.Models.Quarter selQuar = Context.Session.Get<ELI.Models.Quarter>(AppConfiguration.GetSection(ELI.Models.ApplicationSettings.SectionName).Get<ELI.Models.ApplicationSettings>().SessionKey_SelectedQuarter);
 }
-<form method="post" class="navbar-form navbar-right">
+<form method="post" class="navbar-form navbar-right" asp-page-handler="QuarterSet">
     <div class="form-group">
         <label for="QuarterSelect">Quarter</label> 
         <select name="QuarterSelect" id="QuarterSelect" class="form-control input-sm">

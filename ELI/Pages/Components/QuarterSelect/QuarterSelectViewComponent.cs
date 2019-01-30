@@ -43,7 +43,6 @@ namespace ELI.Pages.Components.QuarterSelect
             {
                 //get current quarter and set it in the session
                 Quarter curQuarter = util.getCurrentQuarter(_context);
-                //_logger.LogDebug(curQuarter.Title.ToString());
                 _httpContextAccessor.HttpContext.Session.Set<Quarter>(_appSettings.SessionKey_SelectedQuarter, curQuarter);
                 Quarter quar = _httpContextAccessor.HttpContext.Session.Get<Quarter>(_appSettings.SessionKey_SelectedQuarter);
                 //_logger.LogDebug(quar.Id);
