@@ -31,5 +31,12 @@ namespace ELI.Helpers
         {
             return context.Quarters.Where(q => DateTime.Now.Date >= q.FirstClassDay && q.Id != _appSettings.MaxQuarter).OrderByDescending(q => q.Id).Take(count).ToList();
         }
+
+        public string getUsernameFromIdentityName(string identityName)
+        {
+            string curUsername = identityName;
+            if (identityName.IndexOf(@"\") > -1) curUsername = identityName.Substring(identityName.IndexOf(@"\") + 1);
+            return curUsername;
+        }
     }
 }

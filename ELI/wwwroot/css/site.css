@@ -24,3 +24,12 @@ for details on configuring this project to bundle and minify static web assets. 
 .studentsearch th a span {
     font-size: 80%;
 }
+
+/** Form styles **/
+.limited-width {
+    max-width: 75px;
+}
+
+.field-validation-error {
+    color: #843534 !important;
+}
