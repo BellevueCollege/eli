@@ -57,3 +57,13 @@ Example connection string:
     "ELIDatabase": "Server=xxx.bellevuecollege.edu;Database=ELI;User Id=xxx;Password=xxx"
   }
 ```
+
+## Documentation/help resources
+
+ - [https://docs.microsoft.com/en-us/aspnet/core/data/ef-rp/?view=aspnetcore-2.1](ASP.NET Core Razor Pages with EF Core - tutorial series)
+ - [https://www.learnrazorpages.com/](Learn Razor Pages)
+ - [https://docs.microsoft.com/en-us/aspnet/core/mvc/models/model-binding?view=aspnetcore-2.1](Model binding and validation)
+ - [https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/web-farm?view=aspnetcore-2.1](Host ASP.NET Core in a web farm)
+ - [https://docs.microsoft.com/en-us/xamarin/xamarin-forms/enterprise-application-patterns/mvvm](The Model-View-ViewModel pattern)
+ - [https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/proxy-load-balancer?view=aspnetcore-2.1](Configuring ASP.NET to work with proxies and load balancers)
+ - [https://docs.microsoft.com/en-us/aspnet/core/security/authorization/iauthorizationpolicyprovider?view=aspnetcore-2.1](Custom authorization policy providers)
