@@ -12,6 +12,10 @@ using ELI.Models;
 
 namespace ELI.Pages
 {
+    /** Allows one to search and filter students
+     * Extends ELIPageModel to provide basic page 
+     * functionality 
+     * **/
     public class StudentSearchModel : EliPageModel
     {
         //private readonly ELIContext _context;
@@ -52,28 +56,31 @@ namespace ELI.Pages
         public void OnGet(string sortType)
         {
             //_context.Database.SetCommandTimeout(200);
-            //StudentData = _context.StudentSearchResults.FromSql("EXEC dbo.usp_getStudentViewData").ToList();
-            //StudentData = _context.StudentSearchResults.FromSql("EXEC dbo.usp_getFakeStudentView").OrderByDescending(s => s.ProjectedQuarter).ThenBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
-            StudentData = _context.Students.OrderByDescending(s => s.YearQuarterEnrolled).ThenBy(s => s.LastName).ThenBy(s => s.FirstName).ToList();
+            /** Use IQueryable so additional conditionals can be added before converting to a 
+             * collection (at which time the query goes to the db)
+             * **/
+            IQueryable<Student> StudentsIQ = _context.Students.OrderByDescending(s => s.YearQuarterEnrolled).ThenBy(s => s.LastName).ThenBy(s => s.FirstName);
             /***
              * get groups, countries, and quarters to fill filter drop downs
              * need to do before student data is filtered
             ***/
-            var g = StudentData.Select(s => s.Group).Distinct();
+            //save to separate IQueryable so conditionals can later be used against original before query is sent to database
+            IQueryable<Student> StudentsIQForGrouping = StudentsIQ; 
+            var g = StudentsIQForGrouping.Select(s => s.Group).Distinct();
             if (!String.IsNullOrEmpty(GroupSearch))
             {
                 SelectGroups = new SelectList(g, GroupSearch);
             }
             else SelectGroups = new SelectList(g);
 
-            var c  = StudentData.Select(s => s.Country).Distinct();
+            var c  = StudentsIQForGrouping.Select(s => s.Country).Distinct();
             if (!String.IsNullOrEmpty(CountrySearch))
             {
                 SelectCountries = new SelectList(c, CountrySearch);
             }
             else SelectCountries = new SelectList(c);
 
-            var q = StudentData.Select(s => s.YearQuarterEnrolled).Distinct();
+            var q = StudentsIQForGrouping.Select(s => s.YearQuarterEnrolled).Distinct();
             if (!String.IsNullOrEmpty(QuarterSearch))
             {
                 SelectQuarters = new SelectList(q, QuarterSearch);
@@ -86,27 +93,27 @@ namespace ELI.Pages
             ***/
             if ( !String.IsNullOrEmpty(LnameSearch) )
             {
-                StudentData = StudentData.Where(s => s.LastName.ToLower().StartsWith(LnameSearch.ToLower())).ToList();
+                StudentsIQ = StudentsIQ.Where(s => s.LastName.ToLower().StartsWith(LnameSearch.ToLower()));
             }
             if( !String.IsNullOrEmpty(SidSearch))
             {
-                StudentData = StudentData.Where(s => s.Sid.StartsWith(SidSearch)).ToList();
+                StudentsIQ = StudentsIQ.Where(s => s.Sid.StartsWith(SidSearch));
             }
             if (!String.IsNullOrEmpty(FnameSearch))
             {
-                StudentData = StudentData.Where(s => s.FirstName.ToLower().StartsWith(FnameSearch.ToLower())).ToList();
+                StudentsIQ = StudentsIQ.Where(s => s.FirstName.ToLower().StartsWith(FnameSearch.ToLower()));
             }
             if (!String.IsNullOrEmpty(GroupSearch))
             {
-                StudentData = StudentData.Where(s => s.Group.Equals(GroupSearch)).ToList();
+                StudentsIQ = StudentsIQ.Where(s => s.Group.Equals(GroupSearch));
             }
             if (!String.IsNullOrEmpty(CountrySearch))
             {
-                StudentData = StudentData.Where(s => s.Country.Equals(CountrySearch)).ToList();
+                StudentsIQ = StudentsIQ.Where(s => s.Country.Equals(CountrySearch));
             }
             if (!String.IsNullOrEmpty(QuarterSearch))
             {
-                StudentData = StudentData.Where(s => s.YearQuarterEnrolled.Equals(QuarterSearch)).ToList();
+                StudentsIQ = StudentsIQ.Where(s => s.YearQuarterEnrolled.Equals(QuarterSearch));
             }
 
             /***
@@ -124,56 +131,56 @@ namespace ELI.Pages
                 switch(sortType)
                 {
                     case "lname":
-                        StudentData = StudentData.OrderBy(s => s.LastName).ToList();
+                        StudentsIQ = StudentsIQ.OrderBy(s => s.LastName);
                         LnameSort = "lname_desc";
                         break;
                     case "lname_desc":
-                        StudentData = StudentData.OrderByDescending(s => s.LastName).ToList();
+                        StudentsIQ = StudentsIQ.OrderByDescending(s => s.LastName);
                         LnameSort = "lname";
                         SortDirLname = "top";
                         break;
                     case "fname":
-                        StudentData = StudentData.OrderBy(s => s.FirstName).ToList();
+                        StudentsIQ = StudentsIQ.OrderBy(s => s.FirstName);
                         FnameSort = "fname_desc";
                         break;
                     case "fname_desc":
-                        StudentData = StudentData.OrderByDescending(s => s.FirstName).ToList();
+                        StudentsIQ = StudentsIQ.OrderByDescending(s => s.FirstName);
                         FnameSort = "fname";
                         SortDirFname = "top";
                         break;
                     case "sid":
-                        StudentData = StudentData.OrderBy(s => s.Sid).ToList();
+                        StudentsIQ = StudentsIQ.OrderBy(s => s.Sid);
                         SidSort = "sid_desc";
                         break;
                     case "sid_desc":
-                        StudentData = StudentData.OrderByDescending(s => s.Sid).ToList();
+                        StudentsIQ = StudentsIQ.OrderByDescending(s => s.Sid);
                         SidSort = "sid";
                         SortDirSid = "top";
                         break;
                     case "group":
-                        StudentData = StudentData.OrderBy(s => s.Group).ToList();
+                        StudentsIQ = StudentsIQ.OrderBy(s => s.Group);
                         GroupSort = "group_desc";
                         break;
                     case "group_desc":
-                        StudentData = StudentData.OrderByDescending(s => s.Group).ToList();
+                        StudentsIQ = StudentsIQ.OrderByDescending(s => s.Group);
                         GroupSort = "group";
                         SortDirGroup = "top";
                         break;
                     case "country":
-                        StudentData = StudentData.OrderBy(s => s.Country).ToList();
+                        StudentsIQ = StudentsIQ.OrderBy(s => s.Country);
                         CountrySort = "country_desc";
                         break;
                     case "country_desc":
-                        StudentData = StudentData.OrderByDescending(s => s.Country).ToList();
+                        StudentsIQ = StudentsIQ.OrderByDescending(s => s.Country);
                         CountrySort = "country";
                         SortDirCountry = "top";
                         break;
                     case "quarter":
-                        StudentData = StudentData.OrderBy(s => s.YearQuarterEnrolled).ToList();
+                        StudentsIQ = StudentsIQ.OrderBy(s => s.YearQuarterEnrolled);
                         QuarterSort = "quarter_desc";
                         break;
                     case "quarter_desc":
-                        StudentData = StudentData.OrderByDescending(s => s.YearQuarterEnrolled).ToList();
+                        StudentsIQ = StudentsIQ.OrderByDescending(s => s.YearQuarterEnrolled);
                         QuarterSort = "quarter";
                         SortDirQuarter = "top";
                         break;
@@ -187,6 +194,9 @@ namespace ELI.Pages
                 CountrySort = "country";
                 QuarterSort = "quarter";
             }
+
+            //Now set to list and save to variable
+            StudentData = StudentsIQ.ToList();
         }
     }
 }
