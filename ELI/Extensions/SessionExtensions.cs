@@ -7,6 +7,10 @@ using Newtonsoft.Json;
 
 namespace ELI
 {
+    /**
+     * Session extension class that allows setting and getting a non-string 
+     * object value to the session
+     * **/
     public static class SessionExtensions
     {
         public static void Set<T>(this ISession session, string key, T value)

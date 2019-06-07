@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ELI.Models
 {
+    /**
+     * Database context class
+     * Tie in database objects here
+     * **/
     public partial class ELIContext : DbContext
     {
         public ELIContext()

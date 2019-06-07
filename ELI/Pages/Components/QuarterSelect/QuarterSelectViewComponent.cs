@@ -12,6 +12,11 @@ using ELI.Helpers;
 
 namespace ELI.Pages.Components.QuarterSelect
 {
+    /**
+     * This class extends ViewComponent to provide 
+     * quarter information and set for the session the 
+     * selected quarter for use in the template layout.
+     * **/
     public class QuarterSelectViewComponent : ViewComponent
     {
         private readonly ELIContext _context;
@@ -29,12 +34,19 @@ namespace ELI.Pages.Components.QuarterSelect
             _appSettings = _config.GetSection(ApplicationSettings.SectionName).Get<ApplicationSettings>();
         }
 
+        /**
+         * Calls setting method and returns quarters list to view
+         * **/
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var quarters = await SetAndGetQuartersAsync();
             return View(quarters);
         }
 
+        /**
+         * Sets the selected quarter to session if one not already 
+         * set. Then gets the list of valid quarters and returns
+         * **/
         private Task<List<Quarter>> SetAndGetQuartersAsync()
         {
             Utility util = new Utility(_config);

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace ELI.Models
 {
+    /**
+     * Basic model for StudentClassDetail object
+     * **/
     public class StudentClassDetail
     {
         public string Sid { get; private set; }

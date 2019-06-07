@@ -7,6 +7,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ELI.Models
 {
+    /**
+     * Basic model for Student object
+     * **/
     public class Student
     {
         [Key]

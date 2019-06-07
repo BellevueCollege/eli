@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ELI.Models
 {
+    /**
+     * Basic model for Scores object
+     * **/
     public class Scores
     {
         [Key]
@@ -78,7 +81,8 @@ namespace ELI.Models
             }
         }
 
-        public bool Equals(Scores s)
+        // custom comparator for comparing two scores for equality
+        public bool IsEqualTo(Scores s)
         {
             if ( OralScore == s.OralScore && WriteScore == s.WriteScore && EptScore == s.EptScore 
                     && OralPlacement == s.OralPlacement && WritePlacement == s.WritePlacement && 

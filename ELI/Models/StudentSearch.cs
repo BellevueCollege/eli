@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace ELI.Models
 {
+    /**
+     * Basic model for StudentSearch object
+     * **/
     public class StudentSearch
     {
         public string Sid { get; private set; }

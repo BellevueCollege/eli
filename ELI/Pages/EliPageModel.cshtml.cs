@@ -7,6 +7,10 @@ using ELI.Models;
 
 namespace ELI.Pages
 {
+    /**
+     * Basic EliPageModel class that has functionality that can be 
+     * extended and used by other pages.
+     * **/
     public abstract class EliPageModel : PageModel
     {
         protected readonly IConfiguration _config;
@@ -31,9 +35,7 @@ namespace ELI.Pages
                 var settings = GetSettings();
                 //get current quarter and set it in the session
                 Quarter selQuarter = _context.Quarters.Where(q => q.Id == QuarterSelect).Take(1).Single();
-                //_logger.LogDebug(QuarterSelect);
                 HttpContext.Session.Set<Quarter>(settings.SessionKey_SelectedQuarter, selQuarter);
-                //_logger.LogDebug(HttpContext.Session.Get<Quarter>(settings.SessionKey_SelectedQuarter).Id);
             }
         }
 
@@ -47,6 +49,9 @@ namespace ELI.Pages
             return _config.GetSection(ApplicationSettings.SectionName).Get<ApplicationSettings>();
         }
 
+        /**
+         * Handles post from quarter drop down to set selected quarter
+         * **/
         public IActionResult OnPostQuarterSet()
         {
             SetSelectedQuarter();

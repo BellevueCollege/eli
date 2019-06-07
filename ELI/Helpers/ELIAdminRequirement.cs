@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ELI.Helpers
 {
+    /**
+     * A very basic authorization requirement class utilizing 
+     * the empty marker interface of IAuthorizationRequirement
+     * **/
     public class ELIAdminRequirement : IAuthorizationRequirement
     {
     }
