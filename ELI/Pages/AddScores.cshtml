@@ -1,7 +1,7 @@
-﻿@page
+﻿@page "{handler?}"
 @model ELI.Pages.AddScoresModel
 @{
-
+    ViewData["Title"] = "Add Assessment Scores";
 }
 <datalist id="scores">
     <option value="1-">1-</option>
@@ -25,35 +25,38 @@
         <h2>Add Assessment Scores</h2>
     </div>
     @*<div class="col-md-2">
-        <div class="btn-group mt-1 btn-block">
-            <button type="button" class="btn btn-primary btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Actions <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="#">Add placement scores</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a asp-page="/StudentSearch" class="dropdown-item">Clear filters</a></li>
-            </ul>
-        </div>
-    </div>*@
+            <div class="btn-group mt-1 btn-block">
+                <button type="button" class="btn btn-primary btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Actions <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Add placement scores</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a asp-page="/StudentSearch" class="dropdown-item">Clear filters</a></li>
+                </ul>
+            </div>
+        </div>*@
 </div>
 <div class="row content-padding">
     <div class="col-md-12">
-        <form method="post" class="form-inline">
+        <form method="post"> <!--class="form-inline">-->
             <div class="pull-right">
-                <button type="submit" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>  Save scores
+                <button type="submit" class="btn btn-primary" asp-all-route-data="@Model.QueryParams" asp-page-handler="SaveScores">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save scores
                 </button>
             </div>
             <table class="table table-striped studentsearch">
                 <thead class="thead-light">
                     <tr>
-                        <th>SID</th>
-                        <th>Last name</th>
-                        <th>First name</th>
+                        <th><a asp-page="/AddScores" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.SidSort">SID <span class="glyphicon glyphicon-triangle-@Model.SortDirSid" aria-hidden="true"></span></a> <input type="text" asp-for="@Model.SidSearch" class="form-control input-sm" placeholder="Filter by SID" /></th>
+                        <th><a asp-page="/AddScores" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.LnameSort">Last name <span class="glyphicon glyphicon-triangle-@Model.SortDirLname" aria-hidden="true"></span></a> <input type="text" asp-for="@Model.LnameSearch" class="form-control input-sm" placeholder="Filter by last name" /></th>
+                        <th><a asp-page="/AddScores" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.FnameSort">First name <span class="glyphicon glyphicon-triangle-@Model.SortDirFname" aria-hidden="true"></span></a> <input type="text" asp-for="@Model.FnameSearch" class="form-control input-sm" placeholder="Filter by first name" /></th>
                         <th>EPT</th>
                         <th>Writing</th>
                         <th>Oral</th>
+                        <th>
+                            <input type="submit" value="Apply" class="btn btn-secondary btn-sm" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.CurrentSortType" asp-page-handler="ApplyFilters" />
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,6 +67,7 @@
                             <td>@Model.Students[i].LastName</td>
                             <td>@Model.Students[i].FirstName</td>
                             <td>
+                                @* Ept score form group *@
                                 <div class="form-group">
                                     <input type="hidden" asp-for="@Model.Students[i].Sid" />
                                     <label asp-for="@Model.Students[i].Score.EptScore">Score</label>
@@ -76,6 +80,7 @@
                                 </div>
                             </td>
                             <td>
+                                @* Write score form group *@
                                 <div class="form-group">
                                     <label asp-for="@Model.Students[i].Score.WriteScore">Score</label>
                                     <input list="scores" data-internalid="@i" asp-for="@Model.Students[i].Score.WriteScore" class="form-control limited-width" aria-describedby="helpBlock3" />
@@ -87,6 +92,7 @@
                                 </div>
                             </td>
                             <td>
+                                @* Oral score form group *@
                                 <div class="form-group">
                                     <label asp-for="@Model.Students[i].Score.OralScore">Score</label>
                                     <input list="scores" data-internalid="@i" asp-for="@Model.Students[i].Score.OralScore" class="form-control limited-width" aria-describedby="helpBlock5" />
@@ -97,12 +103,13 @@
                                     <span id="helpBlock6" asp-validation-for="@Model.Students[i].Score.OralPlacement" class="help-block"></span>
                                 </div>
                             </td>
+                            <td></td>
                         </tr>
                     }
                 </tbody>
             </table>
             <div class="pull-right">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" asp-all-route-data="@Model.QueryParams" asp-page-handler="SaveScores">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>  Save scores
                 </button>
             </div>
@@ -114,41 +121,46 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
 <script type="text/javascript">
+    /** JS autofill logic for EptPlacement **/
     $('input[name$="EptScore"]').change(function () {
-        var intid = $(this).attr("data-internalid");
-        //alert(intid);
-        var placement_item = $('input[name="Students[' + intid + '].Score.EptPlacement"]');
-        //alert(placement_item.val());
+        let intid = $(this).attr("data-internalid");
+        let placement_item = $('input[name="Students[' + intid + '].Score.EptPlacement"]');
+
         if (!placement_item.val()) {
-            var placement_score = calculateEptPlacement($(this).val());
+            //only autofill if placement doesn't yet have a value
+            let placement_score = calculateEptPlacement($(this).val());
             placement_item.val(placement_score);
         }
     });
 
+    /** JS autofill logic for WritePlacement **/
     $('input[name$="WriteScore"]').change(function () {
-        var intid = $(this).attr("data-internalid");
-        //alert(intid);
-        var placement_item = $('input[name="Students[' + intid + '].Score.WritePlacement"]');
+        let intid = $(this).attr("data-internalid");
+        let placement_item = $('input[name="Students[' + intid + '].Score.WritePlacement"]');
 
-        //alert(placement_item.val());
         if (!placement_item.val()) {
-            var eptscore_item = $('input[name="Students[' + intid + '].Score.EptScore"]');
-            var placement_score = calculateEptPlacement(eptscore_item.val());
+            //only autofill if placement doesn't yet have a value
+            let eptscore_item = $('input[name="Students[' + intid + '].Score.EptScore"]');
+            let placement_score = calculateEptPlacement(eptscore_item.val());
             placement_item.val(placement_score);
         }
     });
 
+    /** JS autofill logic for OralPlacement **/
     $('input[name$="OralScore"]').change(function () {
-        var intid = $(this).attr("data-internalid");
-        //alert(intid);
-        var placement_item = $('input[name="Students[' + intid + '].Score.OralPlacement"]');
-        //alert(placement_item.val());
+        let intid = $(this).attr("data-internalid");
+        let placement_item = $('input[name="Students[' + intid + '].Score.OralPlacement"]');
+
         if (!placement_item.val()) {
-            var placement_score = calculateOralPlacement($(this).val());
+            //only autofill if placement doesn't yet have a value
+            let placement_score = calculateOralPlacement($(this).val());
             placement_item.val(placement_score);
         }
     });
 
+    /**
+     * Calculate EptPlacement based on a score
+     */
     function calculateEptPlacement(score) {
         if (score) {
             if (score >= 0 && score <= 29) {
@@ -170,6 +182,9 @@
         return null;
     }
 
+    /**
+     * Calculate OralPlacement based on a score
+     */
     function calculateOralPlacement(score) {
         if (score) {
             return score.substring(0, 1);
