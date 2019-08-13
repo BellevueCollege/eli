@@ -4,12 +4,12 @@
 
 ### Windows
 
- - .NET Core 2.1 SDK
+ - .NET Core 2.2 SDK
  - Visual Studio 2017 (version 15.7+)
 
 ### Mac
 
- - .NET Core 2.1 SDK
+ - .NET Core 2.2 SDK
  - Visual Studio for Mac (version 7.5+)
 
 ## Development notes
