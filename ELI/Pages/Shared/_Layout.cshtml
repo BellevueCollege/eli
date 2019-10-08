@@ -15,103 +15,112 @@
     <!--[if IE]>
         <link rel="shortcut icon" href="https://www.bellevuecollege.edu/bellevue.ico" />
     <![endif]-->
-    <link rel='dns-prefetch' href='//s.bellevuecollege.edu' />
+    @*<link rel='dns-prefetch' href='//s.bellevuecollege.edu' />*@
 
     <environment include="Development">
-        <link rel='stylesheet' id='globals-css' href='//s.bellevuecollege.edu/g/3/c/g.css' type='text/css' media='screen' />
-        <link rel='stylesheet' id='globals-print-css' href='//s.bellevuecollege.edu/g/3/c/p.css' type='text/css' media='print' />
+        <link rel='stylesheet' id='globals-css' href='~/css/g.css' type='text/css' media='screen' />
+        <link rel='stylesheet' id='globals-print-css' href='~/css/p.css' type='text/css' media='print' />
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script type='text/javascript' src='//shoes.bellevuecollege.edu/g/3/j/ghead-full.js'></script>
+        <script type='text/javascript' src='~/js/ghead-full.js'></script>
     </environment>
     <environment exclude="Development">
-        <link rel='stylesheet' id='globals-css' href='//s.bellevuecollege.edu/g/3/c/g.css' type='text/css' media='screen' />
-        <link rel='stylesheet' id='globals-print-css' href='//s.bellevuecollege.edu/g/3/c/p.css' type='text/css' media='print' />
+        <link rel='stylesheet' id='globals-css' href='~/css/g.css' type='text/css' media='screen' />
+        <link rel='stylesheet' id='globals-print-css' href='~/css/p.css' type='text/css' media='print' />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script type='text/javascript' src='//s.bellevuecollege.edu/g/3/j/ghead-full.min.js'></script>
+        <script type='text/javascript' src='~/js/ghead-full.min.js'></script>
     </environment>
 </head>
 <body>
     <ul id="skiplinks">
         <li><a href="#content">Skip to Content</a></li>
     </ul>
-    <header id="top-wrap" class="lite clearfix mobile-s17">
+    <header id="top-wrap" class="lite">
         <div id="smallhead-wrap" class="container">
-            <div id="smallhead" class="clearfix">
-                <a href="https://www.bellevuecollege.edu/" id="bc-logo">
-                    <img alt="Bellevue College (with link to home page)" src="//s.bellevuecollege.edu/g/3/i/bellevuecollege-s.png" />
-                </a><!-- #bc-logo-->
-                <ul id="college-top-actions">
-                    <p>Hello, @User.Identity.Name!</p>
+            <div class="row">
+                <div class="col-md-6 col-lg-8">
+                    <a href="https://www.bellevuecollege.edu/" id="bc-logo">
+                        <img alt="Bellevue College (with link to home page)" src="~/images/bellevuecollege-s.png" />
+                    </a><!-- #bc-logo-->
+                </div>
+                <ul id="college-top-actions" class="nav justify-content-end col-md-6 col-lg-4 nav nav-pills">
+                    <li class="nav-item">Hello, @User.Identity.Name!</li>
                 </ul>
-            </div><!-- smallhead -->
+            </div><!-- row -->
         </div><!-- #smallhead-wrap .container -->
     </header> <!--#masthead-->
-    <div id="main-wrap" class="globals-lite">
-        <div id="main" class="container no-padding">
-            <div id="top" class="mobile-s17">
+    <header id="secondary-header" class="lite container shadow">
+        <div class="row align-items-center">
+            <div class="col-md-8">
                 <div id="site-branding">
                     <p class="site-title">
                         <a title="Return to Home Page" rel="home" asp-page="/Index">ELI Student Management</a>
                     </p>
                 </div><!-- #site-branding -->
-                <div id="header-actions-container">
+            </div>
+        </div> <!-- row -->
 
 
-                    <div id="header-actions-bar" class="row searchform-show">
-                        <div id="main-nav-link" class="col-xs-4 col-sm-12">
-                            <a href="#college-navbar" title="Navigation Menu" class="btn btn-default btn-block" aria-expanded="false" aria-controls="main-nav-wrap"><span class="glyphicon menu-icon" aria-hidden="true"></span> Menu</a>
+        <nav class="row navbar navbar-expand-md navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavBar" aria-controls="mainNavBar" aria-expanded="false" aria-label="Toggle Menu">
+                <span class="navbar-toggler-icon"></span> Menu
+            </button>
 
-                        </div><!-- main-nav-link -->
-                    </div><!-- row -->
+            <div class="collapse navbar-collapse" id="mainNavBar">
+                <ul class="navbar-nav mr-auto" id="main-nav">
+                    <li id="nav-top"><a class="nav-link" href="#top">Top ^</a></li>
+                    <li class="nav-item active ">
+                        <a class="nav-link" asp-page="/Index">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Index">Students</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Index">Classes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Index">Reports</a>
+                    </li>
+                </ul>
+                @* NOTE: GROUP SELECT currently not implemented - placeholder only *@
+                <form class="form-inline my-2 my-lg-0" method="post" asp-page-handler="GroupSet">
+                    <div class="form-group">
+                        <label for="GroupSelect" class="my-1 mr-2">Group</label>
+                        <select name="GroupSelect" id="GroupSelect" class="form-control mr-sm-2">
+                            <option selected>All</option>
+                        </select>
+                    </div>
+                </form>
+                @* Inserts the Quarter Select component form *@
+                @await Component.InvokeAsync("QuarterSelect")
+            </div>
+
+        </nav>
+
+    </header>
+    <div id="main" class="globals-lite container shadow">
+        <div class="row pt-4 pb-4">
+            <div class="col-md-12">
 
 
-                </div><!-- col-md-4 -->
-            </div> <!--#top-->
+                <main role="main">
+                    @RenderBody()
+                </main>
 
-
-            <div class="row">
-                <div class="col-md-12">
-
-                    <div class="flexwrap">
-
-                        <div id="content">
-                            <div class="row">
-                                <main class="col-md-12">
-                                    @RenderBody()
-                                </main>
-                            </div>
-                        </div><!-- #content-->
-                        <div id="" class="">
-                            <!--<div class="container">-->
-                                <nav class="navbar navbar-default">
-                                    <div class="container-fluid">
-                                        <!-- Collect the nav links, forms, and other content for toggling -->
-                                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                                            <ul class="nav navbar-nav">
-                                                <li><a class="menu-item active" asp-page="/Index">Home</a></li>
-                                            </ul>
-                                            @await Component.InvokeAsync("QuarterSelect")
-                                        </div><!-- /.navbar-collapse -->
-                                    </div><!-- /.container-fluid -->
-                                </nav>
-                            <!--</div>--><!-- /.container -->
-                        </div><!-- main-nav-wrap -->
-                    </div> <!-- .flexwrap -->
-                </div><!-- row -->
             </div><!-- col-md-12 -->
-        </div><!-- #main .container -->
-    </div><!-- #main-wrap -->
+        </div> <!-- row -->
+    </div>
+
 
     @RenderSection("Scripts", required: false)
     <environment include="Development">
-        <script type='text/javascript' src='//shoes.bellevuecollege.edu/g/3/j/gfoot-full.js'></script>
+        <script type='text/javascript' src='~/js/gfoot-full.js'></script>
     </environment>
     <environment exclude="Development">
-        <script type='text/javascript' src='//s.bellevuecollege.edu/g/3/j/gfoot-full.min.js'></script>
+        <script type='text/javascript' src='~/js/gfoot-full.min.js'></script>
     </environment>
 
 </body>

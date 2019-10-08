@@ -6,8 +6,8 @@ for details on configuring this project to bundle and minify static web assets. 
     padding-bottom: 1em;
 }
 
-#college-top-actions p {
-    color: #fff;
+ul#college-top-actions li {
+	color: #fff;
 }
 
 .mt-1 {

@@ -7,10 +7,11 @@
 @{
     ELI.Models.Quarter selQuar = Context.Session.Get<ELI.Models.Quarter>(AppConfiguration.GetSection(ELI.Models.ApplicationSettings.SectionName).Get<ELI.Models.ApplicationSettings>().SessionKey_SelectedQuarter);
 }
-<form method="post" class="navbar-form navbar-right" asp-page-handler="QuarterSet">
+
+<form class="form-inline my-2 my-lg-0" method="post" asp-page-handler="QuarterSet">
     <div class="form-group">
-        <label for="QuarterSelect">Quarter</label> 
-        <select name="QuarterSelect" id="QuarterSelect" class="form-control input-sm">
+        <label for="QuarterSelect" class="my-1 mr-2">Quarter</label>
+        <select name="QuarterSelect" id="QuarterSelect" class="form-control mr-sm-2">
             @foreach (var q in Model)
             {
                 string selected = null;
@@ -19,5 +20,6 @@
             }
         </select>
     </div>
-    <input type="submit" value="Apply" class="btn btn-default btn-sm" />
+  
+    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Apply</button>
 </form>
