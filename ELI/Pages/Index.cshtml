@@ -4,36 +4,16 @@
     ViewData["Title"] = "Home page";
 }
 
-@*<div class="row">
-    <div class="col-md-6">
-        <h2>Student Actions</h2>
-
-        <ul>
-            <li><a asp-page="/StudentSearch">View/search all students</a></li>
-            <li><a asp-page="/AddScores">Add assessment scores</a></li>
-            <li>Place New Students</li>
-            <li>Place Returning Students</li>
-            <li>Assign Classes</li>
-        </ul>
-    </div>
-    <div class="col-md-6">
-        <h2>Class Actions</h2>
-        <ul>
-            <li>View/Search Classes</li>
-        </ul>
-    </div>
-</div>*@
-
 <div class="row">
     <div class="col-md-6">
-        <div class="card bg-light">
+        <div class="card bg-light mb-3">
             <h2 class="card-header">Student Actions</h2>
             <div class="list-group list-group-flush">
-                <a asp-page="/StudentSearch" class="list-group-item list-group-item-action">View/search all students</a>
-                <a asp-page="/AddScores" class="list-group-item list-group-item-action">Add assessment scores</a>
-                <a asp-page="/Index" class="list-group-item list-group-item-action">Place New Students</a>
-                <a asp-page="/Index" class="list-group-item list-group-item-action">Place Returning Students</a>
-                <a asp-page="/Index" class="list-group-item list-group-item-action">Assign Classes</a>
+                <a asp-page="/StudentSearch" class="list-group-item list-group-item-action">View/Search All Students</a>
+                <a asp-page="/AddScores" class="list-group-item list-group-item-action">Add Assessment scores</a>
+                <a asp-page="/Index" class="list-group-item list-group-item-action disabled">Place New Students</a>
+                <a asp-page="/Index" class="list-group-item list-group-item-action disabled">Place Returning Students</a>
+                <a asp-page="/Index" class="list-group-item list-group-item-action disabled">Assign Classes</a>
             </div>
         </div>
     </div>
@@ -41,7 +21,7 @@
         <div class="card bg-light">
             <h2 class="card-header">Class Actions</h2>
             <div class="list-group list-group-flush">
-                <a asp-page="/Index" class="list-group-item list-group-item-action">View/Search Classes</a>
+                <a asp-page="/Index" class="list-group-item list-group-item-action disabled">View/Search Classes</a>
             </div>
         </div>
     </div>

@@ -5,86 +5,96 @@
 
     var parms = Request.Query.ToDictionary(p => p.Key, p => p.Value.ToString());
     var sortInput = "";
-    if (parms.ContainsKey("sortType") && !String.IsNullOrEmpty(parms["sortType"])) {
+    if (parms.ContainsKey("sortType") && !String.IsNullOrEmpty(parms["sortType"]))
+    {
         sortInput = parms["sortType"];
     }
 }
-<div class="row content-padding">
-    <div class="col-md-10">
+<div class="row">
+    <div class="col-md-12 d-flex justify-content-between">
         <h2>View Students</h2>
-    </div>
-    <div class="col-md-2">
-        <div class="btn-group mt-1 btn-block">
-            <button type="button" class="btn btn-primary btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Actions <span class="caret"></span>
+        <div class="dropdown mb-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="actionsDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Actions
             </button>
-            <ul class="dropdown-menu">
-                <li><a href="#">Add placement scores</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a asp-page="/StudentSearch" class="dropdown-item">Clear filters</a></li>
-            </ul>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionsDropdownMenu">
+                <a class="dropdown-item" asp-page="/AddScores">Add Placement scores</a>
+                <a class="dropdown-item disabled" asp-page="#">Place New Students</a>
+                <a class="dropdown-item disabled" asp-page="#">Place Returning Students</a>
+            </div>
         </div>
     </div>
 </div>
-<div class="row content-padding">
+<div class="row">
     <div class="col-md-12">
         <form>
             <input type="hidden" name="sortType" id="sortType" value="@sortInput" />
-            <table class="table table-striped studentsearch">
-                <thead class="thead-light">
-                    <tr>
-                        <th><a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.SidSort">SID <span class="glyphicon glyphicon-triangle-@Model.SortDirSid" aria-hidden="true"></span></a> <input type="text" asp-for="@Model.SidSearch" class="form-control input-sm" placeholder="Filter by SID" /></th>
-                        <th><a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.LnameSort">Last name <span class="glyphicon glyphicon-triangle-@Model.SortDirLname" aria-hidden="true"></span></a> <input type="text" asp-for="@Model.LnameSearch" class="form-control input-sm" placeholder="Filter by last name" /></th>
-                        <th><a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.FnameSort">First name <span class="glyphicon glyphicon-triangle-@Model.SortDirFname" aria-hidden="true"></span></a> <input type="text" asp-for="@Model.FnameSearch" class="form-control input-sm" placeholder="Filter by first name" /></th>
-                        <th>
-                            <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.GroupSort">Group <span class="glyphicon glyphicon-triangle-@Model.SortDirGroup" aria-hidden="true"></span></a>
-                                <select asp-for="@Model.GroupSearch" asp-items="Model.SelectGroups" class="form-control input-sm">
+            <div class="table-responsive">
+                <table class="table table-hover studentsearch">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.SidSort">SID <i class="fas fa-sort-numeric-@Model.SortDirSid" aria-hidden="true"></i> <span class="sr-only">Sort by SID</span></a> <input type="text" asp-for="@Model.SidSearch" class="form-control" placeholder="Filter by SID" />
+                            </th>
+                            <th><a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.LnameSort">Last name <i class="fas fa-sort-alpha-@Model.SortDirLname" aria-hidden="true"></i> <span class="sr-only">Sort by Last Name</span></a> <input type="text" asp-for="@Model.LnameSearch" class="form-control" placeholder="Filter by last name" /></th>
+                            <th><a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.FnameSort">First name <i class="fas fa-sort-alpha-@Model.SortDirFname" aria-hidden="true"></i> <span class="sr-only">Sort by First Name</span></a> <input type="text" asp-for="@Model.FnameSearch" class="form-control" placeholder="Filter by first name" /></th>
+                            <th>
+                                <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.GroupSort">Group <i class="fas fa-sort-alpha-@Model.SortDirGroup" aria-hidden="true"></i> <span class="sr-only">Sort by Group</span></a>
+                                <select asp-for="@Model.GroupSearch" asp-items="Model.SelectGroups" class="form-control">
                                     <option value="">All</option>
                                 </select>
-</th>
-                        <th>
-                            <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.CountrySort">Country <span class="glyphicon glyphicon-triangle-@Model.SortDirCountry" aria-hidden="true"></span></a> 
-                                <select asp-for="@Model.CountrySearch" asp-items="Model.SelectCountries" class="form-control input-sm">
+                            </th>
+                            <th>
+                                <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.CountrySort">Country <i class="fas fa-sort-alpha-@Model.SortDirCountry" aria-hidden="true"></i> <span class="sr-only">Sort by Country</span></a>
+                                <select asp-for="@Model.CountrySearch" asp-items="Model.SelectCountries" class="form-control">
                                     <option value="">All</option>
                                 </select>
-</th>
-                        <th>
-                            <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.QuarterSort">Most recent quarter <span class="glyphicon glyphicon-triangle-@Model.SortDirQuarter" aria-hidden="true"></span></a>
-                                <div class="form-inline">
-                                    <select asp-for="@Model.QuarterSearch" asp-items="Model.SelectQuarters" class="form-control input-sm">
+                            </th>
+                            <th>
+                                <div>
+                                    <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.QuarterSort">Most recent quarter <i class="fas fa-sort-alpha-@Model.SortDirQuarter" aria-hidden="true"></i> <span class="sr-only">Sort by Quarter</span></a>
+                                    <select asp-for="@Model.QuarterSearch" asp-items="Model.SelectQuarters" class="form-control mr-sm-2">
                                         <option value="">All</option>
                                     </select>
-                                    <input type="submit" class="btn btn-secondary btn-sm" value="Apply" />
                                 </div>
-</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var student in Model.StudentData)
-                    {
-                        <tr>
-                            <td><a asp-page="/StudentDetail" asp-route-id="@student.Sid" class="modal-link" data-toggle="modal" data-target="#studDialog">@student.Sid</a></td>
-                            <td>@student.LastName</td>
-                            <td>@student.FirstName</td>
-                            <td>@student.Group</td>
-                            <td>@student.Country</td>
-                            <td>@student.YearQuarterEnrolled</td>
+                            </th>
+                            <th>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary">Apply Filters</button>
+                                    <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" asp-page="/StudentSearch">Clear filters</a>
+                                    </div>
+                                </div>
+                            </th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var student in Model.StudentData)
+                        {
+                            <tr>
+                                <td><a asp-page="/StudentDetail" asp-route-id="@student.Sid" class="modal-link" data-toggle="modal" data-target="#studDialog">@student.Sid</a></td>
+                                <td>@student.LastName</td>
+                                <td>@student.FirstName</td>
+                                <td>@student.Group</td>
+                                <td>@student.Country</td>
+                                <td>@student.YearQuarterEnrolled</td>
+                                <td>
+                                    <a asp-page="/StudentDetail" asp-route-id="@student.Sid" class="modal-link" data-toggle="modal" data-target="#studDialog"><i class="fas fa-external-link-alt"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </form>
-        
+
         <!-- Student info modal -->
-        <div class="modal fade" id="studDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                    </div>
-                </div>
+        <div class="modal" id="studDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                @*StudentDetail modal-content gets placed here*@
             </div>
         </div>
 
@@ -93,56 +103,23 @@
 
                 $(function () {
 
-                    /*** Bootstrap 3 solution for modal ***/
-                    //load modal
+                    /*** Bootstrap 4 Modal for Student Details ***/
                     $('#studDialog').on('show.bs.modal', function (event) {
                         var link = $(event.relatedTarget);
                         var openpage = link.attr("href");
 
-                        $.get(openpage, function (data) {
-                            $('#studDialog').find('.modal-content').html(data);
+                        $("#studDialog .modal-dialog").load(openpage + " .modal-content", function (response, status, xhr) {
+                            if (status == "error") {
+                                $('#studDialog').modal('hide');
+                                alert("Error: Unable to retrieve student data.\n" + "Error code " + xhr.status + "\n" + xhr.statusText);
+                            }
                         });
                     });
 
-                    //empty modal on close so that old data isn't shown when modal is reopened
+                    // empty modal on close so that old data isn't shown when modal is reopened
                     $('#studDialog').on('hidden.bs.modal', function (event) {
-                        $('#studDialog').find('.modal-body').empty();
+                        $('#studDialog').find('.modal-content').remove();
                     });
-
-                    /*** jQuery UI solution  
-                     * Not actively in use
-                     * jQuery UI would need to be included in page for it to work.
-                     * Would also need empty div with #dialog id
-                     * 
-                    //fix bootstrap conflict w jQuery UI so close icon shows
-                    var bootstrapButton = $.fn.button.noConflict(); // return $.fn.button to previously assigned value
-                    $.fn.bootstrapBtn = bootstrapButton;           // give $().bootstrapBtn the Bootstrap functionality
-
-                    var dialog;
-                    dialog = $("#dialog").dialog({
-                        autoOpen: false,
-                        height: 'auto',
-                        width: 'auto',
-                        maxWidth: 650,
-                        fluid: true,
-                        modal: true,
-                        position: {
-                            my: "center center",
-                            at: "center center",
-                            of: window,
-                            collision: "fit"
-                        },
-                    });
-
-                    //link on click - open URL and load in dialog div
-                    $(".modal-link").on('click', function () {
-
-                        var openpage = $(this).attr("href");
-                        dialog.load(openpage, function () {
-                            dialog.dialog("open");
-                        });
-                        return false;
-                    });*/
                 });
             </script>
         }
