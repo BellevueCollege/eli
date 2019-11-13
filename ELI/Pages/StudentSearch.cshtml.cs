@@ -125,7 +125,7 @@ namespace ELI.Pages
             GroupSort = "group";
             CountrySort = "country";
             QuarterSort = "quarter";
-            SortDirSid = SortDirFname = SortDirLname = SortDirGroup = SortDirCountry = SortDirQuarter = "bottom";
+            SortDirSid = SortDirFname = SortDirLname = SortDirGroup = SortDirCountry = SortDirQuarter = "down";
             if ( !String.IsNullOrEmpty(sortType) )
             {
                 switch(sortType)
@@ -137,7 +137,7 @@ namespace ELI.Pages
                     case "lname_desc":
                         StudentsIQ = StudentsIQ.OrderByDescending(s => s.LastName);
                         LnameSort = "lname";
-                        SortDirLname = "top";
+                        SortDirLname = "up";
                         break;
                     case "fname":
                         StudentsIQ = StudentsIQ.OrderBy(s => s.FirstName);
@@ -146,7 +146,7 @@ namespace ELI.Pages
                     case "fname_desc":
                         StudentsIQ = StudentsIQ.OrderByDescending(s => s.FirstName);
                         FnameSort = "fname";
-                        SortDirFname = "top";
+                        SortDirFname = "up";
                         break;
                     case "sid":
                         StudentsIQ = StudentsIQ.OrderBy(s => s.Sid);
@@ -155,7 +155,7 @@ namespace ELI.Pages
                     case "sid_desc":
                         StudentsIQ = StudentsIQ.OrderByDescending(s => s.Sid);
                         SidSort = "sid";
-                        SortDirSid = "top";
+                        SortDirSid = "up";
                         break;
                     case "group":
                         StudentsIQ = StudentsIQ.OrderBy(s => s.Group);
@@ -164,7 +164,7 @@ namespace ELI.Pages
                     case "group_desc":
                         StudentsIQ = StudentsIQ.OrderByDescending(s => s.Group);
                         GroupSort = "group";
-                        SortDirGroup = "top";
+                        SortDirGroup = "up";
                         break;
                     case "country":
                         StudentsIQ = StudentsIQ.OrderBy(s => s.Country);
@@ -173,7 +173,7 @@ namespace ELI.Pages
                     case "country_desc":
                         StudentsIQ = StudentsIQ.OrderByDescending(s => s.Country);
                         CountrySort = "country";
-                        SortDirCountry = "top";
+                        SortDirCountry = "up";
                         break;
                     case "quarter":
                         StudentsIQ = StudentsIQ.OrderBy(s => s.YearQuarterEnrolled);
@@ -182,7 +182,7 @@ namespace ELI.Pages
                     case "quarter_desc":
                         StudentsIQ = StudentsIQ.OrderByDescending(s => s.YearQuarterEnrolled);
                         QuarterSort = "quarter";
-                        SortDirQuarter = "top";
+                        SortDirQuarter = "up";
                         break;
                 }
             } else
