@@ -84,7 +84,7 @@
                                 <td>@student.Country</td>
                                 <td>@student.YearQuarterEnrolled</td>
                                 <td>
-                                    <a asp-page="/StudentDetail" asp-route-id="@student.Sid" class="modal-link" data-toggle="modal" data-target="#studDialog"><i class="fas fa-external-link-alt"></i></a>
+                                    <a asp-page="/StudentDetail" asp-route-id="@student.Sid" class="modal-link" data-toggle="modal" data-target="#studDialog"><i class="fas fa-external-link-alt"></i> @student.FirstName's Profile</a>
                                 </td>
                             </tr>
                         }

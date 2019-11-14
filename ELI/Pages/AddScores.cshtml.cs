@@ -219,7 +219,7 @@ namespace ELI.Pages
             SidSort = "sid";
 
             //used for determining icon direction
-            SortDirSid = SortDirFname = SortDirLname = "bottom";
+            SortDirSid = SortDirFname = SortDirLname = "down";
             if (!String.IsNullOrEmpty(SortType))
             {
                 switch (SortType)
@@ -231,7 +231,7 @@ namespace ELI.Pages
                     case "lname_desc":
                         StudentsIQ = StudentsIQ.OrderByDescending(s => s.LastName);
                         LnameSort = "lname";
-                        SortDirLname = "top";
+                        SortDirLname = "up";
                         break;
                     case "fname":
                         StudentsIQ = StudentsIQ.OrderBy(s => s.FirstName);
@@ -240,7 +240,7 @@ namespace ELI.Pages
                     case "fname_desc":
                         StudentsIQ = StudentsIQ.OrderByDescending(s => s.FirstName);
                         FnameSort = "fname";
-                        SortDirFname = "top";
+                        SortDirFname = "up";
                         break;
                     case "sid":
                         StudentsIQ = StudentsIQ.OrderBy(s => s.Sid);
@@ -249,7 +249,7 @@ namespace ELI.Pages
                     case "sid_desc":
                         StudentsIQ = StudentsIQ.OrderByDescending(s => s.Sid);
                         SidSort = "sid";
-                        SortDirSid = "top";
+                        SortDirSid = "up";
                         break;
                 }
                 CurrentSortType = SortType;
