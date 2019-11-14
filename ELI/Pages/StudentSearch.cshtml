@@ -38,6 +38,7 @@
                             </th>
                             <th><a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.LnameSort">Last name <i class="fas fa-sort-alpha-@Model.SortDirLname" aria-hidden="true"></i> <span class="sr-only">Sort by Last Name</span></a> <input type="text" asp-for="@Model.LnameSearch" class="form-control" placeholder="Filter by last name" /></th>
                             <th><a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.FnameSort">First name <i class="fas fa-sort-alpha-@Model.SortDirFname" aria-hidden="true"></i> <span class="sr-only">Sort by First Name</span></a> <input type="text" asp-for="@Model.FnameSearch" class="form-control" placeholder="Filter by first name" /></th>
+                            <th>Student Type</th>
                             <th>
                                 <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.GroupSort">Group <i class="fas fa-sort-alpha-@Model.SortDirGroup" aria-hidden="true"></i> <span class="sr-only">Sort by Group</span></a>
                                 <select asp-for="@Model.GroupSearch" asp-items="Model.SelectGroups" class="form-control">
@@ -78,6 +79,7 @@
                                 <td><a asp-page="/StudentDetail" asp-route-id="@student.Sid" class="modal-link" data-toggle="modal" data-target="#studDialog">@student.Sid</a></td>
                                 <td>@student.LastName</td>
                                 <td>@student.FirstName</td>
+                                <td>@student.StuType</td>
                                 <td>@student.Group</td>
                                 <td>@student.Country</td>
                                 <td>@student.YearQuarterEnrolled</td>

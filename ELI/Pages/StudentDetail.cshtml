@@ -15,7 +15,7 @@
                 <div class="col-md-8">
                     <ul class="list-unstyled">
                         <li><p class="h3">@Model.Student.Sid</p></li>
-                        <li><h1 class="text-uppercase">@Model.Student.LastName, @Model.Student.FirstName</h1></li>
+                        <li><h1 class="text-uppercase">@Model.Student.LastName, @Model.Student.FirstName <span class="badge badge-secondary text-lowercase">@Model.Student.StuType</span></h1></li>
                         <li>@Model.Student.Gender, born @String.Format("{0:MMMM d, yyyy}", @Model.Student.Dob.Date), from @Model.Student.Country</li>
                     </ul>
                 </div>
@@ -69,7 +69,6 @@
                         </ul>
                     </div>
                     <div class="card bg-light mb-3">
-
                         <h2 class="card-header">Assessment scores</h2>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Writing Score: @Model.Student.Score.WriteScore</li>
