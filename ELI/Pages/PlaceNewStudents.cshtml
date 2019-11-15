@@ -1,7 +1,7 @@
 ﻿@page "{handler?}"
-@model ELI.Pages.AddScoresModel
+@model ELI.Pages.PlaceNewStudentsModel
 @{
-    ViewData["Title"] = "Add Assessment Scores";
+    ViewData["Title"] = "Place New Students";
 }
 <datalist id="scores">
     <option value="1-">1-</option>
@@ -22,14 +22,14 @@
 </datalist>
 <div class="row">
     <div class="col-md-12 d-flex justify-content-between">
-        <h2>Add Assessment Scores</h2>
+        <h2>Place New Students</h2>
         <div class="dropdown mb-3">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="actionsDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Actions
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionsDropdownMenu">
-                <a class="dropdown-item active" asp-page="/AddScores">Add Placement scores</a>
-                <a class="dropdown-item disabled" asp-page="#">Place New Students</a>
+                <a class="dropdown-item" asp-page="/StudentSearch">View All Students</a>
+                <a class="dropdown-item active" asp-page="/PlaceNewStudents">Place New Students</a>
                 <a class="dropdown-item disabled" asp-page="#">Place Returning Students</a>
             </div>
         </div>
@@ -43,10 +43,10 @@
                     <thead>
                         <tr>
                             <th>
-                                <a asp-page="/AddScores" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.SidSort">SID <i class="fas fa-sort-numeric-@Model.SortDirSid" aria-hidden="true"></i> <span class="sr-only">Sort by SID</span></a> <input type="text" asp-for="@Model.SidSearch" class="form-control" placeholder="Filter by SID" />
+                                <a asp-page="/PlaceNewStudents" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.SidSort">SID <i class="fas fa-sort-numeric-@Model.SortDirSid" aria-hidden="true"></i> <span class="sr-only">Sort by SID</span></a> <input type="text" asp-for="@Model.SidSearch" class="form-control" placeholder="Filter by SID" />
                             </th>
-                            <th><a asp-page="/AddScores" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.LnameSort">Last name <i class="fas fa-sort-alpha-@Model.SortDirLname" aria-hidden="true"></i> <span class="sr-only">Sort by Last Name</span></a> <input type="text" asp-for="@Model.LnameSearch" class="form-control" placeholder="Filter by last name" /></th>
-                            <th><a asp-page="/AddScores" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.FnameSort">First name <i class="fas fa-sort-alpha-@Model.SortDirFname" aria-hidden="true"></i> <span class="sr-only">Sort by First Name</span></a> <input type="text" asp-for="@Model.FnameSearch" class="form-control" placeholder="Filter by first name" /></th>
+                            <th><a asp-page="/PlaceNewStudents" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.LnameSort">Last name <i class="fas fa-sort-alpha-@Model.SortDirLname" aria-hidden="true"></i> <span class="sr-only">Sort by Last Name</span></a> <input type="text" asp-for="@Model.LnameSearch" class="form-control" placeholder="Filter by last name" /></th>
+                            <th><a asp-page="/PlaceNewStudents" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.FnameSort">First name <i class="fas fa-sort-alpha-@Model.SortDirFname" aria-hidden="true"></i> <span class="sr-only">Sort by First Name</span></a> <input type="text" asp-for="@Model.FnameSearch" class="form-control" placeholder="Filter by first name" /></th>
                             <th>EPT</th>
                             <th>Writing</th>
                             <th>Oral</th>
@@ -58,7 +58,7 @@
                                             <span class="sr-only">Toggle Dropdown</span>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" asp-page="/AddScores">Clear filters</a>
+                                            <a class="dropdown-item" asp-page="/PlaceNewStudents">Clear filters</a>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-success" asp-all-route-data="@Model.QueryParams" asp-page-handler="SaveScores">

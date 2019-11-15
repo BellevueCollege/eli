@@ -14,9 +14,9 @@ using ELI.Helpers;
 
 namespace ELI.Pages
 {
-    public class AddScoresModel : EliPageModel
+    public class PlaceNewStudentsModel : EliPageModel
     {
-        public AddScoresModel(ELIContext context, IConfiguration config, ILogger<AddScoresModel> logger) : base(context, config, logger){}
+        public PlaceNewStudentsModel(ELIContext context, IConfiguration config, ILogger<PlaceNewStudentsModel> logger) : base(context, config, logger){}
 
         [BindProperty]
         public IList<Student> Students { get; set; }
