@@ -5,7 +5,7 @@
 ### Windows
 
  - .NET Core 2.2 SDK
- - Visual Studio 2017 (version 15.7+)
+ - Visual Studio 2017 (version 16+)
 
 ### Mac
 
@@ -51,7 +51,7 @@ The project can be run from within Visual Studio using IIS Express.  However, de
     - On the right side under Installation Details customize the module by selecting `Development time IIS support`. Click the modify button and this will install the module
     - If you don't see `Development time IIS support`, restart the Visual Studio Installer
 
-![alt text](docs/screenshots/ELI_SS_2.png "Install the AspNetCoreModule")
+      ![alt text](docs/screenshots/ELI_SS_2.png "Install the AspNetCoreModule")
 
 5. Add a web.config file to the base of the ELI project folder, `C:\...\eli\ELI\web.config`. 
 
@@ -127,47 +127,18 @@ The project can be run from within Visual Studio using IIS Express.  However, de
 
 ## Globals 4 Set Up
 
-Temporarily, we will be connecting Globals 4/Bootstrap 4 files into ELI in the wwwroot folder. This will be changed as we upgrade Globals4 into ELI completely.
+Temporarily, we will be connecting Globals 4/Bootstrap 4 files into ELI in the wwwroot folder. This will be changed as we upgrade Globals 4 into ELI completely.
 
-1. Clone down globals and then we will set up the files. In a terminal, run `cd globals/src/4/` and then run `gulp sass-dev`
+1. Clone down globals and checkout into `dev` and then we will set up the files. 
+    - In a terminal, change directory into the globals folder. Run `npm install`. Make sure gulp is installed: `npm install -g gulp`. 
+    - Run `cd globals/src/4/` and then run `gulp dev`
 2. In Visual Studio, under the ELI wwwroot folder, right click and **add a folder** called `g`.
-3. Under `g`, add a `4` folder, and then under `4`, add a `c`, `f`, `i`, and `j` folder. We will be copying the globals files into these folders, much like the original globals.
+3. Under `g`, add a `4` folder, and then under the `4` folder, add a `c`, `f`, `i`, and `j` folder. We will be copying the globals files into these folders, much like the original globals.
 4. Right click each folder, and **add an existing file** for each corresponding folder in `globals/4`. Choose the following files below to add:
 
     ![alt text](docs/screenshots/ELI_SS_6.png "Folders to add for Globals 4")
-5. Open up the following file, `Pages/Shared/_Layout.cshtml`, and make the following changes:
-    - Lines 20 to 35:
-    ```html
-        <environment include="Development">
-          <link rel='stylesheet' id='globals-css' href='~/g/4/c/g.css' type='text/css' media='screen' />
-          <link rel='stylesheet' id='globals-print-css' href='~/g/4/c/p.css' type='text/css' media='print' />
-          <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-          <script type='text/javascript' src='~/g/4/j/ghead-full.js'></script>
-      </environment>
-      <environment exclude="Development">
-          <link rel='stylesheet' id='globals-css' href='~/g/4/c/g.css' type='text/css' media='screen' />
-          <link rel='stylesheet' id='globals-print-css' href='~/g/4/c/p.css' type='text/css' media='print' />
-          <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-          <script type='text/javascript' src='~/g/4/j/ghead-full.min.js'></script>
-      </environment>
-    ```
-    - Line 46:
-    ```html
-    <img alt="Bellevue College (with link to home page)" src="~/g/4/i/bellevuecollege-s.png" />
-    ```
-    - Lines 119 to 124:
-    ```html
-    <environment include="Development">
-        <script type='text/javascript' src='~/g/4/j/gfoot-full.js'></script>
-    </environment>
-    <environment exclude="Development">
-        <script type='text/javascript' src='~/g/4/j/gfoot-full.min.js'></script>
-    </environment>
-    ```
+**Note:** In the following file, `Pages/Shared/_Layout.cshtml`, the following pattern `~/g/4/...` is used to link the globals files in HTML.
 
 #### More information
 
