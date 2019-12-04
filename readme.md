@@ -12,28 +12,162 @@
  - .NET Core 2.2 SDK
  - Visual Studio for Mac (version 7.5+)
 
+---
+
 ## Development notes
 
 We are trying to make this project one that can be worked on by folks using Mac or Windows, so please be mindful that you are not checking in Windows-specific config files that do not work on a Mac.
 
-### Using local IIS on Windows to serve project without publishing
+---
+
+## Installation and Setup
+
+### Windows Setup
+
+#### Using local IIS on Windows to serve project without publishing
 
 The project can be run from within Visual Studio using IIS Express.  However, depending on your development setup/work process, you may want to serve the project via your local IIS.  By default in .NET Core, this requires publishing, then setting up the project in IIS which is...not ideal.  Ideally, one wants to just build the project, then be able to view the app at the standard location for your local IIS setup. Good news - it's possible!
 
-1. Install the AspNetCoreModule.
+1. Install Requirements
+    - [Install Visual Studio 2017 (version 15.7+)](https://visualstudio.microsoft.com/)
+    - [Install .NET Core SDK 2.2](https://dotnet.microsoft.com/download/dotnet-core/2.2)
+        - Open a command prompt and type `dotnet --list-sdks` to ensure the SDK was properly installed. Below is an example of a successful install:
+          ```
+          C:\Users\user.name>dotnet --list-sdks
+          2.2.207 [C:\Program Files\dotnet\sdk]
+          ```
 
-	- Open Visual Studio Installer. Select "Modify" for the Visual Studio instance you're using.
-	- Under Installation Details > ASP.NET and web development, select `Development time IIS support`. Then click the modify button. This will install the AspNetCoreModule.
+2. Install the **ASP.NET and web development module**.
+    - Open the Visual Studio Installer if it's not already open. Select "Modify" for the Visual Studio instance you're using if you skipped package installation
+    - Select `ASP.NET and web development` under Workloads (Web & Cloud) and click add. Close the window
 
-2. Add a web.config file to the base of the ELI project folder. 
+3. Enable IIS.
+    - Go to the Control Panel > Programs > Programs & Features > Turn Windows features on or off
+    - Select the `Internet Information Services` check box, and click OK
+        ![alt text](docs/screenshots/ELI_SS_1.png "Enable IIS")
 
-  Example below. Update the arguments path to point to location of the ELI project in your local ELI solution folder.
+4. Enable Development Time IIS for ASP.NET in the Visual Studio Installer.
+    - Open the Visual Studio Installer
+    - On the right side under Installation Details customize the module by selecting `Development time IIS support`. Click the modify button and this will install the module
+    - If you don't see `Development time IIS support`, restart the Visual Studio Installer
 
-  ```
-  <?xml version="1.0" encoding="utf-8"?>  <configuration>    <!-- To customize the asp.net core module uncomment and edit the following section.   For more info see https://go.microsoft.com/fwlink/?linkid=838655 -->      <system.webServer>      <handlers>        <add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModule" resourceType="Unspecified" />      </handlers>      <aspNetCore processPath="C:\Program Files\dotnet\dotnet.exe"                arguments="run --project C:\Path\to\your\eli\ELI"                 stdoutLogEnabled="true" stdoutLogFile=".\logs\stdout" forwardWindowsAuthToken="false">          <environmentVariables>            <environmentVariable name="ASPNETCORE_ENVIRONMENT" value="Development" />          </environmentVariables>      </aspNetCore>    </system.webServer>    </configuration>
-  ```
+![alt text](docs/screenshots/ELI_SS_2.png "Install the AspNetCoreModule")
 
-3. Set up the app in IIS.  Set up the app as your normally would in IIS. For the application pool, set the .NET CLR version to No Managed Code.
+5. Add a web.config file to the base of the ELI project folder, `C:\...\eli\ELI\web.config`. 
+
+    - To add a web.config file, right click on the ELI project in the Solution Explorer in Visual Studio then > Add > New Item > Under ASP.NET Core, select Web Configuration File > Click Add at the bottom
+        ![alt text](docs/screenshots/ELI_SS_3.png "Add a web.config file")
+    - Replace the file with the example below. Update the arguments path to point to the location of the ELI project in your local ELI solution folder
+    - Make sure that the processPath attribute has the correct path for dotnet. It typically installs in `C:\Program Files\dotnet\dotnet.exe`
+
+      ```xml
+      <?xml version="1.0" encoding="utf-8"?>
+      <configuration>
+
+        <!-- To customize the asp.net core module uncomment and edit the following section. 
+      For more info see https://go.microsoft.com/fwlink/?linkid=838655 -->
+      
+        <system.webServer>
+          <handlers>
+            <add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModule" resourceType="Unspecified" />
+          </handlers>
+          <!-- Check dotnet installation and update arguments path here -->
+          <aspNetCore processPath="C:\Program Files\dotnet\dotnet.exe"
+                    arguments="run --project C:\Path\to\your\eli\ELI" 
+                    stdoutLogEnabled="true" stdoutLogFile=".\logs\stdout" forwardWindowsAuthToken="false">
+              <environmentVariables>
+                <environmentVariable name="ASPNETCORE_ENVIRONMENT" value="Development" />
+              </environmentVariables>
+          </aspNetCore>
+        </system.webServer>
+      
+      </configuration>
+      ```
+
+6. Set up the app in IIS.
+    - Open up the Internet Information Services (IIS) manager
+    - On the left side under Connections, expand your computer's folder
+    - Click on Application Pools and to the right side under Actions, click on 'Add Application Pool'
+    - Set the following and click OK:
+        - **Name:** ELI
+        - **.NET CLR version:** No Managed Code
+        - **Managed pipleine mode:** Integrated
+          ![alt text](docs/screenshots/ELI_SS_4.png "Install the AspNetCoreModule")
+    - Right click on the ELI Application Pool and select **Advanced Settings**. Scroll down to the Process Model, and under the **Identity** attribute, click the 3 dots that appear and sign in as a **Custom Account** with your campus username and password. Click **OK**.
+    - On the left side under Connections, click on **Sites**, and to the right side under Actions, click on **Add Website**
+    - Set the following and click OK:
+        - **Content Directory**
+            - **Site Name**: ELI
+            - **Application Pool**: ELI
+            - **Physical Path**: C:\Users\user.name\...\eli\ELI
+            - Click **Connect as...** and log in as a specific user with your campus username and password.
+        - Test that you are able to authenticate and view the ELI folder by clicking on **Test Settings...**. Both settings should have a green checkmark if successful. If not, check that you have permission to read the ELI folder as an admin.
+        - **Binding**
+            - **Type**: http
+            - **IP Address**: All unassigned
+            - **Port**: (Insert any port number that is not taken) ex: 800
+            - **Host name**: localhost
+      - The end result will look similar to this:
+      ![alt text](docs/screenshots/ELI_SS_5.png "Adding the ELI Website")
+7. Set up the Nlog Config
+    - In Visual Studio, open up the ELI solution. Rename the `example-nlog.config` file to `nlog.config`.
+    - Change the settings on lines **23** and **24** to the following and save:
+    ```xml
+      <variable name="dbServer" value="<Insert database URL>"/>
+      <variable name="dbName" value="Elmah"/>
+    ```
+8. Set up the appsettings.Development.json config
+    - Rename the `appsettings.Development.json.example` file to `appsettings.Development.json`.
+    - Change the settings on line **10** to the following and save:
+    ```json
+    "ELIDatabase": "Data Source=<Insert database URL>;Initial Catalog=ELI;Integrated Security=True;"
+    ```
+    - **Make sure to never commit the newly updated Development file to Github.**
+9. In Visual Studio, run the program by clicking **IIS Express** under debug. The program should open up and be running in the browser.
+
+## Globals 4 Set Up
+
+Temporarily, we will be connecting Globals 4/Bootstrap 4 files into ELI in the wwwroot folder. This will be changed as we upgrade Globals4 into ELI completely.
+
+1. Clone down globals and then we will set up the files. In a terminal, run `cd globals/src/4/` and then run `gulp sass-dev`
+2. In Visual Studio, under the ELI wwwroot folder, right click and **add a folder** called `g`.
+3. Under `g`, add a `4` folder, and then under `4`, add a `c`, `f`, `i`, and `j` folder. We will be copying the globals files into these folders, much like the original globals.
+4. Right click each folder, and **add an existing file** for each corresponding folder in `globals/4`. Choose the following files below to add:
+
+    ![alt text](docs/screenshots/ELI_SS_6.png "Folders to add for Globals 4")
+5. Open up the following file, `Pages/Shared/_Layout.cshtml`, and make the following changes:
+    - Lines 20 to 35:
+    ```html
+        <environment include="Development">
+          <link rel='stylesheet' id='globals-css' href='~/g/4/c/g.css' type='text/css' media='screen' />
+          <link rel='stylesheet' id='globals-print-css' href='~/g/4/c/p.css' type='text/css' media='print' />
+          <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+          <script type='text/javascript' src='~/g/4/j/ghead-full.js'></script>
+      </environment>
+      <environment exclude="Development">
+          <link rel='stylesheet' id='globals-css' href='~/g/4/c/g.css' type='text/css' media='screen' />
+          <link rel='stylesheet' id='globals-print-css' href='~/g/4/c/p.css' type='text/css' media='print' />
+          <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+          <script type='text/javascript' src='~/g/4/j/ghead-full.min.js'></script>
+      </environment>
+    ```
+    - Line 46:
+    ```html
+    <img alt="Bellevue College (with link to home page)" src="~/g/4/i/bellevuecollege-s.png" />
+    ```
+    - Lines 119 to 124:
+    ```html
+    <environment include="Development">
+        <script type='text/javascript' src='~/g/4/j/gfoot-full.js'></script>
+    </environment>
+    <environment exclude="Development">
+        <script type='text/javascript' src='~/g/4/j/gfoot-full.min.js'></script>
+    </environment>
+    ```
 
 #### More information
 
