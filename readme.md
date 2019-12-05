@@ -134,7 +134,7 @@ Temporarily, we will be connecting Globals 4/Bootstrap 4 files into ELI in the w
     - Run `cd globals/src/4/` and then run `gulp dev`
 2. In Visual Studio, under the ELI wwwroot folder, right click and **add a folder** called `g`.
 3. Under `g`, add a `4` folder, and then under the `4` folder, add a `c`, `f`, `i`, and `j` folder. We will be copying the globals files into these folders, much like the original globals.
-4. Right click each folder, and **add an existing file** for each corresponding folder in `globals/4`. Choose the following files below to add:
+4. Right click each folder in Visual Studio, and **add an existing file** for each corresponding folder from `globals/g/4`. Choose the following files below to add from the globals project folder, such as `globals/g/4/c`:
 
     ![alt text](docs/screenshots/ELI_SS_6.png "Folders to add for Globals 4")
 
