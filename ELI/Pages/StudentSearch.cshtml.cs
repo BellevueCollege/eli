@@ -59,7 +59,14 @@ namespace ELI.Pages
             /** Use IQueryable so additional conditionals can be added before converting to a 
              * collection (at which time the query goes to the db)
              * **/
-            IQueryable<Student> StudentsIQ = _context.Students.OrderByDescending(s => s.YearQuarterEnrolled).ThenBy(s => s.LastName).ThenBy(s => s.FirstName);
+            IQueryable<Student> StudentsIQ = _context.Students;
+            /****************NOTE: 
+             * .OrderByDescending(s => s.YearQuarterEnrolled).ThenBy(s => s.LastName).ThenBy(s => s.FirstName);
+             * was intially on the end of the line above(IQueryable<Student> StudentsIQ = _context.Students)
+             * HOWEVER, this was causing the last name sorting issue described in JIRA bug: ER-83 where sorting by lastname requires user to double click to begin sorting functionality.
+             * More research needs to be done to figure out why this snid but of code breaks the lastname sort functionality. 
+           ********************/
+
             /***
              * get groups, countries, and quarters to fill filter drop downs
              * need to do before student data is filtered
@@ -130,23 +137,23 @@ namespace ELI.Pages
             {
                 switch(sortType)
                 {
-                    case "lname":
-                        StudentsIQ = StudentsIQ.OrderBy(s => s.LastName);
-                        LnameSort = "lname_desc";
-                        break;
                     case "lname_desc":
                         StudentsIQ = StudentsIQ.OrderByDescending(s => s.LastName);
                         LnameSort = "lname";
                         SortDirLname = "up";
                         break;
-                    case "fname":
-                        StudentsIQ = StudentsIQ.OrderBy(s => s.FirstName);
-                        FnameSort = "fname_desc";
+                    case "lname":
+                        StudentsIQ = StudentsIQ.OrderBy(s => s.LastName);
+                        LnameSort = "lname_desc"; 
                         break;
                     case "fname_desc":
                         StudentsIQ = StudentsIQ.OrderByDescending(s => s.FirstName);
                         FnameSort = "fname";
                         SortDirFname = "up";
+                        break;
+                    case "fname":
+                        StudentsIQ = StudentsIQ.OrderBy(s => s.FirstName);
+                        FnameSort = "fname_desc";
                         break;
                     case "sid":
                         StudentsIQ = StudentsIQ.OrderBy(s => s.Sid);
