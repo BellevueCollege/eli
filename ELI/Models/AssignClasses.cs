@@ -13,6 +13,7 @@ namespace ELI.Models
         public string Sid { get; private set; }
         public string LastName { get; private set; }
         public string FirstName { get; private set; }
+        public string ProjectedQuarter { get; private set; }
         public string Country { get; private set; }
      // public string New { get; private set; }
 
