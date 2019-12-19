@@ -1,0 +1,112 @@
+﻿@page
+@model ELI.Pages.AssignClassesModel
+@{
+    ViewData["Title"] = "View Student";
+
+    var parms = Request.Query.ToDictionary(p => p.Key, p => p.Value.ToString());
+    var sortInput = "";
+    if (parms.ContainsKey("sortType") && !String.IsNullOrEmpty(parms["sortType"]))
+    {
+        sortInput = parms["sortType"];
+    }
+}
+<div class="row">
+    <div class="col-md-12 d-flex justify-content-between">
+        <h2>View Classes</h2>
+        <div class="dropdown mb-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="actionsDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Actions
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionsDropdownMenu">
+                <a class="dropdown-item active" asp-page="/StudentSearch">View All Students</a>
+                <a class="dropdown-item" asp-page="/PlaceNewStudents">Place New Students</a>
+                <a class="dropdown-item disabled" asp-page="#">Place Returning Students</a>
+                <a class="dropdown-item" asp-page="/AssignClasses">Assign Classes</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form>
+            <input type="hidden" name="sortType" id="sortType" value="@sortInput" />
+            <div class="table-responsive">
+                <table class="table table-hover studentsearch">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.SidSort">SID <i class="fas fa-sort-numeric-@Model.SortDirSid" aria-hidden="true"></i> <span class="sr-only">Sort by SID</span></a> <input type="text" asp-for="@Model.SidSearch" class="form-control" placeholder="Filter by SID" />
+                            </th>
+                            <th><a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.LnameSort">Last name <i class="fas fa-sort-alpha-@Model.SortDirLname" aria-hidden="true"></i> <span class="sr-only">Sort by Last Name</span></a> <input type="text" asp-for="@Model.LnameSearch" class="form-control" placeholder="Filter by last name" /></th>
+                            <th><a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.FnameSort">First name <i class="fas fa-sort-alpha-@Model.SortDirFname" aria-hidden="true"></i> <span class="sr-only">Sort by First Name</span></a> <input type="text" asp-for="@Model.FnameSearch" class="form-control" placeholder="Filter by first name" /></th>
+                            <th>
+                                <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.GroupSort">Group <i class="fas fa-sort-alpha-@Model.SortDirGroup" aria-hidden="true"></i> <span class="sr-only">Sort by Group</span></a>
+                                <select asp-for="@Model.GroupSearch" asp-items="Model.SelectGroups" class="form-control">
+                                    <option value="">All</option>
+                                </select>
+                            </th>
+                            <th>
+                                <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.CountrySort">Country <i class="fas fa-sort-alpha-@Model.SortDirCountry" aria-hidden="true"></i> <span class="sr-only">Sort by Country</span></a>
+                                <select asp-for="@Model.CountrySearch" asp-items="Model.SelectCountries" class="form-control">
+                                    <option value="">All</option>
+                                </select>
+                            </th>
+                            <th>
+                                <div>
+                                    <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.QuarterSort">Most recent quarter <i class="fas fa-sort-alpha-@Model.SortDirQuarter" aria-hidden="true"></i> <span class="sr-only">Sort by Quarter</span></a>
+                                    <select asp-for="@Model.QuarterSearch" asp-items="Model.SelectQuarters" class="form-control mr-sm-2">
+                                        <option value="">All</option>
+                                    </select>
+                                </div>
+                            </th>
+                            @* ADD A COLUMN HERE FOR "NEW"*@
+                            <th>
+                                <div class="btn-group">
+                                    <input class="btn btn-primary" type="submit" value="Apply Filters">
+                                    <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" asp-page="/StudentSearch">Clear filters</a>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var student in Model.StudentData)
+                        {
+                        <tr>
+                            <td><a asp-page="/StudentDetail" asp-route-id="@student.Sid" class="modal-link" data-toggle="modal" data-target="#studDialog">@student.Sid</a></td>
+                            <td>@student.LastName</td>
+                            <td>@student.FirstName</td>
+                            <td>@student.Group</td>
+                            <td>@student.Country</td>
+                            <td>@student.YearQuarterEnrolled</td>
+                            <td>
+                                <a asp-page="/StudentDetail" asp-route-id="@student.Sid" class="modal-link" data-toggle="modal" data-target="#studDialog"><i class="fas fa-external-link-alt"></i> @student.FirstName's Profile</a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </form>
+
+        <!-- Student info modal -->
+        <div class="modal" id="studDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        </div>
+
+        @section Scripts {
+            <script type="text/javascript">
+
+                $(function () {
+                    // empty modal on close so that old data isn't shown when modal is reopened
+                    $('#studDialog').on('hidden.bs.modal', function (event) {
+                        $('#studDialog').find('.modal-content').remove();
+                    });
+                });
+            </script>
+        }
+    </div>
+</div>
