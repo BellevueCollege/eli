@@ -24,6 +24,7 @@ namespace ELI.Models
         public DbSet<Student> Students { get; set; }
         public DbQuery<Quarter> Quarters { get; set; }
         public DbSet<Scores> Scores { get; set; }
+        public DbSet<Levels> Levels { get; set; }
 
         /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -38,6 +39,7 @@ namespace ELI.Models
             //define views for these models
             modelBuilder.Entity<Student>().ToTable("Students");
             modelBuilder.Entity<Scores>().ToTable("Scores");
+            modelBuilder.Entity<Levels>().ToTable("Levels");
             modelBuilder.Query<StudentClassDetail>().ToView("vw_StudentClassDetail");
             modelBuilder.Query<Quarter>().ToView("vw_YearQuarter");
         }
