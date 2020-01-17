@@ -27,7 +27,12 @@ namespace ELI.Pages
             if ( id != null )
             {
                 StudentID = id;
-                Student = _context.Students.Include(s => s.Score).Where(s => s.Sid == StudentID).Single();
+                Student = _context.Students.Where(s => s.Sid == StudentID).Single(); // Get the Student
+                if (Student.StuType == "New") // Check if student is new and include assessment scores
+                {
+                    Student = _context.Students.Include(s => s.Score).Where(s => s.Sid == StudentID).Single();
+                }
+                // List out all student class details
                 StudentClassDetails = _context.StudentClassDetails.Where(s => s.Sid == StudentID).OrderByDescending(s => s.YearQuarterID).ThenBy(s => s.ItemNumber).ToList();
             }
 

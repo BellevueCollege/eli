@@ -71,12 +71,12 @@
                     <div class="card bg-light mb-3">
                         <h2 class="card-header">Assessment scores</h2>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Writing Score: @Model.Student.Score.WriteScore</li>
-                            <li class="list-group-item">Writing Placement: @Model.Student.Score.WritePlacement</li>
-                            <li class="list-group-item">EPT/Reading Score: @Model.Student.Score.EptScore</li>
-                            <li class="list-group-item">EPT/Reading Placement: @Model.Student.Score.EptPlacement</li>
-                            <li class="list-group-item">Speaking Score: @Model.Student.Score.OralScore</li>
-                            <li class="list-group-item">Speaking Placement: @Model.Student.Score.OralPlacement</li>
+                            <li class="list-group-item">Writing Score: @(Model.Student.StuType == "New" && @Model.Student.Score.WriteScore != null ? @Model.Student.Score.WriteScore.ToString(): "0")</li>
+                            <li class="list-group-item">Writing Placement: @(Model.Student.StuType == "New" && @Model.Student.Score.WritePlacement != null ? @Model.Student.Score.WritePlacement.ToString() : "0")</li>
+                            <li class="list-group-item">EPT/Reading Score: @(Model.Student.StuType == "New" && @Model.Student.Score.EptScore != null ? @Model.Student.Score.EptScore.ToString() : "0")</li>
+                            <li class="list-group-item">EPT/Reading Placement: @(Model.Student.StuType == "New" && @Model.Student.Score.EptPlacement != null ? @Model.Student.Score.EptPlacement.ToString() : "0")</li>
+                            <li class="list-group-item">Speaking Score: @(Model.Student.StuType == "New" && @Model.Student.Score.OralScore != null ? @Model.Student.Score.OralScore.ToString() : "0")</li>
+                            <li class="list-group-item">Speaking Placement: @(Model.Student.StuType == "New" && @Model.Student.Score.OralPlacement != null ? @Model.Student.Score.OralPlacement.ToString() : "0")</li>
                         </ul>
                     </div>
                 </div>
