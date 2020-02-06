@@ -12,7 +12,7 @@
 }
 <div class="row">
     <div class="col-md-12 d-flex justify-content-between">
-        <h2>View Classes</h2>
+        <h2>Assign Classes</h2>
         <div class="dropdown mb-3">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="actionsDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Actions
@@ -31,29 +31,29 @@
         <form>
             <input type="hidden" name="sortType" id="sortType" value="@sortInput" />
             <div class="table-responsive">
-                <table class="table table-hover studentsearch">
+                <table class="table table-hover AssignClasses">
                     <thead>
                         <tr>
                             <th>
-                                <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.SidSort">SID <i class="fas fa-sort-numeric-@Model.SortDirSid" aria-hidden="true"></i> <span class="sr-only">Sort by SID</span></a> <input type="text" asp-for="@Model.SidSearch" class="form-control" placeholder="Filter by SID" />
+                                <a asp-page="/AssignClasses" asp-all-route-data="@parms" asp-route-sortType="@Model.SidSort">SID <i class="fas fa-sort-numeric-@Model.SortDirSid" aria-hidden="true"></i> <span class="sr-only">Sort by SID</span></a> <input type="text" asp-for="@Model.SidSearch" class="form-control" placeholder="Filter by SID" />
                             </th>
-                            <th><a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.LnameSort">Last name <i class="fas fa-sort-alpha-@Model.SortDirLname" aria-hidden="true"></i> <span class="sr-only">Sort by Last Name</span></a> <input type="text" asp-for="@Model.LnameSearch" class="form-control" placeholder="Filter by last name" /></th>
-                            <th><a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.FnameSort">First name <i class="fas fa-sort-alpha-@Model.SortDirFname" aria-hidden="true"></i> <span class="sr-only">Sort by First Name</span></a> <input type="text" asp-for="@Model.FnameSearch" class="form-control" placeholder="Filter by first name" /></th>
+                            <th><a asp-page="/AssignClasses" asp-all-route-data="@parms" asp-route-sortType="@Model.LnameSort">Last name <i class="fas fa-sort-alpha-@Model.SortDirLname" aria-hidden="true"></i> <span class="sr-only">Sort by Last Name</span></a> <input type="text" asp-for="@Model.LnameSearch" class="form-control" placeholder="Filter by last name" /></th>
+                            <th><a asp-page="/AssignClasses" asp-all-route-data="@parms" asp-route-sortType="@Model.FnameSort">First name <i class="fas fa-sort-alpha-@Model.SortDirFname" aria-hidden="true"></i> <span class="sr-only">Sort by First Name</span></a> <input type="text" asp-for="@Model.FnameSearch" class="form-control" placeholder="Filter by first name" /></th>
                             <th>
-                                <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.GroupSort">Group <i class="fas fa-sort-alpha-@Model.SortDirGroup" aria-hidden="true"></i> <span class="sr-only">Sort by Group</span></a>
+                                <a asp-page="/AssignClasses" asp-all-route-data="@parms" asp-route-sortType="@Model.GroupSort">Group <i class="fas fa-sort-alpha-@Model.SortDirGroup" aria-hidden="true"></i> <span class="sr-only">Sort by Group</span></a>
                                 <select asp-for="@Model.GroupSearch" asp-items="Model.SelectGroups" class="form-control">
                                     <option value="">All</option>
                                 </select>
                             </th>
                             <th>
-                                <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.CountrySort">Country <i class="fas fa-sort-alpha-@Model.SortDirCountry" aria-hidden="true"></i> <span class="sr-only">Sort by Country</span></a>
+                                <a asp-page="/AssignClasses" asp-all-route-data="@parms" asp-route-sortType="@Model.CountrySort">Country <i class="fas fa-sort-alpha-@Model.SortDirCountry" aria-hidden="true"></i> <span class="sr-only">Sort by Country</span></a>
                                 <select asp-for="@Model.CountrySearch" asp-items="Model.SelectCountries" class="form-control">
                                     <option value="">All</option>
                                 </select>
                             </th>
                             <th>
                                 <div>
-                                    <a asp-page="/StudentSearch" asp-all-route-data="@parms" asp-route-sortType="@Model.QuarterSort">Most recent quarter <i class="fas fa-sort-alpha-@Model.SortDirQuarter" aria-hidden="true"></i> <span class="sr-only">Sort by Quarter</span></a>
+                                    <a asp-page="/AssignClasses" asp-all-route-data="@parms" asp-route-sortType="@Model.QuarterSort">Most recent quarter <i class="fas fa-sort-alpha-@Model.SortDirQuarter" aria-hidden="true"></i> <span class="sr-only">Sort by Quarter</span></a>
                                     <select asp-for="@Model.QuarterSearch" asp-items="Model.SelectQuarters" class="form-control mr-sm-2">
                                         <option value="">All</option>
                                     </select>
@@ -67,7 +67,7 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" asp-page="/StudentSearch">Clear filters</a>
+                                        <a class="dropdown-item" asp-page="/AssignClasses">Clear filters</a>
                                     </div>
                                 </div>
                             </th>
