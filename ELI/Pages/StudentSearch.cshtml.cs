@@ -59,13 +59,7 @@ namespace ELI.Pages
             /** Use IQueryable so additional conditionals can be added before converting to a 
              * collection (at which time the query goes to the db)
              * **/
-            IQueryable<Student> StudentsIQ = _context.Students;
-            /****************NOTE: 
-             * .OrderByDescending(s => s.YearQuarterEnrolled).ThenBy(s => s.LastName).ThenBy(s => s.FirstName);
-             * was intially on the end of the line above(IQueryable<Student> StudentsIQ = _context.Students)
-             * HOWEVER, this was causing the last name sorting issue described in JIRA bug: ER-83 where sorting by lastname requires user to double click to begin sorting functionality.
-             * More research needs to be done to figure out why this snid but of code breaks the lastname sort functionality. 
-           ********************/
+            IQueryable<Student> StudentsIQ = _context.Students.OrderByDescending(s => s.YearQuarterEnrolled).ThenBy(s => s.LastName).ThenBy(s => s.FirstName);
 
             /***
              * get groups, countries, and quarters to fill filter drop downs
@@ -127,7 +121,7 @@ namespace ELI.Pages
              * Now sort data per any inputs 
             ***/
             FnameSort = "fname";
-            LnameSort = "lname";
+            LnameSort = "lname_desc";
             SidSort = "sid";
             GroupSort = "group";
             CountrySort = "country";
@@ -195,7 +189,7 @@ namespace ELI.Pages
             } else
             {
                 FnameSort = "fname";
-                LnameSort = "lname";
+                LnameSort = "lname_desc";
                 SidSort = "sid";
                 GroupSort = "group";
                 CountrySort = "country";

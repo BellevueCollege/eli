@@ -215,7 +215,7 @@ namespace ELI.Pages
 
             // Now sort data per any inputs 
             FnameSort = "fname";
-            LnameSort = "lname";
+            LnameSort = "lname_desc";
             SidSort = "sid";
 
             //used for determining icon direction
@@ -257,7 +257,7 @@ namespace ELI.Pages
             else
             {
                 FnameSort = "fname";
-                LnameSort = "lname";
+                LnameSort = "lname_desc";
                 SidSort = "sid";
             }
 
