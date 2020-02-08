@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Place New Students";
 }
+@*data list contains numerical representations used for Writing and Oral scores  *@
 <datalist id="scores">
     <option value="1-">1-</option>
     <option value="1">1</option>
@@ -23,6 +24,7 @@
 <div class="row">
     <div class="col-md-12 d-flex justify-content-between">
         <h2>Place New Students</h2>
+        @*Action button functionality- sits outside table*@
         <div class="dropdown mb-3">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="actionsDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Actions
@@ -35,6 +37,7 @@
         </div>
     </div>
 </div>
+@*Start of entire table for page*@
 <div class="row">
     <div class="col-md-12">
         <form method="post">
@@ -42,6 +45,7 @@
                 <table class="table table-hover studentsearch">
                     <thead>
                         <tr>
+                            @*Table headers information: contains routes and models for the sort functionality *@
                             <th>
                                 <a asp-page="/PlaceNewStudents" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.SidSort">SID <i class="fas fa-sort-numeric-@Model.SortDirSid" aria-hidden="true"></i> <span class="sr-only">Sort by SID</span></a> <input type="text" asp-for="@Model.SidSearch" class="form-control" placeholder="Filter by SID" />
                             </th>
@@ -51,6 +55,7 @@
                             <th>Writing</th>
                             <th>Oral</th>
                             <th class="d-flex flex-column">
+                                @*Apply/Clear filters & save scores button functionality *@
                                 <div class="btn-group-vertical" role="group" aria-label="Button group to apply, clear filters, and save student scores">
                                     <div class="btn-group" role="group">
                                         <input class="btn btn-primary" type="submit" value="Apply Filters" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.CurrentSortType" asp-page-handler="ApplyFilters" />
@@ -69,32 +74,36 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @*Retriving students to form list*@
                         @for (int i = 0; i < Model.Students.Count; i++)
                         {
                             <tr>
+
                                 <td><a asp-page="/StudentDetail" asp-route-id="@Model.Students[i].Sid" class="modal-link" data-toggle="modal" data-target="#studDialog">@Model.Students[i].Sid</a></td>
                                 <td>@Model.Students[i].LastName</td>
                                 <td>@Model.Students[i].FirstName</td>
                                 <td>
-                                    @* Ept score form group *@
+                                    @* Ept score form group*@
                                     <div class="form-group">
                                         <input type="hidden" asp-for="@Model.Students[i].Sid" />
                                         <label asp-for="@Model.Students[i].Score.EptScore">Score</label>
                                         <input type="number" data-internalid="@i" asp-for="@Model.Students[i].Score.EptScore" class="form-control limited-width" aria-describedby="helpBlock1" />
                                         <span id="helpBlock1" asp-validation-for="@Model.Students[i].Score.EptScore" class="help-block"></span>
-
+                                    </div>
+                                    <div class="form-group">
                                         <label asp-for="@Model.Students[i].Score.EptPlacement">Place</label>
                                         <input type="text" asp-for="@Model.Students[i].Score.EptPlacement" class="form-control limited-width" aria-describedby="helpBlock2" />
                                         <span id="helpBlock2" asp-validation-for="@Model.Students[i].Score.EptPlacement" class="help-block"></span>
                                     </div>
-                                </td>
+                                </td>                                  
                                 <td>
                                     @* Write score form group *@
                                     <div class="form-group">
                                         <label asp-for="@Model.Students[i].Score.WriteScore">Score</label>
                                         <input list="scores" data-internalid="@i" asp-for="@Model.Students[i].Score.WriteScore" class="form-control limited-width" aria-describedby="helpBlock3" />
                                         <span id="helpBlock3" asp-validation-for="@Model.Students[i].Score.WriteScore" class="help-block"></span>
-
+                                    </div>
+                                    <div class="form-group">
                                         <label asp-for="@Model.Students[i].Score.WritePlacement">Place</label>
                                         <input type="text" asp-for="@Model.Students[i].Score.WritePlacement" class="form-control limited-width" aria-describedby="helpBlock4" />
                                         <span id="helpBlock4" asp-validation-for="@Model.Students[i].Score.WritePlacement" class="help-block"></span>
@@ -106,7 +115,8 @@
                                         <label asp-for="@Model.Students[i].Score.OralScore">Score</label>
                                         <input list="scores" data-internalid="@i" asp-for="@Model.Students[i].Score.OralScore" class="form-control limited-width" aria-describedby="helpBlock5" />
                                         <span id="helpBlock5" asp-validation-for="@Model.Students[i].Score.OralScore" class="help-block"></span>
-
+                                    </div>
+                                    <div class="form-group">
                                         <label asp-for="@Model.Students[i].Score.OralPlacement">Place</label>
                                         <input type="text" asp-for="@Model.Students[i].Score.OralPlacement" class="form-control limited-width" aria-describedby="helpBlock6" />
                                         <span id="helpBlock6" asp-validation-for="@Model.Students[i].Score.OralPlacement" class="help-block"></span>
@@ -239,4 +249,6 @@
             $('#studDialog').find('.modal-content').remove();
         });
     });
+    /*Only get student scores for filtered students  */
+    
 </script>
