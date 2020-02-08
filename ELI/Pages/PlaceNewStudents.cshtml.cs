@@ -199,7 +199,7 @@ namespace ELI.Pages
             // Based on input search filters, filter student data
             if (!String.IsNullOrEmpty(LnameSearch))
             {
-                StudentsIQ = StudentsIQ.Where(s => s.LastName.ToLower().StartsWith(LnameSearch.ToLower()));
+                StudentsIQ = StudentsIQ.Where(s => s.LastName.StartsWith(LnameSearch));
                 queryParams.Add("LnameSearch", LnameSearch);
             }
             if (!String.IsNullOrEmpty(SidSearch))
@@ -209,7 +209,7 @@ namespace ELI.Pages
             }
             if (!String.IsNullOrEmpty(FnameSearch))
             {
-                StudentsIQ = StudentsIQ.Where(s => s.FirstName.ToLower().StartsWith(FnameSearch.ToLower()));
+                StudentsIQ = StudentsIQ.Where(s => s.FirstName.StartsWith(FnameSearch));
                 queryParams.Add("FnameSearch", FnameSearch);
             }
 
