@@ -22,9 +22,23 @@ ul#college-top-actions li {
 	text-decoration: none;
 }
 
-	.studentsearch th a span {
-		font-size: 80%;
-	}
+.studentsearch th a span {
+	font-size: 80%;
+}
+
+.studentsearch td .fas.fa-arrow-right {
+	color: green;
+}
+
+.studentsearch td .fas.fa-arrow-left,
+.studentsearch td .fas.fa-sync {
+	color: orange;
+}
+
+.studentsearch td .fas.fa-times-circle {
+	color: red;
+}
+
 
 /** Form styles **/
 .limited-width {

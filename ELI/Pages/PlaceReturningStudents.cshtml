@@ -75,85 +75,133 @@
                                 <td><a asp-page="/StudentDetail" asp-route-id="@Model.Students[i].Sid" class="modal-link" data-toggle="modal" data-target="#studDialog">@Model.Students[i].Sid</a></td>
                                 <td>@Model.Students[i].LastName</td>
                                 <td>@Model.Students[i].FirstName</td>
-                                <td>
-                                    @* Read Score *@
+                                <td class="fas-color">
+                                    @* Reading *@
+
+                                    @* Read level *@
                                     @if (@Model.Students[i].Level.ReadLevel != null)
                                     {
                                         <span>Level <b>@Model.Students[i].Level.ReadLevel</b></span><br>
                                     }
                                     else
                                     {
-                                        <span>Level <b>N/A</b></span><br>
+                                        <span>Level <b>None</b></span><br>
                                     }
+                                    @* Read Grade *@
                                     @if (@Model.Students[i].Level.ReadGrade != null)
                                     {
                                         <span>Grade <b>@Model.Students[i].Level.ReadGrade</b></span><br>
                                     }
                                     else
                                     {
-                                        <span>Grade <b>N/A</b></span><br>
+                                        <span>Grade <b>None</b></span><br>
                                     }
+                                    @* Read Place *@
                                     @if (@Model.Students[i].Level.ReadPlace != null)
                                     {
-                                        @Model.Students[i].Level.ReadPlace
+                                        if (@Model.Students[i].Level.ReadLevel < @Model.Students[i].Level.ReadPlace)
+                                        {
+                                            <span>Place <i class="fas fa-arrow-right"></i> <b>@Model.Students[i].Level.ReadPlace</b></span>
+                                        }
+                                        else if (@Model.Students[i].Level.ReadLevel > @Model.Students[i].Level.ReadPlace)
+                                        {
+                                            <span>Place <i class="fas fa-arrow-left"></i> <b>@Model.Students[i].Level.ReadPlace</b></span>
+                                        }
+                                        else
+                                        {
+                                            <span>Place <i class="fas fa-sync"></i> <b>@Model.Students[i].Level.ReadPlace</b></span>
+                                        }
+
                                     }
                                     else
                                     {
-                                        <span>Not Yet Placed</span>;
+                                        <span>Place <i class="fas fa-times-circle"></i> <b>None</b></span>;
                                     }
                                 </td>
                                 <td>
-                                    @* Write Score *@
+                                    @* Writing *@
+
+                                    @* Write level *@
                                     @if (@Model.Students[i].Level.WriteLevel != null)
                                     {
                                         <span>Level <b>@Model.Students[i].Level.WriteLevel</b></span><br>
                                     }
                                     else
                                     {
-                                        <span>Level <b>N/A</b></span><br>
+                                        <span>Level <b>None</b></span><br>
                                     }
+                                    @* Write Grade *@
                                     @if (@Model.Students[i].Level.WriteGrade != null)
                                     {
                                         <span>Grade <b>@Model.Students[i].Level.WriteGrade</b></span><br>
                                     }
                                     else
                                     {
-                                        <span>Grade <b>N/A</b></span><br>
+                                        <span>Grade <b>None</b></span><br>
                                     }
+                                    @* Write Place *@
                                     @if (@Model.Students[i].Level.WritePlace != null)
                                     {
-                                        @Model.Students[i].Level.WritePlace
+                                        if (@Model.Students[i].Level.WriteLevel < @Model.Students[i].Level.WritePlace)
+                                        {
+                                            <span>Place <i class="fas fa-arrow-right"></i> <b>@Model.Students[i].Level.WritePlace</b></span>
+                                        }
+                                        else if (@Model.Students[i].Level.WriteLevel > @Model.Students[i].Level.WritePlace)
+                                        {
+                                            <span>Place <i class="fas fa-arrow-left"></i> <b>@Model.Students[i].Level.WritePlace</b></span>
+                                        }
+                                        else
+                                        {
+                                            <span>Place <i class="fas fa-sync"></i> <b>@Model.Students[i].Level.WritePlace</b></span>
+                                        }
+
                                     }
                                     else
                                     {
-                                        <span>Not Yet Placed</span>;
+                                        <span>Place <i class="fas fa-times-circle"></i> <b>None</b></span>;
                                     }
                                 </td>
                                 <td>
-                                    @* Speak Score *@
+                                    @* Speaking *@
+
+                                    @* Speak level *@
                                     @if (@Model.Students[i].Level.SpeakLevel != null)
                                     {
                                         <span>Level <b>@Model.Students[i].Level.SpeakLevel</b></span><br>
                                     }
                                     else
                                     {
-                                        <span>Level <b>N/A</b></span><br>
+                                        <span>Level <b>None</b></span><br>
                                     }
+                                    @* Speak Grade *@
                                     @if (@Model.Students[i].Level.SpeakGrade != null)
                                     {
                                         <span>Grade <b>@Model.Students[i].Level.SpeakGrade</b></span><br>
                                     }
                                     else
                                     {
-                                        <span>Grade <b>N/A</b></span><br>
+                                        <span>Grade <b>None</b></span><br>
                                     }
+                                    @* Speak Place *@
                                     @if (@Model.Students[i].Level.SpeakPlace != null)
                                     {
-                                        @Model.Students[i].Level.SpeakPlace
+                                        if (@Model.Students[i].Level.SpeakLevel < @Model.Students[i].Level.SpeakPlace)
+                                        {
+                                            <span>Place <i class="fas fa-arrow-right"></i> <b>@Model.Students[i].Level.SpeakPlace</b></span>
+                                        }
+                                        else if (@Model.Students[i].Level.SpeakLevel > @Model.Students[i].Level.SpeakPlace)
+                                        {
+                                            <span>Place <i class="fas fa-arrow-left"></i> <b>@Model.Students[i].Level.SpeakPlace</b></span>
+                                        }
+                                        else
+                                        {
+                                            <span>Place <i class="fas fa-sync"></i> <b>@Model.Students[i].Level.SpeakPlace</b></span>
+                                        }
+
                                     }
                                     else
                                     {
-                                        <span>Not Yet Placed</span>;
+                                        <span>Place <i class="fas fa-times-circle"></i> <b>None</b></span>;
                                     }
                                 </td>
                                 <td>
