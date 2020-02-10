@@ -43,8 +43,6 @@ namespace ELI.Pages
         {
             SortType = sortType;
             await SetStudents();
-
-
         }
 
         /** Page handler method for filters **/
@@ -54,128 +52,81 @@ namespace ELI.Pages
             await SetStudents();
         }
 
-        /** Page handler method for save scores **/
-        //public async Task OnPostSaveScoresAsync(string sortType)
-        //{
-        //    SortType = sortType;
-        //    if (ModelState.IsValid)
-        //    {
-        //        Utility util = new Utility(_config);
-        //        string modUsername = util.getUsernameFromIdentityName(HttpContext.User.Identity.Name);
+        /** Page handler method for placing students **/
+        public async Task OnPostAutoPlaceStudentsAsync(string sortType)
+        {
+            SortType = sortType;
+            await SetStudents();
 
-        //        //loop through students and add/update scores as necessary
-        //        int i = 0;
-        //        foreach (var student in Students)
-        //        {
-        //            if (student.Score.EptScore == null && student.Score.OralScore == null && student.Score.WriteScore == null)
-        //            {
-        //                //nothing to update, continue
-        //                continue;
-        //            }
+            if (ModelState.IsValid)
+            {
+                //loop through students and add/update scores as necessary
+                int i = 0;
+                foreach (var student in Students)
+                {
+                    if (student.Level.WriteLevel == null && student.Level.ReadLevel == null && student.Level.SpeakLevel == null)
+                    {
+                        //nothing to update, continue
+                        continue;
+                    }
 
-        //            //_logger.LogDebug("student info {0}", JsonConvert.SerializeObject(student));
-        //            var studentToUpdate = await _context.Students.Include(s => s.Score).FirstOrDefaultAsync(s => s.Sid == student.Sid);
+                    var studentToUpdate = await _context.Students.Include(s => s.Level).FirstOrDefaultAsync(s => s.Sid == student.Sid);
 
-        //            //store original scores from database in object to compare to later
-        //            Scores origScores = new Scores{
-        //                                Sid = studentToUpdate.Score.Sid,
-        //                                EptScore = studentToUpdate.Score.EptScore,
-        //                                EptPlacement = studentToUpdate.Score.EptPlacement,
-        //                                OralScore = studentToUpdate.Score.OralScore,
-        //                                OralPlacement = studentToUpdate.Score.OralPlacement,
-        //                                WriteScore = studentToUpdate.Score.WriteScore,
-        //                                WritePlacement = studentToUpdate.Score.WritePlacement
-        //            };
+                    if (studentToUpdate == null)
+                    {
+                        //if the student was removed for whatever reason, just carry on
+                        continue;
+                    }
 
-        //            //_logger.LogDebug("origScores 1: {0}", JsonConvert.SerializeObject(origScores));
-        //            //_logger.LogDebug("form scores 1: {0}", JsonConvert.SerializeObject(student.Score));
-        //            if (studentToUpdate == null)
-        //            {
-        //                //if the student was removed for whatever reason, just carry on
-        //                continue;
-        //            }
-        //            _logger.LogDebug("student score update info {0}", JsonConvert.SerializeObject(studentToUpdate));
+                    // ----- Placement Logic
+                    // If Grade is C- (1.70) & above or Pass (P) then next level
+                    // Else Grade is D+ & below, F, Not Pass, W, HW then repeat/last level
 
-        //            /*** check if values changed and update accordingly ***/
-        //            bool isScoresChanged = studentToUpdate.Score.IsEqualTo(student.Score);
-        //            // Ept score/placement logic
-        //            if ( studentToUpdate.Score.EptScore != student.Score.EptScore )
-        //            {
-        //                studentToUpdate.Score.EptScore = student.Score.EptScore;
-        //                if (student.Score.EptPlacement == null)
-        //                {
-        //                    student.Score.AssignEptPlacement();
-        //                    studentToUpdate.Score.EptPlacement = student.Score.EptPlacement;
-        //                }
-        //            }
-        //            if ( studentToUpdate.Score.EptPlacement != student.Score.EptPlacement)
-        //            {
-        //                studentToUpdate.Score.EptPlacement = student.Score.EptPlacement;
-        //            }
+                    // Reading
+                    if ((student.Level.ReadLevel < 5 && student.Level.ReadGradePoint >= 1.70M) || (student.Level.ReadGrade == "P"))
+                    {
+                        studentToUpdate.Level.ReadPlace = student.Level.ReadLevel + 1;
+                        //_logger.LogDebug("set read level: {0}", studentToUpdate.Level.ReadPlace);
+                    }
+                    else
+                    {
+                        studentToUpdate.Level.ReadPlace = student.Level.ReadLevel;
+                        //_logger.LogDebug("set read level: {0}", studentToUpdate.Level.ReadPlace);
+                    }
 
-        //            // Oral score/placement logic
-        //            if (studentToUpdate.Score.OralScore != student.Score.OralScore)
-        //            {
-        //                studentToUpdate.Score.OralScore = student.Score.OralScore;
-        //                if (student.Score.OralPlacement == null)
-        //                {
-        //                    student.Score.AssignOralPlacement();
-        //                    studentToUpdate.Score.OralPlacement = student.Score.OralPlacement;
-        //                }
-        //            }
-        //            if (studentToUpdate.Score.OralPlacement != student.Score.OralPlacement)
-        //            {
-        //                studentToUpdate.Score.OralPlacement = student.Score.OralPlacement;
-        //            }
+                    // Writing
+                    if ((student.Level.WriteLevel < 5 && student.Level.WriteGradePoint >= 1.70M) || (student.Level.WriteGrade == "P"))
+                    {
+                        studentToUpdate.Level.WritePlace = student.Level.WriteLevel + 1;
+                        //_logger.LogDebug("set write level: {0}", studentToUpdate.Level.WritePlace);
+                    }
+                    else
+                    {
+                        studentToUpdate.Level.WritePlace = student.Level.WriteLevel;
+                        //_logger.LogDebug("set write level: {0}", studentToUpdate.Level.WritePlace);
+                    }
 
-        //            // Written score/placement logic
-        //            if (studentToUpdate.Score.WriteScore != student.Score.WriteScore)
-        //            {
-        //                studentToUpdate.Score.WriteScore = student.Score.WriteScore;
-        //                if (student.Score.WritePlacement == null)
-        //                {
-        //                    student.Score.AssignWritePlacement();
-        //                    studentToUpdate.Score.WritePlacement = student.Score.WritePlacement;
-        //                }
-        //            }
-        //            if (studentToUpdate.Score.WritePlacement != student.Score.WritePlacement)
-        //            {
-        //                studentToUpdate.Score.WritePlacement = student.Score.WritePlacement;
-        //            }
+                    // Speaking
+                    if ((student.Level.SpeakLevel < 5 && student.Level.SpeakGradePoint >= 1.70M) || (student.Level.SpeakGrade == "P"))
+                    {
+                        studentToUpdate.Level.SpeakPlace = student.Level.SpeakLevel + 1;
+                        //_logger.LogDebug("set speak level: {0}", studentToUpdate.Level.SpeakPlace);
+                    }
+                    else
+                    {
+                        studentToUpdate.Level.SpeakPlace = student.Level.SpeakLevel;
+                        //_logger.LogDebug("set speak level: {0}", studentToUpdate.Level.SpeakPlace);
+                    }
 
-        //            //_logger.LogDebug("origScores 2: {0}", JsonConvert.SerializeObject(origScores));
-        //            //_logger.LogDebug("form scores 2: {0}", JsonConvert.SerializeObject(student.Score));
-        //            // data has changed so set modify updates
-        //            if (! origScores.IsEqualTo(student.Score))
-        //            {
-        //                _logger.LogDebug("SID: {0} - scores aren't equal so set modify info.", studentToUpdate.Sid);
-        //                studentToUpdate.Score.ModifyDt = DateTime.Now;
-        //                studentToUpdate.Score.ModifyUsername = modUsername;
-        //                _context.Students.Update(studentToUpdate);
-        //            }
+                    _context.Students.Update(studentToUpdate);
+                    i++;
+                }
 
-        //            // Update model
-        //            /*if ( await TryUpdateModelAsync<Scores>(
-        //                studentToUpdate.Score,
-        //                String.Format("Students[{0}].Score", i),
-        //                s => s.EptScore,  s => s.EptPlacement, s => s.OralScore, 
-        //                s => s.OralPlacement, s => s.WriteScore, s => s.WritePlacement) )
-        //            {*/
-
-        //            /*}*/
-        //            //_logger.LogDebug("success {0}", success);
-
-        //            i++;
-        //        }
-
-        //        //process post info
-        //        await _context.SaveChangesAsync();
-        //        await SetStudents();
-
-        //return RedirectToPage();
-
-        //    }
-        // }
+                //process post info
+                await _context.SaveChangesAsync();
+                await SetStudents(); //shows list of students
+            }
+        }
 
         private async Task SetStudents()
         {
@@ -197,7 +148,7 @@ namespace ELI.Pages
                                               where s.StuType == StudentType.Returning
                                               && s.YearQuarterEnrolled == quar.Id
                                               orderby s.LastName, s.FirstName      //default ordering
-                                              select s).Include(st => st.Level).Where(st => st.Level.YearQuarterID == quar.Id );
+                                              select s).Include(st => st.Level);
 
             // Based on input search filters, filter student data
             if (!String.IsNullOrEmpty(LnameSearch))
