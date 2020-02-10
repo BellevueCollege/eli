@@ -148,7 +148,7 @@ namespace ELI.Pages
                                               where s.StuType == StudentType.Returning
                                               && s.YearQuarterEnrolled == quar.Id
                                               orderby s.LastName, s.FirstName      //default ordering
-                                              select s).Include(st => st.Level);
+                                              select s).Include(st => st.Level).Where(st => st.Level != null);
 
             // Based on input search filters, filter student data
             if (!String.IsNullOrEmpty(LnameSearch))
