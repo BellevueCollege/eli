@@ -27,7 +27,6 @@ namespace ELI.Models
         public DateTime AddDate { get; private set; }
         public DateTime ModifyDate { get; set; }
         public Scores Score { get; set; }
-        [ForeignKey("SID")]
         public Levels Level { get; set; }
     }    
 }
