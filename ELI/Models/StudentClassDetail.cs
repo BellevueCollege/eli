@@ -15,10 +15,9 @@ namespace ELI.Models
         public string ItemNumber { get; private set; }
         public string ClassID { get; private set; }
         public string CourseTitle { get; private set; }
-        public string Category { get; private set; }
-        public int? Level { get; private set; }
-        public string GradeID { get; private set; }
         public string InstructorName { get; private set; }
+        public string GradeID { get; private set; }
+
 
     }
 }
