@@ -3,23 +3,6 @@
 @{
     ViewData["Title"] = "Place Returning Students";
 }
-<datalist id="scores">
-    <option value="1-">1-</option>
-    <option value="1">1</option>
-    <option value="1+">1+</option>
-    <option value="2-">2-</option>
-    <option value="2">2</option>
-    <option value="2+">2+</option>
-    <option value="3-">3-</option>
-    <option value="3">3</option>
-    <option value="3+">3+</option>
-    <option value="4-">4-</option>
-    <option value="4">4</option>
-    <option value="4+">4+</option>
-    <option value="5-">5-</option>
-    <option value="5">5</option>
-    <option value="5+">5+</option>
-</datalist>
 <div class="row">
     <div class="col-md-12 d-flex justify-content-between">
         <h2>Place Returning Students</h2>
@@ -75,7 +58,7 @@
                                 <td><a asp-page="/StudentDetail" asp-route-id="@Model.Students[i].Sid" class="modal-link" data-toggle="modal" data-target="#studDialog">@Model.Students[i].Sid</a></td>
                                 <td>@Model.Students[i].LastName</td>
                                 <td>@Model.Students[i].FirstName</td>
-                                <td class="fas-color">
+                                <td>
                                     @* Reading *@
 
                                     @* Read level *@
@@ -101,21 +84,25 @@
                                     {
                                         if (@Model.Students[i].Level.ReadLevel < @Model.Students[i].Level.ReadPlace)
                                         {
-                                            <span>Place <i class="fas fa-arrow-right"></i> <b>@Model.Students[i].Level.ReadPlace</b></span>
+                                            <span title="Placed in next level @Model.Students[i].Level.ReadPlace">Place <i class="fas fa-arrow-right"></i> <b>@Model.Students[i].Level.ReadPlace</b></span>
                                         }
                                         else if (@Model.Students[i].Level.ReadLevel > @Model.Students[i].Level.ReadPlace)
                                         {
-                                            <span>Place <i class="fas fa-arrow-left"></i> <b>@Model.Students[i].Level.ReadPlace</b></span>
+                                            <span title="Placed in previous level @Model.Students[i].Level.ReadPlace">Place <i class="fas fa-arrow-left"></i> <b>@Model.Students[i].Level.ReadPlace</b></span>
+                                        }
+                                        else if (@Model.Students[i].Level.ReadLevel == 5)
+                                        {
+                                            <span title="Completed Reading">Place <i class="fas fa-check"></i> <b>@Model.Students[i].Level.ReadPlace</b></span>
                                         }
                                         else
                                         {
-                                            <span>Place <i class="fas fa-sync"></i> <b>@Model.Students[i].Level.ReadPlace</b></span>
+                                            <span title="Placed to repeat level @Model.Students[i].Level.ReadPlace">Place <i class="fas fa-sync"></i> <b>@Model.Students[i].Level.ReadPlace</b></span>
                                         }
 
                                     }
                                     else
                                     {
-                                        <span>Place <i class="fas fa-times-circle"></i> <b>None</b></span>;
+                                        <span title="No placement because there are no previous levels">Place <i class="fas fa-times-circle"></i> <b>None</b></span>;
                                     }
                                 </td>
                                 <td>
@@ -144,21 +131,25 @@
                                     {
                                         if (@Model.Students[i].Level.WriteLevel < @Model.Students[i].Level.WritePlace)
                                         {
-                                            <span>Place <i class="fas fa-arrow-right"></i> <b>@Model.Students[i].Level.WritePlace</b></span>
+                                            <span title="Placed in next level @Model.Students[i].Level.WritePlace">Place <i class="fas fa-arrow-right"></i> <b>@Model.Students[i].Level.WritePlace</b></span>
                                         }
                                         else if (@Model.Students[i].Level.WriteLevel > @Model.Students[i].Level.WritePlace)
                                         {
-                                            <span>Place <i class="fas fa-arrow-left"></i> <b>@Model.Students[i].Level.WritePlace</b></span>
+                                            <span title="Placed in previous level @Model.Students[i].Level.WritePlace">Place <i class="fas fa-arrow-left"></i> <b>@Model.Students[i].Level.WritePlace</b></span>
+                                        }
+                                        else if (@Model.Students[i].Level.WriteLevel == 5)
+                                        {
+                                            <span title="Completed Writing">Place <i class="fas fa-check"></i> <b>@Model.Students[i].Level.WritePlace</b></span>
                                         }
                                         else
                                         {
-                                            <span>Place <i class="fas fa-sync"></i> <b>@Model.Students[i].Level.WritePlace</b></span>
+                                            <span title="Placed to repeat level @Model.Students[i].Level.WritePlace">Place <i class="fas fa-sync"></i> <b>@Model.Students[i].Level.WritePlace</b></span>
                                         }
 
                                     }
                                     else
                                     {
-                                        <span>Place <i class="fas fa-times-circle"></i> <b>None</b></span>;
+                                        <span title="No placement because there are no previous levels">Place <i class="fas fa-times-circle"></i> <b>None</b></span>;
                                     }
                                 </td>
                                 <td>
@@ -187,21 +178,25 @@
                                     {
                                         if (@Model.Students[i].Level.SpeakLevel < @Model.Students[i].Level.SpeakPlace)
                                         {
-                                            <span>Place <i class="fas fa-arrow-right"></i> <b>@Model.Students[i].Level.SpeakPlace</b></span>
+                                            <span title="Placed in next level @Model.Students[i].Level.SpeakPlace">Place <i class="fas fa-arrow-right"></i> <b>@Model.Students[i].Level.SpeakPlace</b></span>
                                         }
                                         else if (@Model.Students[i].Level.SpeakLevel > @Model.Students[i].Level.SpeakPlace)
                                         {
-                                            <span>Place <i class="fas fa-arrow-left"></i> <b>@Model.Students[i].Level.SpeakPlace</b></span>
+                                            <span title="Placed in previous level @Model.Students[i].Level.SpeakPlace">Place <i class="fas fa-arrow-left"></i> <b>@Model.Students[i].Level.SpeakPlace</b></span>
+                                        }
+                                        else if (@Model.Students[i].Level.SpeakLevel == 5)
+                                        {
+                                            <span title="Completed Speaking">Place <i class="fas fa-check"></i> <b>@Model.Students[i].Level.SpeakPlace</b></span>
                                         }
                                         else
                                         {
-                                            <span>Place <i class="fas fa-sync"></i> <b>@Model.Students[i].Level.SpeakPlace</b></span>
+                                            <span title="Placed to repeat level @Model.Students[i].Level.SpeakPlace">Place <i class="fas fa-sync"></i> <b>@Model.Students[i].Level.SpeakPlace</b></span>
                                         }
 
                                     }
                                     else
                                     {
-                                        <span>Place <i class="fas fa-times-circle"></i> <b>None</b></span>;
+                                        <span title="No placement because there are no previous levels">Place <i class="fas fa-times-circle"></i> <b>None</b></span>;
                                     }
                                 </td>
                                 <td>
@@ -210,17 +205,6 @@
                             </tr>
                         }
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th colspan="7">
-                                <div class="d-flex flex-row-reverse">
-                                    <button type="submit" class="btn btn-success" asp-all-route-data="@Model.QueryParams" asp-page-handler="SaveScores">
-                                        <i class="fas fa-save" aria-hidden="true"></i> Save scores
-                                    </button>
-                                </div>
-                            </th>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
 

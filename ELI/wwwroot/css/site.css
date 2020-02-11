@@ -26,7 +26,8 @@ ul#college-top-actions li {
 	font-size: 80%;
 }
 
-.studentsearch td .fas.fa-arrow-right {
+.studentsearch td .fas.fa-arrow-right, 
+.studentsearch td .fas.fa-check {
 	color: green;
 }
 
