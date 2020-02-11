@@ -13,7 +13,6 @@ namespace ELI.Models
         public string Sid { get; private set; }
         public string YearQuarterID { get; private set; }
         public string ItemNumber { get; private set; }
-        public string ClassID { get; private set; }
         public string CourseTitle { get; private set; }
         public string InstructorName { get; private set; }
         public string GradeID { get; private set; }
