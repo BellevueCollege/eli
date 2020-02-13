@@ -14,6 +14,10 @@
                 <a class="dropdown-item" asp-page="/StudentSearch">View All Students</a>
                 <a class="dropdown-item" asp-page="/PlaceNewStudents">Place New Students</a>
                 <a class="dropdown-item active" asp-page="/PlaceReturningStudents/Index">Place Returning Students</a>
+                @if (@Model.isStudentsPlaced == true)
+                {
+                    <a class="dropdown-item dropdown-item-nested" asp-page="/PlaceReturningStudents/EditPlacements">Edit Placements</a>
+                }
             </div>
         </div>
     </div>
@@ -21,6 +25,24 @@
 <div class="row">
     <div class="col-md-12">
         <form method="post">
+            <div class="d-flex justify-content-end mb-3">
+                @if (@Model.isStudentsPlaced == true)
+                {
+                    <a class="btn btn-warning mr-3" asp-page="/PlaceReturningStudents/EditPlacements">
+                        <i class="fas fa-edit pr-1" aria-hidden="true"></i> Edit Placements
+                    </a>
+                    <button type="submit" class="btn btn-success" asp-all-route-data="@Model.QueryParams" asp-page-handler="AutoPlaceStudents">
+                        <i class="fas fa-sync pr-1" aria-hidden="true"></i> Re-Place Students
+                    </button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-success" asp-all-route-data="@Model.QueryParams" asp-page-handler="AutoPlaceStudents">
+                        <i class="fas fa-save pr-1" aria-hidden="true"></i> Auto-Place Students
+                    </button>
+                }
+
+            </div>
             <div class="table-responsive">
                 <table class="table table-hover studentsearch">
                     <thead>
@@ -33,7 +55,7 @@
                             <th>Reading</th>
                             <th>Writing</th>
                             <th>Speaking</th>
-                            <th class="d-flex flex-column">
+                            <th>
                                 <div class="btn-group-vertical" role="group" aria-label="Button group to apply, clear filters, and save student scores">
                                     <div class="btn-group" role="group">
                                         <input class="btn btn-primary" type="submit" value="Apply Filters" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.CurrentSortType" asp-page-handler="ApplyFilters" />
@@ -44,9 +66,6 @@
                                             <a class="dropdown-item" asp-page="/PlaceReturningStudents">Clear filters</a>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-success" asp-all-route-data="@Model.QueryParams" asp-page-handler="AutoPlaceStudents">
-                                        <i class="fas fa-save pr-1" aria-hidden="true"></i> Auto-Place Students
-                                    </button>
                                 </div>
                             </th>
                         </tr>

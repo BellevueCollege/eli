@@ -60,3 +60,7 @@ ul#college-top-actions li {
 		display: table;
 	}
 }
+
+a.dropdown-item.dropdown-item-nested {
+	padding-left: 4em;
+}

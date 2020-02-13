@@ -39,10 +39,22 @@ namespace ELI.Pages
         public string SortType { get; set; }
         public string CurrentSortType { get; set; }
         public Dictionary<string, string> QueryParams { get; set; }
+        
+        public bool isStudentsPlaced { get; set; }
         public async Task OnGetAsync(string sortType)
         {
             SortType = sortType;
             await SetStudents();
+
+            // Checks to see if at any student has been placed already, so that the Edit Returning Placements button is shown
+            foreach (var student in Students)
+            {
+                if (student.Level.WritePlace != null && student.Level.ReadPlace != null && student.Level.SpeakPlace != null)
+                {
+                    isStudentsPlaced = true;
+                    break;
+                }
+            }
         }
 
         /** Page handler method for filters **/
@@ -125,6 +137,8 @@ namespace ELI.Pages
                 //process post info
                 await _context.SaveChangesAsync();
                 await SetStudents(); //shows list of students
+
+                //isStudentsPlaced = true;
             }
         }
 
