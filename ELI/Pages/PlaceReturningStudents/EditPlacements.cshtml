@@ -1,0 +1,253 @@
+﻿@page "{handler?}"
+@model ELI.Pages.EditPlacementsModel
+@{
+    ViewData["Title"] = "Edit Returning Students Placements";
+}
+<div class="row">
+    <div class="col-md-12 d-flex justify-content-between">
+        <h2>Edit Returning Students Placements</h2>
+        <div class="dropdown mb-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="actionsDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Actions
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionsDropdownMenu">
+                <a class="dropdown-item" asp-page="/StudentSearch">View All Students</a>
+                <a class="dropdown-item" asp-page="/PlaceNewStudents">Place New Students</a>
+                <a class="dropdown-item" asp-page="/PlaceReturningStudents/Index">Place Returning Students</a>
+                <a class="dropdown-item active dropdown-item-nested" asp-page="/PlaceReturningStudents/EditPlacements">Edit Placements</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div class="d-flex justify-content-end mb-3">
+                <button type="submit" class="btn btn-success mr-3" asp-all-route-data="@Model.QueryParams" asp-page-handler="SaveNewPlacements">
+                    <i class="fas fa-save pr-1" aria-hidden="true"></i> Save New Placements
+                </button>
+                <button type="submit" class="btn btn-outline-success" asp-all-route-data="@Model.QueryParams" asp-page-handler="AutoPlaceStudents">
+                    <i class="fas fa-sync pr-1" aria-hidden="true"></i> Re-Place Students
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover studentsearch">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a asp-page="/PlaceReturningStudents/EditPlacements" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.SidSort">SID <i class="fas fa-sort-numeric-@Model.SortDirSid" aria-hidden="true"></i> <span class="sr-only">Sort by SID</span></a> <input type="text" asp-for="@Model.SidSearch" class="form-control" placeholder="Filter by SID" />
+                            </th>
+                            <th><a asp-page="/PlaceReturningStudents/EditPlacements" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.LnameSort">Last name <i class="fas fa-sort-alpha-@Model.SortDirLname" aria-hidden="true"></i> <span class="sr-only">Sort by Last Name</span></a> <input type="text" asp-for="@Model.LnameSearch" class="form-control" placeholder="Filter by last name" /></th>
+                            <th><a asp-page="/PlaceReturningStudents/EditPlacements" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.FnameSort">First name <i class="fas fa-sort-alpha-@Model.SortDirFname" aria-hidden="true"></i> <span class="sr-only">Sort by First Name</span></a> <input type="text" asp-for="@Model.FnameSearch" class="form-control" placeholder="Filter by first name" /></th>
+                            <th>Reading</th>
+                            <th>Writing</th>
+                            <th>Speaking</th>
+                            <th>
+                                <div class="btn-group-vertical" role="group" aria-label="Button group to apply, clear filters, and save student scores">
+                                    <div class="btn-group" role="group">
+                                        <input class="btn btn-primary" type="submit" value="Apply Filters" asp-all-route-data="@Model.QueryParams" asp-route-sortType="@Model.CurrentSortType" asp-page-handler="ApplyFilters" />
+                                        <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" asp-page="/PlaceReturningStudents/EditPlacements">Clear filters</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Students.Count; i++)
+                        {
+                            <tr>
+                                <td><a asp-page="/StudentDetail" asp-route-id="@Model.Students[i].Sid" class="modal-link" data-toggle="modal" data-target="#studDialog">@Model.Students[i].Sid</a></td>
+                                <td>@Model.Students[i].LastName</td>
+                                <td>@Model.Students[i].FirstName</td>
+                                <td>
+                                    @* Reading *@
+
+                                    @* Read level *@
+                                    @if (@Model.Students[i].Level.ReadLevel != null)
+                                    {
+                                        <span>Level <b>@Model.Students[i].Level.ReadLevel</b></span><br>
+                                    }
+                                    else
+                                    {
+                                        <span>Level <b>None</b></span><br>
+                                    }
+                                    @* Read Grade *@
+                                    @if (@Model.Students[i].Level.ReadGrade != null)
+                                    {
+                                        <span>Grade <b>@Model.Students[i].Level.ReadGrade</b></span><br>
+                                    }
+                                    else
+                                    {
+                                        <span>Grade <b>None</b></span><br>
+                                    }
+                                    @* Read Place *@
+                                    @if (@Model.Students[i].Level.ReadPlace != null)
+                                    {
+                                        if (@Model.Students[i].Level.ReadLevel < @Model.Students[i].Level.ReadPlace)
+                                        {
+                                            <span title="Placed in next level @Model.Students[i].Level.ReadPlace">Place <i class="fas fa-arrow-right"></i> <b>@Model.Students[i].Level.ReadPlace</b></span>
+                                        }
+                                        else if (@Model.Students[i].Level.ReadLevel > @Model.Students[i].Level.ReadPlace)
+                                        {
+                                            <span title="Placed in previous level @Model.Students[i].Level.ReadPlace">Place <i class="fas fa-arrow-left"></i> <b>@Model.Students[i].Level.ReadPlace</b></span>
+                                        }
+                                        else if (@Model.Students[i].Level.ReadLevel == 5)
+                                        {
+                                            <span title="Completed Reading">Place <i class="fas fa-check"></i> <b>@Model.Students[i].Level.ReadPlace</b></span>
+                                        }
+                                        else
+                                        {
+                                            <span title="Placed to repeat level @Model.Students[i].Level.ReadPlace">Place <i class="fas fa-sync"></i> <b>@Model.Students[i].Level.ReadPlace</b></span>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <span title="No placement because there are no previous levels">Place <i class="fas fa-times-circle"></i> <b>None</b></span>;
+                                    }
+                                </td>
+                                <td>
+                                    @* Writing *@
+
+                                    @* Write level *@
+                                    @if (@Model.Students[i].Level.WriteLevel != null)
+                                    {
+                                        <span>Level <b>@Model.Students[i].Level.WriteLevel</b></span><br>
+                                    }
+                                    else
+                                    {
+                                        <span>Level <b>None</b></span><br>
+                                    }
+                                    @* Write Grade *@
+                                    @if (@Model.Students[i].Level.WriteGrade != null)
+                                    {
+                                        <span>Grade <b>@Model.Students[i].Level.WriteGrade</b></span><br>
+                                    }
+                                    else
+                                    {
+                                        <span>Grade <b>None</b></span><br>
+                                    }
+                                    @* Write Place *@
+                                    @if (@Model.Students[i].Level.WritePlace != null)
+                                    {
+                                        if (@Model.Students[i].Level.WriteLevel < @Model.Students[i].Level.WritePlace)
+                                        {
+                                            <span title="Placed in next level @Model.Students[i].Level.WritePlace">Place <i class="fas fa-arrow-right"></i> <b>@Model.Students[i].Level.WritePlace</b></span>
+                                        }
+                                        else if (@Model.Students[i].Level.WriteLevel > @Model.Students[i].Level.WritePlace)
+                                        {
+                                            <span title="Placed in previous level @Model.Students[i].Level.WritePlace">Place <i class="fas fa-arrow-left"></i> <b>@Model.Students[i].Level.WritePlace</b></span>
+                                        }
+                                        else if (@Model.Students[i].Level.WriteLevel == 5)
+                                        {
+                                            <span title="Completed Writing">Place <i class="fas fa-check"></i> <b>@Model.Students[i].Level.WritePlace</b></span>
+                                        }
+                                        else
+                                        {
+                                            <span title="Placed to repeat level @Model.Students[i].Level.WritePlace">Place <i class="fas fa-sync"></i> <b>@Model.Students[i].Level.WritePlace</b></span>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <span title="No placement because there are no previous levels">Place <i class="fas fa-times-circle"></i> <b>None</b></span>;
+                                    }
+                                </td>
+                                <td>
+                                    @* Speaking *@
+
+                                    @* Speak level *@
+                                    @if (@Model.Students[i].Level.SpeakLevel != null)
+                                    {
+                                        <span>Level <b>@Model.Students[i].Level.SpeakLevel</b></span><br>
+                                    }
+                                    else
+                                    {
+                                        <span>Level <b>None</b></span><br>
+                                    }
+                                    @* Speak Grade *@
+                                    @if (@Model.Students[i].Level.SpeakGrade != null)
+                                    {
+                                        <span>Grade <b>@Model.Students[i].Level.SpeakGrade</b></span><br>
+                                    }
+                                    else
+                                    {
+                                        <span>Grade <b>None</b></span><br>
+                                    }
+                                    @* Speak Place *@
+                                    @if (@Model.Students[i].Level.SpeakPlace != null)
+                                    {
+                                        if (@Model.Students[i].Level.SpeakLevel < @Model.Students[i].Level.SpeakPlace)
+                                        {
+                                            <span title="Placed in next level @Model.Students[i].Level.SpeakPlace">Place <i class="fas fa-arrow-right"></i> <b>@Model.Students[i].Level.SpeakPlace</b></span>
+                                        }
+                                        else if (@Model.Students[i].Level.SpeakLevel > @Model.Students[i].Level.SpeakPlace)
+                                        {
+                                            <span title="Placed in previous level @Model.Students[i].Level.SpeakPlace">Place <i class="fas fa-arrow-left"></i> <b>@Model.Students[i].Level.SpeakPlace</b></span>
+                                        }
+                                        else if (@Model.Students[i].Level.SpeakLevel == 5)
+                                        {
+                                            <span title="Completed Speaking">Place <i class="fas fa-check"></i> <b>@Model.Students[i].Level.SpeakPlace</b></span>
+                                        }
+                                        else
+                                        {
+                                            <span title="Placed to repeat level @Model.Students[i].Level.SpeakPlace">Place <i class="fas fa-sync"></i> <b>@Model.Students[i].Level.SpeakPlace</b></span>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <span title="No placement because there are no previous levels">Place <i class="fas fa-times-circle"></i> <b>None</b></span>;
+                                    }
+                                </td>
+                                <td>
+                                    <a asp-page="/StudentDetail" asp-route-id="@Model.Students[i].Sid" class="modal-link" data-toggle="modal" data-target="#studDialog"><i class="fas fa-external-link-alt"></i> @Model.Students[i].FirstName's Profile</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+
+        </form>
+
+        <!-- Student info modal -->
+        <div class="modal" id="studDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                @*StudentDetail modal-content gets placed here*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        /*** Bootstrap 4 Modal for Student Details ***/
+        $('#studDialog').on('show.bs.modal', function (event) {
+            var link = $(event.relatedTarget);
+            var openpage = link.attr("href");
+
+            $("#studDialog .modal-dialog").load(openpage + " .modal-content", function (response, status, xhr) {
+                if (status == "error") {
+                    $('#studDialog').modal('hide');
+                    alert("Error: Unable to retrieve student data.\n" + "Error code " + xhr.status + "\n" + xhr.statusText);
+                }
+            });
+        });
+
+        // empty modal on close so that old data isn't shown when modal is reopened
+        $('#studDialog').on('hidden.bs.modal', function (event) {
+            $('#studDialog').find('.modal-content').remove();
+        });
+    });
+</script>
