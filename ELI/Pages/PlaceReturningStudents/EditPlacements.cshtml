@@ -110,6 +110,11 @@
                                     {
                                         <span title="No placement because there are no previous levels">Place <i class="fas fa-times-circle"></i> <b>None</b></span>;
                                     }
+
+                                    <input type="hidden" asp-for="@Model.Students[i].Sid" />
+                                    <label asp-for="@Model.Students[i].Level.ReadPlace">Override</label>
+                                    <input type="number" min="1" max="5" data-internalid="@i" asp-for="@Model.Students[i].Level.ReadPlace" class="form-control limited-width" aria-describedby="helpBlock1" />
+                                    <span id="helpBlock1" asp-validation-for="@Model.Students[i].Level.ReadPlace" class="help-block"></span>
                                 </td>
                                 <td>
                                     @* Writing *@
@@ -157,6 +162,11 @@
                                     {
                                         <span title="No placement because there are no previous levels">Place <i class="fas fa-times-circle"></i> <b>None</b></span>;
                                     }
+
+                                    <input type="hidden" asp-for="@Model.Students[i].Sid" />
+                                    <label asp-for="@Model.Students[i].Level.WritePlace">Override</label>
+                                    <input type="number" min="1" max="5" data-internalid="@i" asp-for="@Model.Students[i].Level.WritePlace" class="form-control limited-width" aria-describedby="helpBlock2" />
+                                    <span id="helpBlock2" asp-validation-for="@Model.Students[i].Level.WritePlace" class="help-block"></span>
                                 </td>
                                 <td>
                                     @* Speaking *@
@@ -204,6 +214,11 @@
                                     {
                                         <span title="No placement because there are no previous levels">Place <i class="fas fa-times-circle"></i> <b>None</b></span>;
                                     }
+
+                                    <input type="hidden" asp-for="@Model.Students[i].Sid" />
+                                    <label asp-for="@Model.Students[i].Level.SpeakPlace">Override</label>
+                                    <input type="number" min="1" max="5" data-internalid="@i" asp-for="@Model.Students[i].Level.SpeakPlace" class="form-control limited-width" aria-describedby="helpBlock3" />
+                                    <span id="helpBlock3" asp-validation-for="@Model.Students[i].Level.SpeakPlace" class="help-block"></span>
                                 </td>
                                 <td>
                                     <a asp-page="/StudentDetail" asp-route-id="@Model.Students[i].Sid" class="modal-link" data-toggle="modal" data-target="#studDialog"><i class="fas fa-external-link-alt"></i> @Model.Students[i].FirstName's Profile</a>
