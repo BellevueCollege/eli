@@ -130,6 +130,93 @@ namespace ELI.Pages
             }
         }
 
+        /** Page handler method for save scores **/
+        public async Task OnPostSaveNewPlacementsAsync(string sortType)
+        {
+            SortType = sortType;
+
+            if (ModelState.IsValid)
+            {
+
+                //loop through students and add/update scores as necessary
+                int i = 0;
+                foreach (var student in Students)
+                {
+                    if (student.Level.WritePlace == null && student.Level.ReadPlace == null && student.Level.SpeakPlace == null)
+                    {
+                        //nothing to update, continue
+                        continue;
+                    }
+
+                    // Get student
+                    var studentToUpdate = await _context.Students.Include(s => s.Level).FirstOrDefaultAsync(s => s.Sid == student.Sid);
+
+                    // Store original level placements from database in object to compare to later
+                    Levels origLevels = new Levels
+                    {
+                        Sid = studentToUpdate.Level.Sid,
+                        ReadPlace = studentToUpdate.Level.ReadPlace,
+                        WritePlace = studentToUpdate.Level.WritePlace,
+                        SpeakPlace = studentToUpdate.Level.SpeakPlace,
+                    };
+
+                    // Store new level placements to compare from original levels
+                    Levels newLevels = new Levels
+                    {
+                        Sid = student.Level.Sid,
+                        ReadPlace = student.Level.ReadPlace,
+                        WritePlace = student.Level.WritePlace,
+                        SpeakPlace = student.Level.SpeakPlace,
+                    };
+
+                    if (studentToUpdate == null)
+                    {
+                        // If the student was removed for whatever reason, just carry on
+                        continue;
+                    }
+
+                    if (origLevels.IsEqualTo(newLevels))
+                    {
+                        // If new levels are same as old levels, then continue onto next student
+                        continue;
+                    }
+
+                    // Check if placements are different and if true then set studentToUpdate with new placement
+
+                    // Reading logic
+                    if (studentToUpdate.Level.ReadPlace != student.Level.ReadPlace)
+                    {
+                        studentToUpdate.Level.ReadPlace = student.Level.ReadPlace;
+                    }
+
+                    // Writing logic
+                    if (studentToUpdate.Level.WritePlace != student.Level.WritePlace)
+                    {
+                        studentToUpdate.Level.WritePlace = student.Level.WritePlace;
+                    }
+
+                    // Speaking logic
+                    if (studentToUpdate.Level.SpeakPlace != student.Level.SpeakPlace)
+                    {
+                        studentToUpdate.Level.SpeakPlace = student.Level.SpeakPlace;
+                    }
+
+                    // data has changed so set modify updates
+                    if (!origLevels.IsEqualTo(newLevels))
+                    {
+                        //_logger.LogDebug("Sid: {0} - scores aren't equal so set modify info.", studentToUpdate.Sid);
+                        _context.Students.Update(studentToUpdate);
+                    }
+
+                    i++;
+                }
+
+                //process post info
+                await _context.SaveChangesAsync();
+                await SetStudents();
+            }
+        }
+
         private async Task SetStudents()
         {
             Quarter quar = GetSelectedQuarter();

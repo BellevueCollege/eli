@@ -30,5 +30,19 @@ namespace ELI.Models
         public decimal? SpeakGradePoint { get; set; }
         [Range(1, 5)]
         public int? SpeakPlace { get; set; }
+
+
+        // custom comparator for comparing two scores for equality
+        public bool IsEqualTo(Levels s)
+        {
+            if (ReadPlace == s.ReadPlace && WritePlace == s.WritePlace && SpeakPlace == s.SpeakPlace)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
