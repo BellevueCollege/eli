@@ -46,10 +46,10 @@ namespace ELI.Pages
             SortType = sortType;
             await SetStudents();
 
-            // Checks to see if at any student has been placed already, so that the Edit Returning Placements button is shown
+            // Checks to see if any student has been placed already, so that the Edit Returning Placements button is shown
             foreach (var student in Students)
             {
-                if (student.Level.WritePlace != null && student.Level.ReadPlace != null && student.Level.SpeakPlace != null)
+                if (student.Level.WritePlace != null || student.Level.ReadPlace != null || student.Level.SpeakPlace != null)
                 {
                     isStudentsPlaced = true;
                     break;
@@ -138,7 +138,7 @@ namespace ELI.Pages
                 await _context.SaveChangesAsync();
                 await SetStudents(); //shows list of students
 
-                //isStudentsPlaced = true;
+                isStudentsPlaced = true;
             }
         }
 
