@@ -22,13 +22,20 @@
 <div class="row">
     <div class="col-md-12">
         <form method="post">
-            <div class="d-flex justify-content-end mb-3">
-                <button type="submit" class="btn btn-success mr-3" asp-all-route-data="@Model.QueryParams" asp-page-handler="SaveNewPlacements">
-                    <i class="fas fa-save pr-1" aria-hidden="true"></i> Save New Placements
-                </button>
-                <button type="submit" class="btn btn-outline-success" asp-all-route-data="@Model.QueryParams" asp-page-handler="AutoPlaceStudents">
-                    <i class="fas fa-sync pr-1" aria-hidden="true"></i> Re-Place Students
-                </button>
+            <div class="d-flex justify-content-between mb-3">
+                <div>
+                    <a class="btn btn-warning mr-3" asp-page="/PlaceReturningStudents/Index">
+                        <i class="fas fa-arrow-left pr-1" aria-hidden="true"></i> Exit Editing
+                    </a>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success mr-3" asp-all-route-data="@Model.QueryParams" asp-page-handler="SaveNewPlacements">
+                        <i class="fas fa-save pr-1" aria-hidden="true"></i> Save New Placements
+                    </button>
+                    <button type="submit" class="btn btn-outline-success" asp-all-route-data="@Model.QueryParams" asp-page-handler="AutoPlaceStudents">
+                        <i class="fas fa-sync pr-1" aria-hidden="true"></i> Re-Place Students
+                    </button>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table table-hover studentsearch">
