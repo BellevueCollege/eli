@@ -11,7 +11,7 @@ namespace ELI.Models
     {
         [Key]
         public int LevelID { get; set; }
-        public string SID { get; set; }
+        public string Sid { get; set; }
         public int? ReadLevel { get; set; }
         public string ReadGrade { get; set; }
         [Column(TypeName = "decimal(3,2)")]
