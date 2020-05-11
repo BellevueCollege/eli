@@ -190,6 +190,8 @@ namespace ELI.Pages
             /** Use IQueryable so additional conditionals can be added before converting to a 
              * collection (at which time the query goes to the db)
              * **/
+
+            ModelState.Clear();
             IQueryable<Student> StudentsIQ = (from s in _context.Students
                                              where s.StuType == StudentType.New 
                                              && s.YearQuarterEnrolled == quar.Id 
@@ -263,6 +265,7 @@ namespace ELI.Pages
 
             QueryParams = queryParams;
             Students = await StudentsIQ.ToListAsync();
+            int x = 7; 
         }
     }
 }
