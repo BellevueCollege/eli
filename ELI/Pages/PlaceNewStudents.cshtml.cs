@@ -127,6 +127,7 @@ namespace ELI.Pages
                     }
 
                     // Written score/placement logic
+                    ModelState.Clear();
                     if (studentToUpdate.Score.WriteScore != student.Score.WriteScore)
                     {
                         studentToUpdate.Score.WriteScore = student.Score.WriteScore;
@@ -191,6 +192,7 @@ namespace ELI.Pages
              * collection (at which time the query goes to the db)
              * **/
 
+            // Model State clears so that when page reloads new saved scores will filter/sort properly with their respective students
             ModelState.Clear();
             IQueryable<Student> StudentsIQ = (from s in _context.Students
                                              where s.StuType == StudentType.New 
