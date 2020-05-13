@@ -127,7 +127,6 @@ namespace ELI.Pages
                     }
 
                     // Written score/placement logic
-                    ModelState.Clear();
                     if (studentToUpdate.Score.WriteScore != student.Score.WriteScore)
                     {
                         studentToUpdate.Score.WriteScore = student.Score.WriteScore;
@@ -267,7 +266,6 @@ namespace ELI.Pages
 
             QueryParams = queryParams;
             Students = await StudentsIQ.ToListAsync();
-            int x = 7; 
         }
     }
 }
