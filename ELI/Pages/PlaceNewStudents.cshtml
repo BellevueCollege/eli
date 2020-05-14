@@ -159,12 +159,12 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
 <script type="text/javascript">
     /** JS autofill logic for EptPlacement **/
+
     $('input[name$="EptScore"]').change(function () {
         let intid = $(this).attr("data-internalid");
         let placement_item = $('input[name="Students[' + intid + '].Score.EptPlacement"]');
 
-        if (!placement_item.val()) {
-            //only autofill if placement doesn't yet have a value
+        if (placement_item.val()) {
             let placement_score = calculateEptPlacement($(this).val());
             placement_item.val(placement_score);
         }
@@ -176,9 +176,8 @@
         let placement_item = $('input[name="Students[' + intid + '].Score.WritePlacement"]');
 
         if (!placement_item.val()) {
-            //only autofill if placement doesn't yet have a value
-            let eptscore_item = $('input[name="Students[' + intid + '].Score.EptScore"]');
-            let placement_score = calculateEptPlacement(eptscore_item.val());
+            //let eptscore_item = $('input[name="Students[' + intid + '].Score.EptScore"]');
+            let placement_score = calculateWritePlacement($(this).val());
             placement_item.val(placement_score);
         }
     });
@@ -189,7 +188,6 @@
         let placement_item = $('input[name="Students[' + intid + '].Score.OralPlacement"]');
 
         if (!placement_item.val()) {
-            //only autofill if placement doesn't yet have a value
             let placement_score = calculateOralPlacement($(this).val());
             placement_item.val(placement_score);
         }
@@ -215,6 +213,16 @@
             else if (score >= 77) {
                 return 5;
             }
+        }
+        return null;
+    }
+    /**
+    * Calculate WritePlacement based on a score
+    */
+
+    function calculateWritePlacement(score) {
+        if (score) {
+            return score.substring(0, 1);
         }
         return null;
     }
